@@ -1,0 +1,35 @@
+
+Create MySql server (consider how to host it)
+
+Read already existing info from excel to the database
+
+
+
+Create a login screen
+---------------------
+JavaFX, create two user types
+
+
+
+Admin login
+------------
+shows buttons that can generate excel files with specific information
+
+manage employees
+
+give access to employee login page
+
+
+
+Employee login
+--------------
+allow employees to check-in/out of work
+
+create new members of forbrændingen
+
+
+
+
+
+
+
