@@ -3,6 +3,8 @@ Create MySql server (consider how to host it)
 
 Read already existing info from excel to the database
 
+Native app may be preferred to a Java Applet. 
+
 
 
 Create a login screen
@@ -25,7 +27,7 @@ Employee login
 --------------
 allow employees to check-in/out of work
 
-create new members of forbrændingen
+create new members of forbrÃ¦ndingen
 
 
 
