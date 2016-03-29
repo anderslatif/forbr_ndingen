@@ -1,33 +1,49 @@
+To do
+-----
 
-Create MySql server (consider how to host it)
+Create paper prototype
 
-Read already existing info from excel to the database
+Write group contract
+
+Create a Google Drive folder for our Diagrams and Report
+Use draw.io connected with the google drive for our Diagrams 
 
 
+
+
+Questions to ask at the meeting
+-------------------------------
+
+Forventnings afstemning. (vi er blot studerende og mange af de ting vi snakker om til dette møde er blot løse ideer som vi ikke kan garantere bliver inkluderet i det færdige produkt?
+
+Hvad er problemet med det nuværende produkt?
+
+Hvilke features are vigtige for dig? Hvad prioriterer du højst?
+
+Hvordan vil du have at sammenspillet mellem applikation og wordpress er?
+
+Hvilket slags udseende skal programmet gerne have? Skal det opereres i mørke (siden det er et spillested)? 
+
+Vis paper-prototype. 
+
+
+
+
+
+
+
+Layout/Applikation
+------------------
+
+Vagtplan (contains events) -> Produktionsplan
 
 Create a login screen
----------------------
-JavaFX, create two user types
+create two user types
 
 
+Hosting MySQL server on Wordpress
 
-Admin login
-------------
-shows buttons that can generate excel files with specific information
-
-manage employees
-
-give access to employee login page
-
-
-
-Employee login
---------------
-allow employees to check-in/out of work
-
-create new members of forbrændingen
-
-
+Read already existing info from excel to the database?
 
 
 
