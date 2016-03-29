@@ -8,6 +8,7 @@ Write group contract
 Create a Google Drive folder for our Diagrams and Report
 Use draw.io connected with the google drive for our Diagrams 
 
+Create a mock wordpress website where we create a database and play around with it
 
 
 
@@ -34,6 +35,9 @@ Vis paper-prototype.
 
 Layout/Applikation
 ------------------
+
+http://jfxtras.org/
+http://stackoverflow.com/questions/22660846/how-to-list-dates-from-database-onto-jfxtras-agenda-as-appointments-google-cale
 
 Vagtplan (contains events) -> Produktionsplan
 
