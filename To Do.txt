@@ -27,7 +27,7 @@ Hvilket slags udseende skal programmet gerne have? Skal det opereres i mørke (si
 
 Vis paper-prototype. 
 
-
+Kan I sende os jeres logo som bagrundsløst png fil?
 
 
 
@@ -39,6 +39,10 @@ Layout/Applikation
 http://jfxtras.org/
 http://stackoverflow.com/questions/22660846/how-to-list-dates-from-database-onto-jfxtras-agenda-as-appointments-google-cale
 
+embed java applets with wordpress
+https://wordpress.org/support/topic/insert-java-web-application-jar-on-post
+https://docs.oracle.com/javase/tutorial/deployment/deploymentInDepth/runAppletFunction.html
+
 Vagtplan (contains events) -> Produktionsplan
 
 Create a login screen
@@ -48,6 +52,23 @@ create two user types
 Hosting MySQL server on Wordpress
 
 Read already existing info from excel to the database?
+
+
+
+
+
+Things to resarch/test
+----------------------
+
+How are appointments listed internally? Array ... or?
+
+Are appointments ordered by date or by time of adding new? What about when they are moved around?
+
+Do the objects as they are internally stored by Java change when we change the values? Are we able to simply do an object equality check?
+
+
+
+
 
 
 
