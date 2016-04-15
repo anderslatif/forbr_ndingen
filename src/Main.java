@@ -23,6 +23,7 @@ public class Main extends Application {
 
     // my comment
     // new comment
+    // third comment
 
     // comment Mikkel
 
