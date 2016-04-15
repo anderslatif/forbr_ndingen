@@ -18,12 +18,12 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-<<<<<<< HEAD
+
     // kommentar fra Mikkels Branch
-=======
+
 
     //Test af sourcetree
->>>>>>> master
+
 
     // my comment
     // new comment
