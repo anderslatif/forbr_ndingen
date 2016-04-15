@@ -54,8 +54,6 @@ public class Root {
         Rectangle rectangle = new Rectangle(200, 20, 400, 400);
         rectangle.setFill(Color.WHITE);
 
-
-
         anchorPane.getChildren().addAll(rectangle);
 
         return anchorPane;
