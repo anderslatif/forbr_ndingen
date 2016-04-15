@@ -1,3 +1,4 @@
+import View.Root;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -12,23 +13,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        BorderPane root = new BorderPane();
 
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Scene scene = new Scene(Root.getRootLayout(), 300, 275);
+
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
 
-    // kommentar fra Mikkels Branch
 
-
-    //Test af sourcetree
-
-
-    // my comment
-    // new comment
-    // third comment
-
-    // comment Mikkel
 
 }
