@@ -1,6 +1,8 @@
 package View;
 
 import javafx.scene.Node;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.MenuBar;
 
@@ -27,6 +29,16 @@ public class Root {
     public static MenuBar getMenuBar(){
 
         MenuBar menuBar = new MenuBar();
+
+        Menu menu1 = new Menu("File");
+        Menu menu2 = new Menu("Edit");
+        Menu menu3 = new Menu("Tilføj Slide");
+
+        MenuItem m3_1 = new MenuItem("Event slide");
+
+        menu3.getItems().addAll(m3_1);
+
+        menuBar.getMenus().addAll(menu1, menu2, menu3);
 
         return menuBar;
     }
