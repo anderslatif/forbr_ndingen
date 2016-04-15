@@ -11,7 +11,7 @@ public class Main extends Application {
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         BorderPane root = new BorderPane();
 
         primaryStage.setScene(new Scene(root, 300, 275));
@@ -20,5 +20,6 @@ public class Main extends Application {
 
     //Test af sourcetree
 
+    // my comment
 
 }
