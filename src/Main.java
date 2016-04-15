@@ -14,7 +14,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Scene scene = new Scene(Root.getRootLayout(), 300, 275);
+        Scene scene = new Scene(Root.getRootLayout(), 800, 475);
 
         primaryStage.setScene(scene);
         primaryStage.show();
