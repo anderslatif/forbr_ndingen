@@ -15,7 +15,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         Scene scene = new Scene(Root.getRootLayout(), 800, 475);
-
+        //primaryStage.setOnCloseRequest( e -> areyousure());
         primaryStage.setScene(scene);
         primaryStage.show();
     }

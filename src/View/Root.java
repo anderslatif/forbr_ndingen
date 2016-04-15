@@ -1,10 +1,14 @@
 package View;
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.MenuBar;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 /**
  * Created by Anders on 4/15/2016.
@@ -17,9 +21,7 @@ public class Root {
 
         borderPane.setTop(getMenuBar());
 
-        //borderPane.setCenter();
-        // anchorpane ? with a rectangle and padding
-        // drag and drop board
+        borderPane.setCenter(getSlidePanel());
 
         return borderPane;
     }
@@ -41,6 +43,22 @@ public class Root {
         menuBar.getMenus().addAll(menu1, menu2, menu3);
 
         return menuBar;
+    }
+
+
+    public static AnchorPane getSlidePanel(){
+        AnchorPane anchorPane = new AnchorPane();
+        //todo drag and drop board
+
+
+        Rectangle rectangle = new Rectangle(200, 20, 400, 400);
+        rectangle.setFill(Color.WHITE);
+
+
+
+        anchorPane.getChildren().addAll(rectangle);
+
+        return anchorPane;
     }
 
 
