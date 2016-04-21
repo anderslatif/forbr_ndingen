@@ -1,9 +1,6 @@
 package View;
 
 import Controller.Controller;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -11,19 +8,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Anders on 4/15/2016.
+ * Created by Anders on 4/21/2016.
  */
-public class Root {
+public class Layout {
 
     Stage stage;
     Scene scene;
@@ -226,12 +220,6 @@ public class Root {
         tabsList.add(tab);
 
     }
-
-
-
-
-
-
 
 
 }

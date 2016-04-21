@@ -1,4 +1,4 @@
-import View.Root;
+import View.Layout;
 import Controller.Controller;
 
 import javafx.application.Application;
@@ -24,7 +24,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Root root = new Root();
+
+        Layout root = new Layout();
 
         Scene scene = new Scene(root.getRootLayout(), 800, 475);
 
