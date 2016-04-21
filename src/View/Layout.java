@@ -1,12 +1,12 @@
 package View;
 
 import Controller.Controller;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -21,12 +21,15 @@ public class Layout {
 
     Stage stage;
     Scene scene;
-    static Controller controller;
+    Controller controller;
+    ArrayList<File> imageList;
+
 
     public void initializeLayout(Scene scene, Stage stage){
         this.scene = scene;
         this.stage = stage;
         controller = new Controller();
+        imageList = new ArrayList<>();
     }
 
 
@@ -45,7 +48,6 @@ public class Layout {
 
 
     TabPane tabPane;
-    List<Tab> tabsList;
 
 
     // things to consider about tabs... should they be closable or are we required to create a delete button to properly dispose of them in the arraylist
@@ -57,18 +59,21 @@ public class Layout {
 //        tabPane.setTabMinWidth(185);
         Tab firstTab = new Tab();     // setName() depending on every slides position in the ArrayList
 
+        tabPane.getSelectionModel().select(firstTab);
         int indexZeroGoAway = tabPane.getSelectionModel().getSelectedIndex() + 2;
         String title = String.valueOf(indexZeroGoAway);
         firstTab.setText(title);
-
-        firstTab.setContent(createEmptyProject());
         tabPane.getTabs().addAll(firstTab);
 
-        tabsList = new ArrayList<Tab>();
-        tabsList.add(firstTab);
 
-        // tabPane.getSelectionModel().selectedItemProperty().addListener( (ov, oldTab, newTab) -> System.out.println("ov: " + ov + "\noldtab: " + oldTab + "\nnewTab:  " + newTab));
 
+        tabPane.getSelectionModel().selectedItemProperty().addListener( (ov, oldTab, newTab) -> {
+            int tabText = 1;
+            for(Tab tab : tabPane.getTabs()){
+                tab.setText(String.valueOf(tabText));
+                tabText++;
+            }
+        });
 
 
         tabPane.setOnDragOver( e -> {
@@ -87,7 +92,7 @@ public class Layout {
             if (db.hasFiles()) {
                 success = true;
                 for (File file : db.getFiles()) {
-                    addPictureToAnchorPane(file);
+                    addPictureToATab(file);
                 }
             }
             e.setDropCompleted(success);
@@ -117,7 +122,7 @@ public class Layout {
 
         MenuItem m1_3 = new MenuItem("_Save");
         m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
-        m1_3.setOnAction( e -> controller.savePresentation());
+        m1_3.setOnAction( e -> savingPresentation());
 
         menu1.getItems().addAll(m1_1, m1_2, m1_3);
 
@@ -155,13 +160,6 @@ public class Layout {
     }
 
 
-    AnchorPane anchorPane;  // keeping it here for reference.. can be moved up later
-
-    public AnchorPane createEmptyProject(){
-        AnchorPane anchorPane = new AnchorPane();
-
-        return anchorPane;
-    }
 
 
     public void newPresentation(){
@@ -173,7 +171,12 @@ public class Layout {
     }
 
 
-    public void addPictureToAnchorPane(File file){
+    public void createEmptyProject(){
+
+    }
+
+
+    public void addPictureToATab(File file){
 
         // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
         String imagePath = "file:///" + file.getAbsoluteFile().toString();
@@ -182,25 +185,25 @@ public class Layout {
             Image image = new Image(imagePath);
 
             Tab tab = tabPane.getSelectionModel().getSelectedItem();
-            AnchorPane anchorPane = (AnchorPane) tab.getContent();
             ImageView imageView = new ImageView();
-            anchorPane.getChildren().add(imageView);
+            tab.setContent(imageView);
 
             imageView.fitWidthProperty().bind(stage.widthProperty());
             imageView.fitHeightProperty().bind(stage.heightProperty());
             imageView.setImage(image);
 
+
+            // this is no good cause it will keep adding images when we change the image in an already open tab
             controller.updateImageForSlideObjectInList(file);
 
         } catch(Exception e){
             // a pop-up telling the user that the file appears not to be an image
             // we need to properly check if the file is an image ... because?!
-            // but right now we will never get here
+            // right now we will never get here
             e.printStackTrace();
         }
 
     }
-
 
 
     public void addNewTab(){
@@ -211,15 +214,24 @@ public class Layout {
         String title = String.valueOf(correctingIndexingIssues);
         tab.setText(title);
 
-        AnchorPane anchorPane = new AnchorPane();
-//        ImageView imageView = new ImageView();
-//        anchorPane.getChildren().add(imageView);
-        tab.setContent(anchorPane);
-
         tabPane.getTabs().add(tab);
-        tabsList.add(tab);
 
     }
+
+
+    public void savingPresentation(){
+
+
+        for(Tab tab : tabPane.getTabs()){
+            System.out.println(tab.getContent());
+
+            // imageList.clear() + imageList.add();
+        }
+
+        controller.savePresentation();
+    }
+
+
 
 
 }

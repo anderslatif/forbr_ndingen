@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.DatabaseSaveAndGet;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -8,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Controller {
 
-    // ArrayList<Slides> presentation = new ArrayList();
+    // ArrayList<Slide> presentation = new ArrayList();
 
     // the list above will be the one we use.. the one below is to try out the database
 
@@ -24,9 +26,17 @@ public class Controller {
     public void openPresentation(){
         // let the user enter a date in a pop-up first??
         // is there a more convenient way to display the slides? perhaps a description/theme/tags for each slide would be apt
+        // remember error messages if images or media can't be found
     }
 
     public void savePresentation(){
+
+        DatabaseSaveAndGet dsag = new DatabaseSaveAndGet();
+        dsag.savePresentation(presentation);
+    }
+
+    public void completelyUpdatePresentation(){
+
 
     }
 
