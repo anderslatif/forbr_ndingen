@@ -24,10 +24,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Scene scene = new Scene(Root.getRootLayout(), 800, 475);
+        Root root = new Root();
+
+        Scene scene = new Scene(root.getRootLayout(), 800, 475);
+
+        root.initializeLayout(scene, primaryStage);
 
 
-        scene.setOnDragOver( e -> {
+/*        scene.setOnDragOver( e -> {
             Dragboard db = e.getDragboard();
             if (db.hasFiles()) {
                 e.acceptTransferModes(TransferMode.ANY);
@@ -43,12 +47,12 @@ public class Main extends Application {
             if (db.hasFiles()) {
                 success = true;
                 for (File file : db.getFiles()) {
-                    Controller.hasFile(file);
+                    root.addPictureToAnchorPane(file);
                 }
             }
             e.setDropCompleted(success);
             e.consume();
-        });
+        });*/
 
 
 
