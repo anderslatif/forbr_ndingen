@@ -32,31 +32,6 @@ public class Main extends Application {
         root.initializeLayout(scene, primaryStage);
 
 
-/*        scene.setOnDragOver( e -> {
-            Dragboard db = e.getDragboard();
-            if (db.hasFiles()) {
-                e.acceptTransferModes(TransferMode.ANY);
-            } else {
-                e.consume();
-            }
-        });
-
-
-        scene.setOnDragDropped( e -> {
-            Dragboard db = e.getDragboard();
-            boolean success = false;
-            if (db.hasFiles()) {
-                success = true;
-                for (File file : db.getFiles()) {
-                    root.addPictureToAnchorPane(file);
-                }
-            }
-            e.setDropCompleted(success);
-            e.consume();
-        });*/
-
-
-
         //primaryStage.setOnCloseRequest( e -> confirmationPopUp());
         primaryStage.setScene(scene);
         primaryStage.show();
