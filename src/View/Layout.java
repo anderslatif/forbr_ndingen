@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -149,6 +150,8 @@ public class Layout {
         Menu menu4 = new Menu("Start Presentation");
 
         MenuItem m4_1 = new MenuItem("_Go");
+        m4_1.setAccelerator(new KeyCodeCombination(KeyCode.G, KeyCombination.CONTROL_DOWN));
+        m4_1.setOnAction( e -> runPresentation());
 
         menu4.getItems().addAll(m4_1);
 
@@ -231,6 +234,33 @@ public class Layout {
         controller.savePresentation();
     }
 
+
+    public void runPresentation(){
+
+        BorderPane borderPane = new BorderPane();
+        Scene presentationScene = new Scene(borderPane, 400, 650);
+        Stage presentationStage = new Stage();
+        presentationStage.setScene(presentationScene);
+        presentationStage.show();
+        borderPane.setOnMouseClicked( e -> presentationStage.close());
+        //presentationStage.initStyle(StageStyle.TRANSPARENT);
+        // http://stackoverflow.com/questions/23503728/cannot-set-style-once-stage-has-been-set-visible
+
+
+        for(Tab tab : tabPane.getTabs()){
+
+            if(tab.getContent() != null){
+
+                ImageView imageView = (ImageView) tab.getContent();
+                imageView.fitHeightProperty().bind(presentationStage.heightProperty());
+                imageView.fitWidthProperty().bind(presentationStage.widthProperty());
+
+                borderPane.setCenter(imageView);
+
+            }
+        }
+
+    }
 
 
 
