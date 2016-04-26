@@ -25,6 +25,7 @@ public class Layout {
     Scene scene;
     Controller controller;
     TabController tabController;
+    String operatingSystem;
 
     public void initializeLayout(Scene scene, Stage stage){
         this.scene = scene;
@@ -32,6 +33,15 @@ public class Layout {
         controller = new Controller();
         tabController = new TabController(scene, stage);
         newPresentation();
+
+        operatingSystem = System.getProperty("os.name");
+
+        if(operatingSystem.startsWith("Windows")){
+            operatingSystem = "Windows";
+        } if(operatingSystem.startsWith("Mac")){
+            operatingSystem = "Mac";
+        }
+
     }
 
 
@@ -57,15 +67,15 @@ public class Layout {
         Menu menu1 = new Menu("File");
 
         MenuItem m1_1 = new MenuItem("_New Presentation");
-        m1_1.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));  //todo need to change this to reflect Mac's command key
+        m1_1.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
         m1_1.setOnAction( e -> newPresentation());
 
         MenuItem m1_2 = new MenuItem("_Open");
-        m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
+        m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         m1_2.setOnAction( e -> controller.openPresentation());
 
         MenuItem m1_3 = new MenuItem("_Save");
-        m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+        m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
         m1_3.setOnAction( e -> tabController.savingPresentation());
 
         menu1.getItems().addAll(m1_1, m1_2, m1_3);
@@ -82,7 +92,7 @@ public class Layout {
         Menu menu3 = new Menu("Add a Slide");
 
         MenuItem m3_1 = new MenuItem("Picture slide");
-        m3_1.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
+        m3_1.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN));
         //m3_1.setOnAction( e -> controller.newSlide());
         m3_1.setOnAction( e -> tabController.addNewTab());
 
@@ -93,7 +103,7 @@ public class Layout {
         Menu menu4 = new Menu("Start Presentation");
 
         MenuItem m4_1 = new MenuItem("_Go");
-        m4_1.setAccelerator(new KeyCodeCombination(KeyCode.G, KeyCombination.CONTROL_DOWN));
+        m4_1.setAccelerator(new KeyCodeCombination(KeyCode.G, KeyCombination.SHORTCUT_DOWN));
         m4_1.setOnAction( e -> tabController.runPresentation());
 
         menu4.getItems().addAll(m4_1);
