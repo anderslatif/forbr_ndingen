@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.TabNode;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -11,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created by Anders on 4/26/2016.
@@ -21,6 +23,7 @@ public class TabController {
     Scene scene;
     TabPane tabPane;
     Controller controller;
+    ArrayList<TabNode> tabCollection = new ArrayList<>();
 
     public TabController(Scene scene, Stage stage){
         this.scene = scene;
@@ -89,8 +92,15 @@ public class TabController {
     }
 
 
+/*
+
+In the method addPictureToATab(File file), find your TabNodePicture in the ArrayList and set the image/file path.
+
+ */
 
     public void addPictureToATab(File file){
+
+
 
         // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
         String imagePath = "file:///" + file.getAbsoluteFile().toString();
@@ -121,6 +131,7 @@ public class TabController {
 
 
     public void addNewTab(){
+
         Tab tab = new Tab();
 
         tabPane.getSelectionModel().select(tab);
@@ -129,6 +140,13 @@ public class TabController {
         tab.setText(title);
 
         tabPane.getTabs().add(tab);
+
+        if(tabCollection.size()>0){
+        //pseudocode
+        } else {
+        //pseudocode
+        }
+
 
     }
 
