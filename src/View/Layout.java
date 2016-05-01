@@ -196,7 +196,7 @@ public class Layout {
             imageView.setImage(image);
 
 
-            // this is no good cause it will keep adding images when we change the image in an already open tab
+            // this is no good because it will keep adding images when we change the image in an already open tab
             controller.updateImageForSlideObjectInList(file);
 
         } catch(Exception e){
