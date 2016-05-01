@@ -33,7 +33,7 @@ public class Main extends Application {
         root.initializeLayout(scene, primaryStage);
 
 
-        //primaryStage.setOnCloseRequest( e -> confirmationPopUp());
+        //primaryStage.setOnCloseRequest( e -> closeConfirmationPopUp());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
