@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class DatabaseSaveAndGet {
 
 
-    public void savePresentation(ArrayList<File> presentation){
+    public void savePresentation(ArrayList<TabNode> presentation){
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -25,8 +25,8 @@ public class DatabaseSaveAndGet {
 
 
 
-                for(File fil : presentation){
-                    System.out.println(fil.getAbsolutePath());
+                for(TabNode tabNode: presentation){
+                    System.out.println(tabNode);
                 }
 
 

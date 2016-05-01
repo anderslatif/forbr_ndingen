@@ -1,6 +1,8 @@
 package Controller;
 
+import Model.SlidePicture;
 import Model.TabNode;
+import Model.TabNodePicture;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -84,9 +86,7 @@ public class TabController {
 
         tabPane = new TabPane();
 
-
         initializeTabController(tabPane);
-
 
         return tabPane;
     }
@@ -101,66 +101,96 @@ In the method addPictureToATab(File file), find your TabNodePicture in the Array
     public void addPictureToATab(File file){
 
 
-
-        // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
-        String imagePath = "file:///" + file.getAbsoluteFile().toString();
-
-        try {
+            // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
+            String imagePath = "file:///" + file.getAbsoluteFile().toString();
             Image image = new Image(imagePath);
 
             Tab tab = tabPane.getSelectionModel().getSelectedItem();
-            ImageView imageView = new ImageView();
-            tab.setContent(imageView);
-
-            imageView.fitWidthProperty().bind(stage.widthProperty());
-            imageView.fitHeightProperty().bind(stage.heightProperty());
-            imageView.setImage(image);
+            ImageView currentImageView = (ImageView) tab.getContent();
 
 
-            // this is no good cause it will keep adding images when we change the image in an already open tab
-            controller.updateImageForSlideObjectInList(file);
+            currentImageView.setImage(image);
 
-        } catch(Exception e){
-            // a pop-up telling the user that the file appears not to be an image
-            // we need to properly check if the file is an image ... because?!
-            // right now we will never get here
-            e.printStackTrace();
-        }
+
+
+            for(TabNode tabNode : tabCollection){
+
+                if(tabNode instanceof TabNodePicture){
+
+                    TabNodePicture tabNodePicture = (TabNodePicture) tabNode;
+
+                    if(tabNodePicture.getImageNode() == currentImageView){
+                        SlidePicture slidePicture = tabNodePicture.getSlidePicture();
+                        slidePicture.setImagePath(imagePath);
+                    }
+                }
+
+            }
+            tab.setContent(currentImageView);
+
+
+
+
+
 
     }
 
 
     public void addNewTab(){
 
-        Tab tab = new Tab();
-
-        tabPane.getSelectionModel().select(tab);
-        int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 2;
-        String title = String.valueOf(correctingIndexingIssues);
-        tab.setText(title);
-
-        tabPane.getTabs().add(tab);
 
         if(tabCollection.size()>0){
-        //pseudocode
-        } else {
-        //pseudocode
-        }
+            Tab tab = new Tab();
 
+            tabPane.getSelectionModel().select(tab);
+            int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 2;
+            String title = String.valueOf(correctingIndexingIssues);
+            tab.setText(title);
+
+            tabPane.getTabs().add(tab);
+            ImageView imageView = new ImageView();
+            imageView.fitWidthProperty().bind(stage.widthProperty());
+            imageView.fitHeightProperty().bind(stage.heightProperty());
+
+            tab.setContent(imageView);
+
+            TabNodePicture tabNodePicture = new TabNodePicture(imageView);
+            tabCollection.add(tabNodePicture);
+
+
+        } else {
+
+            Tab tab = tabPane.getSelectionModel().getSelectedItem();
+
+            ImageView imageView = new ImageView();
+            imageView.fitWidthProperty().bind(stage.widthProperty());
+            imageView.fitHeightProperty().bind(stage.heightProperty());
+
+            tab.setContent(imageView);
+
+            TabNodePicture tabNodePicture = new TabNodePicture(imageView);
+            tabCollection.add(tabNodePicture);
+
+        }
 
     }
 
 
     public void savingPresentation(){
 
+        ArrayList presentation = new ArrayList();
 
         for(Tab tab : tabPane.getTabs()){
             System.out.println(tab.getContent());
 
-            // imageList.clear() + imageList.add();
+            for (TabNode tabNode : tabCollection){
+                if(tab.getContent() == tabNode){
+                    presentation.add(tabNode);
+                }
+            }
         }
 
-        controller.savePresentation();
+        controller.savePresentation(presentation);
     }
 
 
@@ -172,8 +202,6 @@ In the method addPictureToATab(File file), find your TabNodePicture in the Array
         presentationStage.setScene(presentationScene);
         presentationStage.show();
         borderPane.setOnMouseClicked( e -> presentationStage.close());
-        //presentationStage.initStyle(StageStyle.TRANSPARENT);
-        // http://stackoverflow.com/questions/23503728/cannot-set-style-once-stage-has-been-set-visible
 
 
         for(Tab tab : tabPane.getTabs()){
