@@ -17,6 +17,10 @@ import java.time.LocalDate;
 
 public class Main extends Application {
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 46bc680f4f57be313e2b83947c1d1828c8573149
     public static void main(String[] args) {
         launch(args);
     }
