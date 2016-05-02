@@ -92,11 +92,6 @@ public class TabController {
     }
 
 
-/*
-
-In the method addPictureToATab(File file), find your TabNodePicture in the ArrayList and set the image/file path.
-
- */
 
     public void addPictureToATab(File file){
 

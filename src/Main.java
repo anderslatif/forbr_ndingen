@@ -30,11 +30,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        SlidePicture sp1 = new SlidePicture(LocalDate.now(), "dokumenter/billeder/test.jpg");
-        ImageView iv1 = new ImageView();
-
-        TabNodePicture tabNP = new TabNodePicture(iv1, sp1);
-
         Layout root = new Layout();
 
         Scene scene = new Scene(root.getRootLayout(), 800, 475);
