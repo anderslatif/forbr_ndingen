@@ -33,13 +33,27 @@ public class TabController {
         controller = new Controller();
     }
 
+
+
+    public TabPane getTabPane(){
+
+        tabCollection.clear();
+
+        tabPane = new TabPane();
+
+        initializeTabController(tabPane);
+
+        return tabPane;
+    }
+
+
+
     public void initializeTabController(TabPane tabPane){
 
         Tab firstTab = new Tab();
 
-        tabPane.getSelectionModel().select(firstTab);
-        int indexZeroGoAway = tabPane.getSelectionModel().getSelectedIndex() + 2;
-        String title = String.valueOf(indexZeroGoAway);
+        int compensatingForStartAtMinusOne = tabPane.getSelectionModel().getSelectedIndex() + 2;
+        String title = String.valueOf(compensatingForStartAtMinusOne);
         firstTab.setText(title);
         tabPane.getTabs().addAll(firstTab);
 
@@ -82,49 +96,33 @@ public class TabController {
 
 
 
-    public TabPane getTabPane(){
-
-        tabPane = new TabPane();
-
-        initializeTabController(tabPane);
-
-        return tabPane;
-    }
-
-
-
     public void addPictureToATab(File file){
 
 
-            // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
-            String imagePath = "file:///" + file.getAbsoluteFile().toString();
-            Image image = new Image(imagePath);
+        // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
+        String imagePath = "file:///" + file.getAbsoluteFile().toString();
+        Image image = new Image(imagePath);
 
-            Tab tab = tabPane.getSelectionModel().getSelectedItem();
-            ImageView currentImageView = (ImageView) tab.getContent();
+        Tab tab = tabPane.getSelectionModel().getSelectedItem();
+        ImageView currentImageView = (ImageView) tab.getContent();
 
-
-            currentImageView.setImage(image);
-
+        currentImageView.setImage(image);
 
 
-            for(TabNode tabNode : tabCollection){
 
-                if(tabNode instanceof TabNodePicture){
+        for(TabNode tabNode : tabCollection){
 
-                    TabNodePicture tabNodePicture = (TabNodePicture) tabNode;
+            if(tabNode instanceof TabNodePicture){
 
-                    if(tabNodePicture.getImageNode() == currentImageView){
-                        SlidePicture slidePicture = tabNodePicture.getSlidePicture();
-                        slidePicture.setImagePath(imagePath);
-                    }
+                TabNodePicture tabNodePicture = (TabNodePicture) tabNode;
+
+                if(tabNodePicture.getImageNode() == currentImageView){
+                    SlidePicture slidePicture = tabNodePicture.getSlidePicture();
+                    slidePicture.setImagePath(imagePath);
                 }
-
             }
-            tab.setContent(currentImageView);
 
-
-
+        }
 
 
 
@@ -149,7 +147,8 @@ public class TabController {
 
             tab.setContent(imageView);
 
-            TabNodePicture tabNodePicture = new TabNodePicture(imageView);
+            SlidePicture slidePicture = new SlidePicture();
+            TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePicture);
             tabCollection.add(tabNodePicture);
 
 
@@ -163,7 +162,8 @@ public class TabController {
 
             tab.setContent(imageView);
 
-            TabNodePicture tabNodePicture = new TabNodePicture(imageView);
+            SlidePicture slidePicture = new SlidePicture();
+            TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePicture);
             tabCollection.add(tabNodePicture);
 
         }

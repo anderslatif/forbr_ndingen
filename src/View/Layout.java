@@ -25,7 +25,6 @@ public class Layout {
     Scene scene;
     Controller controller;
     TabController tabController;
-    String operatingSystem;
 
     public void initializeLayout(Scene scene, Stage stage){
         this.scene = scene;
@@ -34,13 +33,6 @@ public class Layout {
         tabController = new TabController(scene, stage);
         newPresentation();
 
-        operatingSystem = System.getProperty("os.name");
-
-        if(operatingSystem.startsWith("Windows")){
-            operatingSystem = "Windows";
-        } if(operatingSystem.startsWith("Mac")){
-            operatingSystem = "Mac";
-        }
 
     }
 

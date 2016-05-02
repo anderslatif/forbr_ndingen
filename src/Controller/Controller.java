@@ -28,14 +28,12 @@ public class Controller {
 
     public void savePresentation(ArrayList<TabNode> presentation){
 
+        // pop-up asks for date
+
         DatabaseSaveAndGet databaseSaveAndGet = new DatabaseSaveAndGet();
         databaseSaveAndGet.savePresentation(presentation);
     }
 
-    public void completelyUpdatePresentation(){
-
-
-    }
 
 
 /*    public void changeSlidePosition(int index){
@@ -43,13 +41,6 @@ public class Controller {
     }*/
 
 
-    // this method will later on be more specific for each slide object type
-    public void newSlide(){
-        // create a slide object
-        // add the object to the ArrayList
-        // create a new tab
-
-    }
 
 
 
