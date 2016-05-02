@@ -95,25 +95,6 @@ public class TabController {
     }
 
 
-<<<<<<< HEAD
-/*
-
-In the method addPictureToATab(File file), find your TabNodePicture in the ArrayList and set the image/file path.
-
- */
-=======
-
-    public TabPane getTabPane(){
-
-        tabPane = new TabPane();
-
-        initializeTabController(tabPane);
-
-        return tabPane;
-    }
-
-
->>>>>>> 75ef31d3e91f90861f9261ab9d9a802fbcea904b
 
     public void addPictureToATab(File file){
 
