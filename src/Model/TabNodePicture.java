@@ -15,6 +15,10 @@ public class TabNodePicture implements TabNode {
         this.slidePicture = slidePicture;
     }
 
+    public TabNodePicture(ImageView imageNode) {
+        this.imageNode = imageNode;
+    }
+
     public ImageView getImageNode() {
         return imageNode;
     }
