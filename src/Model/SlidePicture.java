@@ -17,6 +17,9 @@ public class SlidePicture extends Slide {
 
     }
 
+    public SlidePicture(){
+    }
+
     public LocalDate getDate() {
         return date;
     }
