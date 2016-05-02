@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.DatabaseSaveAndGet;
+import Model.TabNode;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,13 +15,9 @@ public class Controller {
 
     // the list above will be the one we use.. the one below is to try out the database
 
-    private ArrayList<File> presentation = new ArrayList();
 
 
 
-    public void updateImageForSlideObjectInList(File file){
-        presentation.add(file);
-    }
 
 
     public void openPresentation(){
@@ -29,10 +26,10 @@ public class Controller {
         // remember error messages if images or media can't be found
     }
 
-    public void savePresentation(){
+    public void savePresentation(ArrayList<TabNode> presentation){
 
-        DatabaseSaveAndGet dsag = new DatabaseSaveAndGet();
-        dsag.savePresentation(presentation);
+        DatabaseSaveAndGet databaseSaveAndGet = new DatabaseSaveAndGet();
+        databaseSaveAndGet.savePresentation(presentation);
     }
 
     public void completelyUpdatePresentation(){
