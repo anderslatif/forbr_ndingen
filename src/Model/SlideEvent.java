@@ -7,7 +7,7 @@ import java.time.LocalDate;
  */
 public class SlideEvent extends Slide {
 
-    private LocalDate date;
+    private String date;
     private String header;
     private String textLabel;
     private String imagePath;
@@ -15,18 +15,18 @@ public class SlideEvent extends Slide {
 
     public SlideEvent(){}
 
-    public SlideEvent(LocalDate date, String header, String textLabel, String imagePath) {
+    public SlideEvent(String date, String header, String textLabel, String imagePath) {
         this.date = date;
         this.header = header;
         this.textLabel = textLabel;
         this.imagePath = imagePath;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

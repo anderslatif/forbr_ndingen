@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - @localhost" uuid="03887549-30b9-4204-bfac-08df260122d5">
+  <data-source name="MySQL - mydb@localhost" uuid="04864733-ee2e-4e96-b3b5-0f789879e7d4">
     <database-info product="MySQL" version="5.7.11-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
@@ -8,31 +8,61 @@
     <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
     <database-model serializer="dbm" rdbms="MYSQL" format-version="2.5">
       <schema id="1" name="mydb"/>
-      <table id="2" parent="1" name="login"/>
-      <table id="3" parent="1" name="slides"/>
-      <column id="4" parent="2" name="id">
+      <table id="2" parent="1" name="events"/>
+      <table id="3" parent="1" name="login"/>
+      <table id="4" parent="1" name="slides"/>
+      <table id="5" parent="1" name="student"/>
+      <column id="6" parent="2" name="date">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="5" parent="2" name="first_name">
+      <column id="7" parent="2" name="header">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="8" parent="2" name="image_path">
+        <data-type>varchar(30)</data-type>
+      </column>
+      <column id="9" parent="2" name="text">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="10" parent="2" name="PRIMARY">
+        <columns>date</columns>
+        <primary>1</primary>
+      </key>
+      <column id="11" parent="3" name="id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="12" parent="3" name="first_name">
         <data-type>varchar(45)</data-type>
       </column>
-      <column id="6" parent="2" name="last_name">
+      <column id="13" parent="3" name="last_name">
         <data-type>varchar(45)</data-type>
       </column>
-      <key id="7" parent="2" name="PRIMARY">
+      <key id="14" parent="3" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="8" parent="3" name="id">
+      <column id="15" parent="4" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="9" parent="3" name="column_2">
+      <column id="16" parent="4" name="column_2">
         <mandatory>1</mandatory>
         <data-type>blob</data-type>
       </column>
-      <key id="10" parent="3" name="PRIMARY">
+      <key id="17" parent="4" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="18" parent="5" name="id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="19" parent="5" name="name">
+        <data-type>varchar(20)</data-type>
+      </column>
+      <key id="20" parent="5" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>

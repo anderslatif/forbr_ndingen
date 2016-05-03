@@ -76,7 +76,11 @@ public class Layout {
         Menu menu2 = new Menu("Events");
 
         MenuItem m2_1 = new MenuItem("_Events");
-        // m2_1.setOnAction( e -> method partly in controller and the rest in view that shows us all the events in a new scene and lets us create new ones, select from the list etc.);
+
+        EventOverview eventOverview = new EventOverview();
+        m2_1.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
+        m2_1.setOnAction( e -> eventOverview.getEventOverview());
+
 
         menu2.getItems().addAll(m2_1);
 

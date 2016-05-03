@@ -58,4 +58,68 @@ public class DatabaseSaveAndGet {
 
 
 
+    public static ArrayList<SlideEvent> loadAllEvents(){
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        ArrayList<SlideEvent> eventCollection = new ArrayList<>();
+
+        try {
+            connection = DatabaseConnection.getConnection();
+
+            statement = connection.createStatement();
+
+            resultSet = statement.executeQuery("SELECT * FROM events;");
+
+            if(connection != null){
+
+                while(resultSet.next()){
+
+                    String date = resultSet.getString("date");
+                    String header = resultSet.getString("header");
+                    String textLabel = resultSet.getString("text");
+                    String imagePath = resultSet.getString("image_path");
+
+
+                    SlideEvent slideEvent = new SlideEvent(date, header, textLabel, imagePath);
+
+                    eventCollection.add(slideEvent);
+
+                }
+
+
+            }
+
+
+        } catch(Exception e){
+            e.printStackTrace();
+        } finally {
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(statement != null){
+                try{
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return eventCollection;
+        }
+
+    }
+
+
+
+
+
+
+
 }

@@ -1,3 +1,4 @@
+import Model.DatabaseSaveAndGet;
 import Model.SlidePicture;
 import Model.TabNodePicture;
 import View.Layout;
@@ -17,10 +18,7 @@ import java.time.LocalDate;
 
 public class Main extends Application {
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 46bc680f4f57be313e2b83947c1d1828c8573149
     public static void main(String[] args) {
         launch(args);
     }
@@ -33,6 +31,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        DatabaseSaveAndGet dasag = new DatabaseSaveAndGet();
+        dasag.loadAllEvents();
 
         Layout root = new Layout();
 
