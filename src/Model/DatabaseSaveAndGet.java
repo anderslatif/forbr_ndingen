@@ -2,6 +2,7 @@ package Model;
 
 import java.io.File;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -89,7 +90,6 @@ public class DatabaseSaveAndGet {
 
                 }
 
-
             }
 
 
@@ -118,6 +118,50 @@ public class DatabaseSaveAndGet {
 
 
 
+
+
+    public static void saveNewEventSlide(SlideEvent slideEvent){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = DatabaseConnection.getConnection();
+
+            if(connection != null){
+
+                //String slideEventValues = "20161102" + ", '" + slideEvent.getHeader() + "', '" + slideEvent.getImagePath() + "', '" + slideEvent.getTextLabel() + "'";
+                //System.out.println(slideEventValues);
+                //preparedStatement = connection.prepareStatement("INSERT INTO events(date, header, image_path, text) VALUES("+ slideEventValues + ")");
+
+                preparedStatement = connection.prepareStatement("INSERT INTO events(date, header, image_path, text) VALUES(20161203, 'Header', 'imageImage', 'text and More')");
+
+                preparedStatement.execute();
+
+
+
+            }
+
+
+        } catch(Exception e){
+            e.printStackTrace();
+        } finally {
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(preparedStatement != null){
+                try{
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
 
 
 

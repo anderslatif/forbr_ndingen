@@ -32,12 +32,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        DatabaseSaveAndGet dasag = new DatabaseSaveAndGet();
-        dasag.loadAllEvents();
+        //DatabaseSaveAndGet dasag = new DatabaseSaveAndGet();
+        //dasag.loadAllEvents();
 
         Layout root = new Layout();
 
         Scene scene = new Scene(root.getRootLayout(), 800, 475);
+        scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
 
         root.initializeLayout(scene, primaryStage);
 
