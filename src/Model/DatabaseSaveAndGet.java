@@ -146,7 +146,7 @@ public class DatabaseSaveAndGet {
                 preparedStatement = connection.prepareStatement("INSERT INTO events(date, header, text, image_path) VALUES(" + slideEventValues + ")");
 
                 preparedStatement.execute();
-                
+
 
             }
 
