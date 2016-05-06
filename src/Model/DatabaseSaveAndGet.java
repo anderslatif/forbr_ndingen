@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.Util;
+
 import java.io.File;
 import java.sql.*;
 import java.time.LocalDate;
@@ -110,6 +112,13 @@ public class DatabaseSaveAndGet {
                     e.printStackTrace();
                 }
             }
+            if(resultSet != null){
+                try{
+                    resultSet.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
 
             return eventCollection;
         }
@@ -129,15 +138,15 @@ public class DatabaseSaveAndGet {
 
             if(connection != null){
 
-                //String slideEventValues = "20161102" + ", '" + slideEvent.getHeader() + "', '" + slideEvent.getImagePath() + "', '" + slideEvent.getTextLabel() + "'";
-                //System.out.println(slideEventValues);
-                //preparedStatement = connection.prepareStatement("INSERT INTO events(date, header, image_path, text) VALUES("+ slideEventValues + ")");
+                String sanitizedpath = Util.turnBackslashToForward(slideEvent.getImagePath());
+                String slideEventValues = slideEvent.getDate() + ", '" + slideEvent.getHeader() + "', '" +
+                                          slideEvent.getTextLabel() + "', '" + sanitizedpath + "'";
 
-                preparedStatement = connection.prepareStatement("INSERT INTO events(date, header, image_path, text) VALUES(20161203, 'Header', 'imageImage', 'text and More')");
+
+                preparedStatement = connection.prepareStatement("INSERT INTO events(date, header, text, image_path) VALUES(" + slideEventValues + ")");
 
                 preparedStatement.execute();
-
-
+                
 
             }
 

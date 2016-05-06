@@ -287,7 +287,7 @@ public class TabController {
 
 
         //todo Image image = new Image(slideEvent.getImagePath());
-        Image image = new Image("red_picture.jpg");
+        Image image = new Image(slideEvent.getImagePath());
         ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.fitHeightProperty().bind(vBox.heightProperty().divide(8));
