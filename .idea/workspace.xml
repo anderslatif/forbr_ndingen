@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="02c20332-5218-419a-b31a-95a67e6c8b27" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/TabController.java" afterPath="$PROJECT_DIR$/src/Controller/TabController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/Util.java" afterPath="$PROJECT_DIR$/src/Controller/Util.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.java" afterPath="$PROJECT_DIR$/src/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Model/DatabaseSaveAndGet.java" afterPath="$PROJECT_DIR$/src/Model/DatabaseSaveAndGet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Model/SlideEvent.java" afterPath="$PROJECT_DIR$/src/Model/SlideEvent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/View/Layout.java" afterPath="$PROJECT_DIR$/src/View/Layout.java" />
     </list>
     <ignored path="Forbr_ndingen.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,11 +62,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6227951">
-              <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -74,7 +78,7 @@
         <entry file="file://$PROJECT_DIR$/src/View/Layout.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="247" column="49" selection-start-line="247" selection-start-column="49" selection-end-line="247" selection-end-column="49" />
+              <caret line="229" column="62" selection-start-line="229" selection-start-column="62" selection-end-line="229" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -86,7 +90,7 @@
         <entry file="file://$PROJECT_DIR$/src/Model/SlideEvent.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="63" selection-start-line="17" selection-start-column="63" selection-end-line="17" selection-end-column="63" />
+              <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -102,26 +106,36 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Util.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/Util.java">
+      <file leaf-file-name="SlideHappyHour.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Model/SlideHappyHour.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="56" selection-start-line="10" selection-start-column="56" selection-end-line="10" selection-end-column="56" />
+              <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DatabaseSaveAndGet.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Model/DatabaseSaveAndGet.java">
+      <file leaf-file-name="Util.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/Util.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
+              <caret line="18" column="63" selection-start-line="18" selection-start-column="63" selection-end-line="18" selection-end-column="63" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DatabaseSaveAndGet.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Model/DatabaseSaveAndGet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.192673">
+              <caret line="157" column="0" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
               <folding>
-                <marker date="1462540326577" expanded="true" signature="553:614" placeholder="INSERT INTO slides... " />
-                <marker date="1462540326577" expanded="true" signature="1900:1920" placeholder="SELECT * FRO... events" />
-                <marker date="1462540326577" expanded="true" signature="3880:3938" placeholder="INSERT INTO events... " />
-                <marker date="1462540326577" expanded="true" signature="3880:3963" placeholder="INSERT INTO events... " />
+                <marker date="1462620323654" expanded="true" signature="504:565" placeholder="INSERT INTO slides... " />
+                <marker date="1462620323654" expanded="true" signature="1851:1871" placeholder="SELECT * FRO... events" />
+                <marker date="1462620323654" expanded="true" signature="4238:4296" placeholder="INSERT INTO events... " />
+                <marker date="1462620323654" expanded="true" signature="4238:4316" placeholder="INSERT INTO events... " />
               </folding>
             </state>
           </provider>
@@ -156,15 +170,15 @@
         <option value="$PROJECT_DIR$/src/Model/TabNodeHappyHour.java" />
         <option value="$PROJECT_DIR$/src/Model/SlideHappyHour.java" />
         <option value="$PROJECT_DIR$/src/Controller/Controller.java" />
-        <option value="$PROJECT_DIR$/src/Model/SlideEvent.java" />
         <option value="$PROJECT_DIR$/src/Controller/Utility.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/9e1fbc97-8f27-4df1-a821-8f2bbe5aa1f9/console.sql" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/b9a86af8-06ac-47be-a507-4ca683cdf044/console.sql" />
+        <option value="$PROJECT_DIR$/src/Controller/TabController.java" />
         <option value="$PROJECT_DIR$/src/View/Layout.java" />
+        <option value="$PROJECT_DIR$/src/Model/SlideEvent.java" />
+        <option value="$PROJECT_DIR$/src/Model/DatabaseSaveAndGet.java" />
         <option value="$PROJECT_DIR$/src/Controller/Util.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
-        <option value="$PROJECT_DIR$/src/Controller/TabController.java" />
-        <option value="$PROJECT_DIR$/src/Model/DatabaseSaveAndGet.java" />
       </list>
     </option>
   </component>
@@ -208,8 +222,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -299,6 +311,8 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -965,12 +979,13 @@
       <updated>1462206312163</updated>
       <workItem from="1462206314423" duration="5182000" />
       <workItem from="1462307273290" duration="12196000" />
-      <workItem from="1462531595923" duration="8776000" />
+      <workItem from="1462531595923" duration="8821000" />
+      <workItem from="1462540669710" duration="6448000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42113000" />
+    <option name="totallyTimeSpent" value="48606000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-320" width="1936" height="1066" extended-state="6" />
@@ -987,8 +1002,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17590618" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14232409" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32869378" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.120469086" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1000,6 +1014,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18113612" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32869378" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1087,7 +1102,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1097,10 +1112,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="135" column="37" selection-start-line="135" selection-start-column="37" selection-end-line="135" selection-end-column="37" />
           <folding>
-            <marker date="1462540326577" expanded="true" signature="553:614" placeholder="INSERT INTO slides... " />
-            <marker date="1462540326577" expanded="true" signature="1900:1920" placeholder="SELECT * FRO... events" />
-            <marker date="1462540326577" expanded="true" signature="3880:3938" placeholder="INSERT INTO events... " />
-            <marker date="1462540326577" expanded="true" signature="3880:3963" placeholder="INSERT INTO events... " />
+            <marker date="1462620323654" expanded="true" signature="504:565" placeholder="INSERT INTO slides... " />
+            <marker date="1462620323654" expanded="true" signature="1851:1871" placeholder="SELECT * FRO... events" />
+            <marker date="1462620323654" expanded="true" signature="4238:4296" placeholder="INSERT INTO events... " />
+            <marker date="1462620323654" expanded="true" signature="4238:4316" placeholder="INSERT INTO events... " />
           </folding>
         </state>
       </provider>
@@ -1145,7 +1160,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1163,10 +1178,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="60" column="40" selection-start-line="60" selection-start-column="40" selection-end-line="60" selection-end-column="40" />
           <folding>
-            <marker date="1462540326577" expanded="true" signature="553:614" placeholder="INSERT INTO slides... " />
-            <marker date="1462540326577" expanded="true" signature="1900:1920" placeholder="SELECT * FRO... events" />
-            <marker date="1462540326577" expanded="true" signature="3880:3938" placeholder="INSERT INTO events... " />
-            <marker date="1462540326577" expanded="true" signature="3880:3963" placeholder="INSERT INTO events... " />
+            <marker date="1462620323654" expanded="true" signature="504:565" placeholder="INSERT INTO slides... " />
+            <marker date="1462620323654" expanded="true" signature="1851:1871" placeholder="SELECT * FRO... events" />
+            <marker date="1462620323654" expanded="true" signature="4238:4296" placeholder="INSERT INTO events... " />
+            <marker date="1462620323654" expanded="true" signature="4238:4316" placeholder="INSERT INTO events... " />
           </folding>
         </state>
       </provider>
@@ -1212,10 +1227,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1462540326577" expanded="true" signature="553:614" placeholder="INSERT INTO slides... " />
-            <marker date="1462540326577" expanded="true" signature="1900:1920" placeholder="SELECT * FRO... events" />
-            <marker date="1462540326577" expanded="true" signature="3880:3938" placeholder="INSERT INTO events... " />
-            <marker date="1462540326577" expanded="true" signature="3880:3963" placeholder="INSERT INTO events... " />
+            <marker date="1462620323654" expanded="true" signature="504:565" placeholder="INSERT INTO slides... " />
+            <marker date="1462620323654" expanded="true" signature="1851:1871" placeholder="SELECT * FRO... events" />
+            <marker date="1462620323654" expanded="true" signature="4238:4296" placeholder="INSERT INTO events... " />
+            <marker date="1462620323654" expanded="true" signature="4238:4316" placeholder="INSERT INTO events... " />
           </folding>
         </state>
       </provider>
@@ -1269,10 +1284,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
           <folding>
-            <marker date="1462540326577" expanded="true" signature="553:614" placeholder="INSERT INTO slides... " />
-            <marker date="1462540326577" expanded="true" signature="1900:1920" placeholder="SELECT * FRO... events" />
-            <marker date="1462540326577" expanded="true" signature="3880:3938" placeholder="INSERT INTO events... " />
-            <marker date="1462540326577" expanded="true" signature="3880:3963" placeholder="INSERT INTO events... " />
+            <marker date="1462620323654" expanded="true" signature="504:565" placeholder="INSERT INTO slides... " />
+            <marker date="1462620323654" expanded="true" signature="1851:1871" placeholder="SELECT * FRO... events" />
+            <marker date="1462620323654" expanded="true" signature="4238:4296" placeholder="INSERT INTO events... " />
+            <marker date="1462620323654" expanded="true" signature="4238:4316" placeholder="INSERT INTO events... " />
           </folding>
         </state>
       </provider>
@@ -1371,14 +1386,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/SlideHappyHour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1391,7 +1398,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1399,7 +1405,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1408,7 +1413,7 @@
         <state vertical-scroll-proportion="0.76648355">
           <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1417,7 +1422,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="2" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1425,7 +1429,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1441,17 +1444,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19127989">
           <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/View/Layout.java">
+    <entry file="file://$PROJECT_DIR$/src/Model/SlideEvent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="247" column="49" selection-start-line="247" selection-start-column="49" selection-end-line="247" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1463,41 +1463,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/SlideEvent.java">
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="63" selection-start-line="17" selection-start-column="63" selection-end-line="17" selection-end-column="63" />
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/SlideHappyHour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/View/Layout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="229" column="62" selection-start-line="229" selection-start-column="62" selection-end-line="229" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/Util.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="56" selection-start-line="10" selection-start-column="56" selection-end-line="10" selection-end-column="56" />
+          <caret line="18" column="63" selection-start-line="18" selection-start-column="63" selection-end-line="18" selection-end-column="63" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Model/DatabaseSaveAndGet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.192673">
+          <caret line="157" column="0" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
           <folding>
-            <marker date="1462540326577" expanded="true" signature="553:614" placeholder="INSERT INTO slides... " />
-            <marker date="1462540326577" expanded="true" signature="1900:1920" placeholder="SELECT * FRO... events" />
-            <marker date="1462540326577" expanded="true" signature="3880:3938" placeholder="INSERT INTO events... " />
-            <marker date="1462540326577" expanded="true" signature="3880:3963" placeholder="INSERT INTO events... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6227951">
-          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <marker date="1462620323654" expanded="true" signature="504:565" placeholder="INSERT INTO slides... " />
+            <marker date="1462620323654" expanded="true" signature="1851:1871" placeholder="SELECT * FRO... events" />
+            <marker date="1462620323654" expanded="true" signature="4238:4296" placeholder="INSERT INTO events... " />
+            <marker date="1462620323654" expanded="true" signature="4238:4316" placeholder="INSERT INTO events... " />
           </folding>
         </state>
       </provider>

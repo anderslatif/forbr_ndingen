@@ -223,6 +223,8 @@ public class Layout {
         doneButton.setOnAction( e -> {
             controller.saveNewSlideEventToDB(new SlideEvent(datePicker.getValue().toString(), headerTextField.getText(), textTextField.getText(), eventImagePath));
             newEventStage.close();
+            eventStage.close();
+            getEventOverview();
         });
 
         vBox2.getChildren().addAll(textTextField, doneButton);
@@ -253,10 +255,6 @@ public class Layout {
             e.setDropCompleted(success);
             e.consume();
         });
-
-
-
-
 
 
         newEventStage.setScene(newEventScene);

@@ -300,7 +300,7 @@ public class TabController {
         VBox filler2 = new VBox();
         filler2.setPadding(new Insets(40, 0, 0, 0));
 
-        Label textLabel = new Label(slideEvent.getTextLabel());
+        Label textLabel = new Label(slideEvent.getText());
         textLabel.getStyleClass().add("slideText");
         filler2.getChildren().add(textLabel);
 

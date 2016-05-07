@@ -2,9 +2,7 @@ package Model;
 
 import Controller.Util;
 
-import java.io.File;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -80,6 +78,8 @@ public class DatabaseSaveAndGet {
 
                 while(resultSet.next()){
 
+                    //todo check if the date is later than today's date if so we go into an if statement and add the event to the ArrayList
+
                     String date = resultSet.getString("date");
                     String header = resultSet.getString("header");
                     String textLabel = resultSet.getString("text");
@@ -89,6 +89,8 @@ public class DatabaseSaveAndGet {
                     SlideEvent slideEvent = new SlideEvent(date, header, textLabel, imagePath);
 
                     eventCollection.add(slideEvent);
+
+                    //todo finally the ArrayList should be sorted based on the date
 
                 }
 
@@ -138,14 +140,20 @@ public class DatabaseSaveAndGet {
 
             if(connection != null){
 
-                String sanitizedpath = Util.turnBackslashToForward(slideEvent.getImagePath());
-                String slideEventValues = slideEvent.getDate() + ", '" + slideEvent.getHeader() + "', '" +
-                                          slideEvent.getTextLabel() + "', '" + sanitizedpath + "'";
+                String date = Util.escapeApostrophe(slideEvent.getDate());
+                String header = Util.escapeApostrophe(slideEvent.getHeader());
+                String textLabel = Util.escapeApostrophe(slideEvent.getText());
+
+                String sanitizedPath = Util.turnBackslashToForward(slideEvent.getImagePath());
+                String queryString = date + ", '" + header + "', '" +
+                                          textLabel+ "', '" + sanitizedPath + "'";
 
 
-                preparedStatement = connection.prepareStatement("INSERT INTO events(date, header, text, image_path) VALUES(" + slideEventValues + ")");
+                preparedStatement = connection.prepareStatement("INSERT INTO events(date, header, text, image_path) VALUES(" + queryString + ")");
 
                 preparedStatement.execute();
+
+
 
 
             }

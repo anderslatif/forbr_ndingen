@@ -1,7 +1,5 @@
 package Model;
 
-import java.time.LocalDate;
-
 /**
  * Created by Mikkel on 02/05/2016.
  */
@@ -9,7 +7,7 @@ public class SlideEvent extends Slide {
 
     private String date;
     private String header;
-    private String textLabel;
+    private String text;
     private String imagePath;
     private final String slideType = "slideevent";
 
@@ -18,7 +16,7 @@ public class SlideEvent extends Slide {
     public SlideEvent(String date, String header, String textLabel, String imagePath) {
         this.date = date;
         this.header = header;
-        this.textLabel = textLabel;
+        this.text = textLabel;
         this.imagePath = imagePath;
     }
 
@@ -38,12 +36,12 @@ public class SlideEvent extends Slide {
         this.header = header;
     }
 
-    public String getTextLabel() {
-        return textLabel;
+    public String getText() {
+        return text;
     }
 
-    public void setTextLabel(String textLabel) {
-        this.textLabel = textLabel;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getImagePath() {

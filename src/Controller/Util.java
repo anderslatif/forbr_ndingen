@@ -6,26 +6,21 @@ package Controller;
 public class Util {
 
 
-    public static String turnBackslashToForward(String textToParse){
+    public static String turnBackslashToForward(String textToParse) {
 
         textToParse = textToParse.replaceAll("\\\\", "/");
 
         return textToParse;
-
-/*        StringBuilder stringToBuild = new StringBuilder();
-
-            for(int i = 0; i < textToParse.length(); i++){
-
-                if (textToParse.charAt(i) == '\\'){
-                    stringToBuild.append("//");
-                } else{
-                    stringToBuild.append(textToParse.charAt(i));
-                }
-
-            }
-
-            return stringToBuild.toString();*/
     }
 
+
+    public static String escapeApostrophe(String stringToParse){
+
+        stringToParse = stringToParse.replaceAll("'", "\\\\'");
+        stringToParse = stringToParse.replaceAll("\"", "\\\\\"");
+
+        return stringToParse;
+
+    }
 
 }
