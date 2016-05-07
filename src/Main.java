@@ -31,8 +31,9 @@ public class Main extends Application {
 
         Scene scene = new Scene(root.getRootLayout());
 
+        double compensatingForNotFullView = Screen.getPrimary().getVisualBounds().getHeight() * 0.125;
         primaryStage.setMinHeight(Screen.getPrimary().getVisualBounds().getHeight());
-        primaryStage.setMinWidth(Screen.getPrimary().getVisualBounds().getHeight()/1.5);
+        primaryStage.setMinWidth(Screen.getPrimary().getVisualBounds().getHeight()/(1.5 + compensatingForNotFullView));
 
 
 

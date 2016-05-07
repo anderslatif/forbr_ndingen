@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="02c20332-5218-419a-b31a-95a67e6c8b27" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/TabController.java" afterPath="$PROJECT_DIR$/src/Controller/TabController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/Util.java" afterPath="$PROJECT_DIR$/src/Controller/Util.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.java" afterPath="$PROJECT_DIR$/src/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Model/DatabaseSaveAndGet.java" afterPath="$PROJECT_DIR$/src/Model/DatabaseSaveAndGet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Model/SlideEvent.java" afterPath="$PROJECT_DIR$/src/Model/SlideEvent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/View/Layout.java" afterPath="$PROJECT_DIR$/src/View/Layout.java" />
     </list>
     <ignored path="Forbr_ndingen.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,11 +57,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.40027136">
+              <caret line="33" column="102" selection-start-line="33" selection-start-column="102" selection-end-line="33" selection-end-column="102" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -126,10 +121,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DatabaseSaveAndGet.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DatabaseSaveAndGet.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Model/DatabaseSaveAndGet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.192673">
+            <state vertical-scroll-proportion="0.0">
               <caret line="157" column="0" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
               <folding>
                 <marker date="1462620323654" expanded="true" signature="504:565" placeholder="INSERT INTO slides... " />
@@ -980,12 +975,12 @@
       <workItem from="1462206314423" duration="5182000" />
       <workItem from="1462307273290" duration="12196000" />
       <workItem from="1462531595923" duration="8821000" />
-      <workItem from="1462540669710" duration="6448000" />
+      <workItem from="1462540669710" duration="7863000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48606000" />
+    <option name="totallyTimeSpent" value="50021000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-320" width="1936" height="1066" extended-state="6" />
@@ -998,7 +993,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1800643" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1800643" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17590618" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1463,16 +1458,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Model/SlideHappyHour.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1501,13 +1486,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Model/DatabaseSaveAndGet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.192673">
+        <state vertical-scroll-proportion="0.0">
           <caret line="157" column="0" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
           <folding>
             <marker date="1462620323654" expanded="true" signature="504:565" placeholder="INSERT INTO slides... " />
             <marker date="1462620323654" expanded="true" signature="1851:1871" placeholder="SELECT * FRO... events" />
             <marker date="1462620323654" expanded="true" signature="4238:4296" placeholder="INSERT INTO events... " />
             <marker date="1462620323654" expanded="true" signature="4238:4316" placeholder="INSERT INTO events... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40027136">
+          <caret line="33" column="102" selection-start-line="33" selection-start-column="102" selection-end-line="33" selection-end-column="102" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
