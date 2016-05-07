@@ -23,4 +23,11 @@ public class Util {
 
     }
 
+    public static String changeHyphenInDateToSlash(String stringToParse){
+
+        stringToParse = stringToParse.replace("-", "/");
+
+        return stringToParse;
+    }
+
 }

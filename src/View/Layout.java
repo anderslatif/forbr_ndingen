@@ -6,6 +6,7 @@ import Model.DatabaseSaveAndGet;
 import Model.SlideEvent;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -63,7 +64,7 @@ public class Layout {
 
         MenuItem m1_1 = new MenuItem("_New Presentation");
         m1_1.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
-        m1_1.setOnAction( e -> newPresentation());
+        m1_1.setOnAction( e -> savePresentationConfirmation());
 
         MenuItem m1_2 = new MenuItem("_Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
@@ -101,11 +102,11 @@ public class Layout {
         menu3.getItems().addAll(m3_1, m3_2);
 
         ///////////////////////////////////////
-        Menu menu4 = new Menu("Start Presentation");
+        Menu menu4 = new Menu("About");
 
-        MenuItem m4_1 = new MenuItem("_Go");
-        m4_1.setAccelerator(new KeyCodeCombination(KeyCode.G, KeyCombination.SHORTCUT_DOWN));
-        m4_1.setOnAction( e -> tabController.runPresentation());
+        MenuItem m4_1 = new MenuItem("About");
+        m4_1.setOnAction( e -> showAbout());
+
 
         menu4.getItems().addAll(m4_1);
 
@@ -122,6 +123,7 @@ public class Layout {
     public void newPresentation(){
 
         borderPane.setCenter(tabController.getTabPane());
+
     }
 
 
@@ -134,7 +136,7 @@ public class Layout {
     public void getEventOverview(){
 
         eventStage = new Stage();
-        Scene eventScene = new Scene(getEventBorderPane(), 800, 475);
+        Scene eventScene = new Scene(getEventBorderPane());
 
         eventStage.setScene(eventScene);
         eventStage.show();
@@ -157,25 +159,35 @@ public class Layout {
         for(SlideEvent slideEvent : eventCollection){
 
             Label date  = new Label(slideEvent.getDate().toString());
-            date.setPadding(new Insets(0, 10, 0, 40));
+
+            if (columnCount>0){     // the spacing will be larger if the event isn't the first in the row
+                date.setPadding(new Insets(0, 20, 0, 50));
+            } else{
+                date.setPadding(new Insets(0, 20, 0, 20));
+            }
             Label header = new Label(slideEvent.getHeader());
             header.setPadding(new Insets(0, 10, 0, 0));
-            Button button = new Button("Insert Event " + index);
+            Button button1 = new Button("Edit");
+            Button button2 = new Button("Insert Event " + index);
 
             final int indexNow = index-1; // because the index starts from 1 since the program is used by non-programmers
             // final because this is necessary in a lambda expression
-            button.setOnAction( e -> tabController.addEventTab(eventCollection.get(indexNow)));
+            //todo button1.setOnAction( e -> controller.editEvent());
+            button2.setOnAction( e -> tabController.addEventTab(eventCollection.get(indexNow)));
 
 
             gridPane.add(date, columnCount, rowCount);
             columnCount++;
             gridPane.add(header, columnCount, rowCount);
             columnCount++;
-            gridPane.add(button, columnCount, rowCount);
+            gridPane.add(button1, columnCount, rowCount);
+            columnCount++;
+            gridPane.add(button2, columnCount, rowCount);
             columnCount++;
 
+
             index++;
-            if(columnCount == 9){
+            if(columnCount == 12){
                 columnCount = 0;
                 rowCount++;
             }
@@ -262,8 +274,61 @@ public class Layout {
     }
 
 
+    public void showAbout(){
+
+        VBox vBox = new VBox();
+
+        Stage aboutStage = new Stage();
+        Scene aboutScene = new Scene(vBox);
+
+        Label label = new Label("This program has been created by: \n\nAnders, Dennis and Mikkel\n\nDat15A, Førsteårsprojekt - 2016");
+        label.setPadding(new Insets(20, 20, 20, 20));
+        vBox.getChildren().add(label);
+
+        aboutStage.setScene(aboutScene);
+        aboutStage.show();
+    }
 
 
+    public void savePresentationConfirmation(){
+
+        GridPane gridPane = new GridPane();
+        Stage savePresentationStage = new Stage();
+        Scene savePresentationScene = new Scene(gridPane);
+
+        Label label = new Label("Do you want to save your current presentation?");
+        label.setStyle("-fx-font-size: 16px");
+        label.setPadding(new Insets(20, 30, 10, 45));
+        gridPane.add(label, 0, 0);
+
+        HBox hBox = new HBox();
+        hBox.setPadding(new Insets(20, 20, 20, 20));
+        Button button1 = new Button("Yes");
+        Button button2 = new Button("No");
+        hBox.getChildren().addAll(button1, button2);
+
+        gridPane.add(hBox, 0, 1);
+
+        hBox.setHgrow(button1, Priority.ALWAYS);
+        hBox.setHgrow(button2, Priority.ALWAYS);
+        button1.setMaxWidth(Double.MAX_VALUE);
+        button2.setMaxWidth(Double.MAX_VALUE);
+        hBox.setPrefWidth(400);
+
+        Button button3 = new Button("Cancel");
+        button3.setMaxWidth(Double.MAX_VALUE);
+        gridPane.add(button3, 0, 2);
+
+        button1.setOnAction( e -> tabController.savePresentationFromPopUp());
+        button2.setOnAction( e -> {
+            savePresentationStage.close();
+            newPresentation();
+        });
+        button3.setOnAction( e -> savePresentationStage.close());
+
+        savePresentationStage.setScene(savePresentationScene);
+        savePresentationStage.show();
+    }
 
 
 

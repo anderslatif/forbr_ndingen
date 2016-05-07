@@ -235,32 +235,6 @@ public class TabController {
     }
 
 
-    public void runPresentation(){
-
-        BorderPane borderPane = new BorderPane();
-        Scene presentationScene = new Scene(borderPane, 400, 650);
-        Stage presentationStage = new Stage();
-        presentationStage.setScene(presentationScene);
-        presentationStage.show();
-        borderPane.setOnMouseClicked( e -> presentationStage.close());
-
-
-        for(Tab tab : tabPane.getTabs()){
-
-            if(tab.getContent() != null){
-
-                ImageView imageView = (ImageView) tab.getContent();
-                imageView.fitHeightProperty().bind(presentationStage.heightProperty());
-                imageView.fitWidthProperty().bind(presentationStage.widthProperty());
-
-                borderPane.setCenter(imageView);
-
-            }
-        }
-
-    }
-
-
 
     public void addEventTab(SlideEvent slideEvent){
 
@@ -275,7 +249,7 @@ public class TabController {
 
 
         tabPane.getSelectionModel().select(tab);
-        int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 2;
+        int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 1;
         String title = String.valueOf(correctingIndexingIssues);
         tab.setText(title);
 
@@ -380,11 +354,17 @@ public class TabController {
 
 
         SlideHappyHour slideHappyHour = new SlideHappyHour();
-        TabNodeHappyHour tabNodeHappyHour = new TabNodeHappyHour(headerTextField, imageView, textTextField, slideHappyHour);
+        TabNodeHappyHour tabNodeHappyHour = new TabNodeHappyHour(vBox, headerTextField, imageView, textTextField, slideHappyHour);
         tabCollection.add(tabNodeHappyHour);
 
         tab.setContent(vBox);
 
+    }
+
+
+    public void savePresentationFromPopUp(){
+
+        controller.savePresentation(tabCollection);
     }
 
 
