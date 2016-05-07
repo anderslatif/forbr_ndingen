@@ -1,32 +1,30 @@
 package Model;
 
-import java.time.LocalDate;
-
 /**
  * Created by Mikkel on 02/05/2016.
  */
 public class SlideEvent extends Slide {
 
-    private LocalDate date;
+    private String date;
     private String header;
-    private String textLabel;
+    private String text;
     private String imagePath;
     private final String slideType = "slideevent";
 
     public SlideEvent(){}
 
-    public SlideEvent(LocalDate date, String header, String textLabel, String imagePath) {
+    public SlideEvent(String date, String header, String textLabel, String imagePath) {
         this.date = date;
         this.header = header;
-        this.textLabel = textLabel;
+        this.text = textLabel;
         this.imagePath = imagePath;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -38,12 +36,12 @@ public class SlideEvent extends Slide {
         this.header = header;
     }
 
-    public String getTextLabel() {
-        return textLabel;
+    public String getText() {
+        return text;
     }
 
-    public void setTextLabel(String textLabel) {
-        this.textLabel = textLabel;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getImagePath() {

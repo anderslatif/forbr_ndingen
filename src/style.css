@@ -1,0 +1,20 @@
+.eventSlidePane{
+
+    -fx-background-image: url("abstract-mosaic-background.png");
+
+}
+
+.slideText{
+
+    -fx-font-size: 28px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+
+}
+
+
+.happyHour{
+
+    -fx-background-image: url("abstract-mosaic-background.png");
+
+}

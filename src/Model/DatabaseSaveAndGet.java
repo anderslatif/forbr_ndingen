@@ -1,6 +1,7 @@
 package Model;
 
-import java.io.File;
+import Controller.Util;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -55,6 +56,130 @@ public class DatabaseSaveAndGet {
 
 
     }
+
+
+
+    public static ArrayList<SlideEvent> loadAllEvents(){
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        ArrayList<SlideEvent> eventCollection = new ArrayList<>();
+
+        try {
+            connection = DatabaseConnection.getConnection();
+
+            statement = connection.createStatement();
+
+            resultSet = statement.executeQuery("SELECT * FROM events;");
+
+            if(connection != null){
+
+                while(resultSet.next()){
+
+                    //todo check if the date is later than today's date if so we go into an if statement and add the event to the ArrayList
+
+                    String date = resultSet.getString("date");
+                    String header = resultSet.getString("header");
+                    String textLabel = resultSet.getString("text");
+                    String imagePath = resultSet.getString("image_path");
+
+
+                    SlideEvent slideEvent = new SlideEvent(date, header, textLabel, imagePath);
+
+                    eventCollection.add(slideEvent);
+
+                    //todo finally the ArrayList should be sorted based on the date
+
+                }
+
+            }
+
+
+        } catch(Exception e){
+            e.printStackTrace();
+        } finally {
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(statement != null){
+                try{
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(resultSet != null){
+                try{
+                    resultSet.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+
+            return eventCollection;
+        }
+
+    }
+
+
+
+
+
+    public static void saveNewEventSlide(SlideEvent slideEvent){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = DatabaseConnection.getConnection();
+
+            if(connection != null){
+
+                String date = Util.escapeApostrophe(slideEvent.getDate());
+                String header = Util.escapeApostrophe(slideEvent.getHeader());
+                String textLabel = Util.escapeApostrophe(slideEvent.getText());
+
+                String sanitizedPath = Util.turnBackslashToForward(slideEvent.getImagePath());
+                String queryString = date + ", '" + header + "', '" +
+                                          textLabel+ "', '" + sanitizedPath + "'";
+
+
+                preparedStatement = connection.prepareStatement("INSERT INTO events(date, header, text, image_path) VALUES(" + queryString + ")");
+
+                preparedStatement.execute();
+
+
+
+
+            }
+
+
+        } catch(Exception e){
+            e.printStackTrace();
+        } finally {
+            if(connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(preparedStatement != null){
+                try{
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+
 
 
 

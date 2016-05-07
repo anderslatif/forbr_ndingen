@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.DatabaseSaveAndGet;
+import Model.SlideEvent;
 import Model.TabNode;
 
 import java.io.File;
@@ -40,7 +41,10 @@ public class Controller {
 
     }*/
 
+    public void saveNewSlideEventToDB(SlideEvent slideEvent){
+        DatabaseSaveAndGet.saveNewEventSlide(slideEvent);
 
+    }
 
 
 
