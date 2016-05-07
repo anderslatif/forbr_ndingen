@@ -314,6 +314,7 @@ public class TabController {
         Image image = new Image("cocktail.png");
 
         TextField headerTextField = new TextField();
+        headerTextField.getStyleClass().add("happyHour_header");
         headerTextField.setPromptText("Type the header here...");
         headerTextField.setOpacity(0.6);
         ImageView imageView = new ImageView();
@@ -322,6 +323,7 @@ public class TabController {
         TextField textTextField =  new TextField();
         textTextField.setPromptText("Type more text here...");
         textTextField.setOpacity(0.6);
+        textTextField.getStyleClass().add("happyHour_text");
 
 
         vBox.getChildren().addAll(headerTextField, imageView, textTextField);

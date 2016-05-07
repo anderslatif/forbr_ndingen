@@ -18,3 +18,12 @@
     -fx-background-image: url("abstract-mosaic-background.png");
 
 }
+
+
+.happyHour_header{
+    -fx-font-size: 24px;
+}
+
+.happyHour_text{
+    -fx-font-size: 18px;
+}
