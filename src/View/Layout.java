@@ -167,12 +167,12 @@ public class Layout {
             }
             Label header = new Label(slideEvent.getHeader());
             header.setPadding(new Insets(0, 10, 0, 0));
-            Button button1 = new Button("Edit");
+            Button button1 = new Button("Delete");
             Button button2 = new Button("Insert Event " + index);
 
             final int indexNow = index-1; // because the index starts from 1 since the program is used by non-programmers
             // final because this is necessary in a lambda expression
-            //todo button1.setOnAction( e -> controller.editEvent());
+            //todo button1.setOnAction( e -> controller.deleteEvent());
             button2.setOnAction( e -> tabController.addEventTab(eventCollection.get(indexNow)));
 
 
