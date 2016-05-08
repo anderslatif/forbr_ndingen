@@ -4,10 +4,7 @@ import Model.*;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
@@ -320,13 +317,13 @@ public class TabController {
         ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.fitHeightProperty().bind(vBox.heightProperty().divide(3));
-        TextField textTextField =  new TextField();
-        textTextField.setPromptText("Type more text here...");
-        textTextField.setOpacity(0.6);
-        textTextField.getStyleClass().add("happyHour_text");
+        TextArea textTextArea =  new TextArea();
+        textTextArea.setPromptText("Type more text here...");
+        textTextArea.setOpacity(0.6);
+        textTextArea.getStyleClass().add("happyHour_text");
 
 
-        vBox.getChildren().addAll(headerTextField, imageView, textTextField);
+        vBox.getChildren().addAll(headerTextField, imageView, textTextArea);
 
 
 
@@ -346,17 +343,17 @@ public class TabController {
         imageView.fitHeightProperty().bind(borderPane.heightProperty().divide(3));
         borderPane.setCenter(imageView);
 
-        TextField textTextField =  new TextField();
-        textTextField.setPromptText("Type more text here...");
-        textTextField.setOpacity(0.6);
-        borderPane.setBottom(textTextField);*/
+        TextField textTextArea =  new TextField();
+        textTextArea.setPromptText("Type more text here...");
+        textTextArea.setOpacity(0.6);
+        borderPane.setBottom(textTextArea);*/
 
 
 
 
 
         SlideHappyHour slideHappyHour = new SlideHappyHour();
-        TabNodeHappyHour tabNodeHappyHour = new TabNodeHappyHour(vBox, headerTextField, imageView, textTextField, slideHappyHour);
+        TabNodeHappyHour tabNodeHappyHour = new TabNodeHappyHour(vBox, headerTextField, imageView, textTextArea, slideHappyHour);
         tabCollection.add(tabNodeHappyHour);
 
         tab.setContent(vBox);

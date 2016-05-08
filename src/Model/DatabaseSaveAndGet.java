@@ -140,7 +140,7 @@ public class DatabaseSaveAndGet {
 
             if(connection != null){
 
-                String date = Util.changeHyphenInDateToSlash(slideEvent.getDate());
+                String date = slideEvent.getDate();
                 String header = Util.escapeApostrophe(slideEvent.getHeader());
                 String textLabel = Util.escapeApostrophe(slideEvent.getText());
 
