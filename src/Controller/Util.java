@@ -56,4 +56,12 @@ public class Util {
         return date;
     }
 
+
+    public static String checkOperatingSystem(){
+
+        String operatingSystem = System.getProperty("os.name");
+
+        return operatingSystem;
+    }
+
 }
