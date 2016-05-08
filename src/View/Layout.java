@@ -7,16 +7,19 @@ import Model.SlideEvent;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.CacheHint;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +75,10 @@ public class Layout {
 
         MenuItem m1_3 = new MenuItem("_Save");
         m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
-        m1_3.setOnAction( e -> tabController.savingPresentation());
+        m1_3.setOnAction( e -> {
+
+            pickSaveDate();
+        });
 
         menu1.getItems().addAll(m1_1, m1_2, m1_3);
 
@@ -329,6 +335,48 @@ public class Layout {
         savePresentationStage.setScene(savePresentationScene);
         savePresentationStage.show();
     }
+
+    public void pickSaveDate(){
+
+        DatePicker datePicker = new DatePicker();
+        TextField headerTextField = new TextField();
+
+        Label label = new Label("Choose date:");
+
+        Button saveBut = new Button("Save");
+        saveBut.setMinWidth(85);
+        Button cancelBut = new Button("Cancel");
+        cancelBut.setMinWidth(85);
+
+        HBox hBox = new HBox();
+        hBox.setPadding(new Insets(0,5,0,5));
+        hBox.getChildren().addAll(saveBut, cancelBut);
+
+        VBox vBox = new VBox();
+        vBox.setPadding(new Insets(5,5,5,5));
+        vBox.getChildren().addAll(label, datePicker, hBox);
+
+        Stage saveStage = new Stage();
+        Scene saveScene = new Scene(vBox, 190, 80);
+
+        saveStage.setScene(saveScene);
+        saveStage.show();
+
+        // Button Actions
+        cancelBut.setOnAction( e -> saveStage.close());
+
+        saveBut.setOnAction( e -> {
+
+            while(datePicker.getValue() != null){
+                controller.chooseLocalDate(datePicker.getValue());
+                tabController.savingPresentation();
+                saveStage.close();
+                return;
+            }
+        });
+    }
+
+
 
 
 
