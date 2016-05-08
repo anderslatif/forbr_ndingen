@@ -18,14 +18,6 @@ public class Main extends Application {
         launch(args);
     }
 
-<<<<<<< HEAD
-=======
-
-
-
-
->>>>>>> 0bd78e1021efeb94bc3e674cb944d3ce9695e459
-    @Override
     public void start(Stage primaryStage) throws Exception {
 
 
