@@ -4,6 +4,14 @@
 
 }
 
+.slideText{
+
+    -fx-font-size: 28px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+
+}
+
 
 .happyHour{
 
@@ -12,10 +20,10 @@
 }
 
 
-.header{
+.happyHour_header{
     -fx-font-size: 24px;
 }
 
-.text_area{
+.happyHour_text{
     -fx-font-size: 18px;
 }

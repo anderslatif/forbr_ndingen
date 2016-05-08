@@ -7,6 +7,7 @@ import Controller.Util;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -18,13 +19,18 @@ public class Main extends Application {
         launch(args);
     }
 
+<<<<<<< HEAD
+=======
+
+    @Override
+>>>>>>> aceb5ad2922d918022fd3f35f8cd9d0412069531
     public void start(Stage primaryStage) throws Exception {
 
 
-        Layout root = new Layout();
+        Layout view = new Layout();
 
 
-        Scene scene = new Scene(root.getRootLayout());
+        Scene scene = new Scene(view.getRootLayout());
 
         double compensatingForNotFullView = Screen.getPrimary().getVisualBounds().getHeight() * 0.125;
         primaryStage.setMinHeight(Screen.getPrimary().getVisualBounds().getHeight());
@@ -34,10 +40,16 @@ public class Main extends Application {
 
         scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
 
-        root.initializeLayout(scene, primaryStage);
+        view.initializeLayout(scene, primaryStage);
+
+        // todo input the correct logo
+        // primaryStage.getIcons().add(new Image("file:src/icon.png"));
 
 
-        //primaryStage.setOnCloseRequest( e -> closeConfirmationPopUp());
+/*        primaryStage.setOnCloseRequest( e -> {
+            e.consume();
+            view.savePresentationConfirmation();
+        });*/
         primaryStage.setScene(scene);
         primaryStage.show();
     }

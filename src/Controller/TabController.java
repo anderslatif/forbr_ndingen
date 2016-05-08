@@ -4,10 +4,7 @@ import Model.*;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
@@ -142,29 +139,48 @@ public class TabController {
             ImageView currentImageView = null;
 
             for (Node node : vBox.getChildren()) {
+
                 if(node instanceof javafx.scene.image.ImageView){
                     currentImageView = (ImageView) node;
                     currentImageView.setImage(image);
+                } else if (node instanceof  javafx.scene.layout.VBox){
+
+                    VBox childVBox = (VBox) node;
+
+                    for (Node noodle : childVBox.getChildren()){
+
+                        if(noodle instanceof javafx.scene.image.ImageView){
+                            currentImageView = (ImageView) noodle;
+                            currentImageView.setImage(image);
+                        }
+                    }
+
                 }
             }
             for (TabNode tabNode : tabCollection) {
 
-                if (tabNode instanceof TabNodePicture) {
+                if (tabNode instanceof TabNodeHappyHour) {
 
-                    TabNodePicture tabNodePicture = (TabNodePicture) tabNode;
+                    TabNodeHappyHour tabNodeHappyHour = (TabNodeHappyHour) tabNode;
 
-                    if (tabNode instanceof TabNodeHappyHour) {
-
-                        TabNodeHappyHour tabNodeHappyHour = (TabNodeHappyHour) tabNode;
-
-                        if (tabNodeHappyHour.getImageView() == currentImageView) {
-                            SlideHappyHour slideHappyHour = tabNodeHappyHour.getSlideHappyHour();
-                            slideHappyHour.setImagePath(imagePath);
-                        }
-
+                    if (tabNodeHappyHour.getImageView() == currentImageView) {
+                        SlideHappyHour slideHappyHour = tabNodeHappyHour.getSlideHappyHour();
+                        slideHappyHour.setImagePath(imagePath);
                     }
 
+                } else if(tabNode instanceof TabNodeEvent){
+
+                    TabNodeEvent tabNodeEvent = (TabNodeEvent) tabNode;
+
+                    if (tabNodeEvent.getImageView() == currentImageView){
+                        SlideEvent slideEvent = tabNodeEvent.getSlideEvent();
+                        slideEvent.setImagePath(imagePath);
+                    }
+
+
                 }
+
+
             }
 
 
@@ -235,32 +251,6 @@ public class TabController {
     }
 
 
-    public void runPresentation(){
-
-        BorderPane borderPane = new BorderPane();
-        Scene presentationScene = new Scene(borderPane, 400, 650);
-        Stage presentationStage = new Stage();
-        presentationStage.setScene(presentationScene);
-        presentationStage.show();
-        borderPane.setOnMouseClicked( e -> presentationStage.close());
-
-
-        for(Tab tab : tabPane.getTabs()){
-
-            if(tab.getContent() != null){
-
-                ImageView imageView = (ImageView) tab.getContent();
-                imageView.fitHeightProperty().bind(presentationStage.heightProperty());
-                imageView.fitWidthProperty().bind(presentationStage.widthProperty());
-
-                borderPane.setCenter(imageView);
-
-            }
-        }
-
-    }
-
-
 
     public void addEventTab(SlideEvent slideEvent){
 
@@ -275,34 +265,38 @@ public class TabController {
 
 
         tabPane.getSelectionModel().select(tab);
-        int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 2;
+        int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 1;
         String title = String.valueOf(correctingIndexingIssues);
         tab.setText(title);
+
+
 
         VBox vBox = new VBox();
         vBox.getStyleClass().add("eventSlidePane");
 
-        Label headerLabel = new Label(slideEvent.getHeader());
-        headerLabel.getStyleClass().add("slideText");
+        TextField headerLabel = new TextField(slideEvent.getHeader());
+        headerLabel.setOpacity(0.4);
+        headerLabel.getStyleClass().add("header");
 
 
-        //todo Image image = new Image(slideEvent.getImagePath());
         Image image = new Image(slideEvent.getImagePath());
         ImageView imageView = new ImageView();
         imageView.setImage(image);
-        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(8));
+        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(4));
+        imageView.fitWidthProperty().bind(vBox.widthProperty());
 
         VBox filler1 = new VBox();
-        filler1.setPadding(new Insets(100, 0, 0, 0));
+        filler1.setPadding(new Insets(20, 0, 0, 0));
         filler1.getChildren().addAll(headerLabel, imageView);
 
 
         VBox filler2 = new VBox();
         filler2.setPadding(new Insets(40, 0, 0, 0));
 
-        Label textLabel = new Label(slideEvent.getText());
-        textLabel.getStyleClass().add("slideText");
-        filler2.getChildren().add(textLabel);
+        TextArea textTextArea = new TextArea(slideEvent.getText());
+        textTextArea.getStyleClass().add("text_area");
+        textTextArea.setOpacity(0.3);
+        filler2.getChildren().add(textTextArea);
 
 
         vBox.getChildren().addAll(filler1, filler2);
@@ -310,7 +304,7 @@ public class TabController {
         tab.setContent(vBox);
 
 
-        TabNodeEvent tabNodeEvent = new TabNodeEvent(slideEvent);
+        TabNodeEvent tabNodeEvent = new TabNodeEvent(vBox, imageView, slideEvent);
         tabCollection.add(tabNodeEvent);
 
     }
@@ -340,51 +334,35 @@ public class TabController {
         Image image = new Image("cocktail.png");
 
         TextField headerTextField = new TextField();
+        headerTextField.getStyleClass().add("header");
         headerTextField.setPromptText("Type the header here...");
         headerTextField.setOpacity(0.6);
         ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.fitHeightProperty().bind(vBox.heightProperty().divide(3));
-        TextField textTextField =  new TextField();
-        textTextField.setPromptText("Type more text here...");
-        textTextField.setOpacity(0.6);
+        imageView.fitWidthProperty().bind(vBox.widthProperty());
+        TextArea textTextArea =  new TextArea();
+        textTextArea.setPromptText("Type more text here...");
+        textTextArea.setOpacity(0.6);
+        textTextArea.getStyleClass().add("text_area");
 
 
-        vBox.getChildren().addAll(headerTextField, imageView, textTextField);
-
-
-
-
-/*        BorderPane borderPane = new BorderPane();
-        borderPane.getStyleClass().add("happyHour");
-
-        Image image = new Image("cocktail.png");
-
-        TextField headerTextField = new TextField();
-        headerTextField.setPromptText("Type the header here...");
-        headerTextField.setOpacity(0.6);
-        borderPane.setTop(headerTextField);
-
-        ImageView imageView = new ImageView();
-        imageView.setImage(image);
-        imageView.fitHeightProperty().bind(borderPane.heightProperty().divide(3));
-        borderPane.setCenter(imageView);
-
-        TextField textTextField =  new TextField();
-        textTextField.setPromptText("Type more text here...");
-        textTextField.setOpacity(0.6);
-        borderPane.setBottom(textTextField);*/
-
-
+        vBox.getChildren().addAll(headerTextField, imageView, textTextArea);
 
 
 
         SlideHappyHour slideHappyHour = new SlideHappyHour();
-        TabNodeHappyHour tabNodeHappyHour = new TabNodeHappyHour(headerTextField, imageView, textTextField, slideHappyHour);
+        TabNodeHappyHour tabNodeHappyHour = new TabNodeHappyHour(vBox, headerTextField, imageView, textTextArea, slideHappyHour);
         tabCollection.add(tabNodeHappyHour);
 
         tab.setContent(vBox);
 
+    }
+
+
+    public void savePresentationFromPopUp(){
+
+        controller.savePresentation(tabCollection);
     }
 
 

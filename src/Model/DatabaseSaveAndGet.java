@@ -80,9 +80,9 @@ public class DatabaseSaveAndGet {
 
                     //todo check if the date is later than today's date if so we go into an if statement and add the event to the ArrayList
 
-                    String date = resultSet.getString("date");
+                    String date = resultSet.getString("slide_date");
                     String header = resultSet.getString("header");
-                    String textLabel = resultSet.getString("text");
+                    String textLabel = resultSet.getString("slide_text");
                     String imagePath = resultSet.getString("image_path");
 
 
@@ -140,16 +140,17 @@ public class DatabaseSaveAndGet {
 
             if(connection != null){
 
-                String date = Util.escapeApostrophe(slideEvent.getDate());
+                String date = slideEvent.getDate();
                 String header = Util.escapeApostrophe(slideEvent.getHeader());
                 String textLabel = Util.escapeApostrophe(slideEvent.getText());
 
                 String sanitizedPath = Util.turnBackslashToForward(slideEvent.getImagePath());
-                String queryString = date + ", '" + header + "', '" +
+                String queryString = "'" + date + "', '" + header + "', '" +
                                           textLabel+ "', '" + sanitizedPath + "'";
 
+                System.out.println(date);
 
-                preparedStatement = connection.prepareStatement("INSERT INTO events(date, header, text, image_path) VALUES(" + queryString + ")");
+                preparedStatement = connection.prepareStatement("INSERT INTO events(slide_date, header, slide_text, image_path) VALUES(" + queryString + ")");
 
                 preparedStatement.execute();
 
