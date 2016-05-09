@@ -190,7 +190,7 @@ public class TabController {
     }
 
 
-    public void addPictureSlide(){
+    public void addPictureTab(){
 
         if(tabCollection.size()>0){
             Tab tab = new Tab();
@@ -297,7 +297,7 @@ public class TabController {
     }
 
 
-    public void addHappyHourSlide(){
+    public void addHappyHourTab(){
 
         Tab tab;
 

@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class Controller {
 
-    
+
     public void openPresentation(){
         // let the user enter a date in a pop-up first??
         // is there a more convenient way to display the slides? perhaps a description/theme/tags for each slide would be apt
