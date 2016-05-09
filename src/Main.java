@@ -39,7 +39,7 @@ public class Main extends Application {
         view.initializeLayout(scene, primaryStage);
 
         // todo input the correct logo
-        // primaryStage.getIcons().add(new Image("file:src/icon.png"));
+        primaryStage.getIcons().add(new Image("file:src/logo.jpeg"));
 
 
 /*        primaryStage.setOnCloseRequest( e -> {
