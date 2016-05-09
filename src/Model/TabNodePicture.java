@@ -1,5 +1,6 @@
 package Model;
 
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
 /**
@@ -19,6 +20,10 @@ public class TabNodePicture implements TabNode {
         this.imageNode = imageNode;
     }
 
+    public Node getNode(){
+        return imageNode;
+    }
+
     public ImageView getImageNode() {
         return imageNode;
     }
@@ -27,7 +32,7 @@ public class TabNodePicture implements TabNode {
         this.imageNode = imageNode;
     }
 
-    public SlidePicture getSlidePicture() {
+    public SlidePicture getSlide() {
         return slidePicture;
     }
 

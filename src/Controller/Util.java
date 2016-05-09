@@ -11,7 +11,11 @@ public class Util {
 
     public static String turnBackslashToForward(String stringToParse) {
 
-        stringToParse = stringToParse.replaceAll("\\\\", "/");
+        if (stringToParse.equals("")){
+            stringToParse = "";
+        } else {
+            stringToParse = stringToParse.replaceAll("\\\\", "/");
+        }
 
         return stringToParse;
     }

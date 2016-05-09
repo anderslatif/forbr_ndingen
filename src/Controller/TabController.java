@@ -124,7 +124,7 @@ public class TabController {
                     TabNodePicture tabNodePicture = (TabNodePicture) tabNode;
 
                     if(tabNodePicture.getImageNode() == currentImageView){
-                        SlidePicture slidePicture = tabNodePicture.getSlidePicture();
+                        SlidePicture slidePicture = tabNodePicture.getSlide();
                         slidePicture.setImagePath(imagePath);
                     }
                 }
@@ -164,7 +164,7 @@ public class TabController {
                     TabNodeHappyHour tabNodeHappyHour = (TabNodeHappyHour) tabNode;
 
                     if (tabNodeHappyHour.getImageView() == currentImageView) {
-                        SlideHappyHour slideHappyHour = tabNodeHappyHour.getSlideHappyHour();
+                        SlideHappyHour slideHappyHour = tabNodeHappyHour.getSlide();
                         slideHappyHour.setImagePath(imagePath);
                     }
 
@@ -173,7 +173,7 @@ public class TabController {
                     TabNodeEvent tabNodeEvent = (TabNodeEvent) tabNode;
 
                     if (tabNodeEvent.getImageView() == currentImageView){
-                        SlideEvent slideEvent = tabNodeEvent.getSlideEvent();
+                        SlideEvent slideEvent = tabNodeEvent.getSlide();
                         slideEvent.setImagePath(imagePath);
                     }
 
@@ -231,27 +231,6 @@ public class TabController {
     }
 
 
-    public void savingPresentation(){
-
-        ArrayList presentation = new ArrayList();
-
-        System.out.println(tabCollection.size());
-
-        for(Tab tab : tabPane.getTabs()){
-
-            for (TabNode tabNode : tabCollection){
-
-                if(tab.getContent() == tabNode){
-                    presentation.add(tabNode);
-                }
-            }
-        }
-
-        controller.savePresentation(presentation);
-    }
-
-
-
     public void addEventTab(SlideEvent slideEvent){
 
         Tab tab;
@@ -277,11 +256,17 @@ public class TabController {
         TextField headerLabel = new TextField(slideEvent.getHeader());
         headerLabel.setOpacity(0.4);
         headerLabel.getStyleClass().add("header");
+        headerLabel.textProperty().addListener( e -> slideEvent.setHeader(headerLabel.getText()));
 
 
-        Image image = new Image(slideEvent.getImagePath());
-        ImageView imageView = new ImageView();
-        imageView.setImage(image);
+        Image image;
+        if (slideEvent.getImagePath().equals("")){
+            image = new Image("empty.png");
+        } else {
+            image = new Image(slideEvent.getImagePath());
+        }
+
+        ImageView imageView = new ImageView(image);
         imageView.fitHeightProperty().bind(vBox.heightProperty().divide(4));
         imageView.fitWidthProperty().bind(vBox.widthProperty());
 
@@ -296,6 +281,8 @@ public class TabController {
         TextArea textTextArea = new TextArea(slideEvent.getText());
         textTextArea.getStyleClass().add("text_area");
         textTextArea.setOpacity(0.3);
+        textTextArea.textProperty().addListener( e -> slideEvent.setText(textTextArea.getText()));
+
         filler2.getChildren().add(textTextArea);
 
 
@@ -326,7 +313,7 @@ public class TabController {
         String title = String.valueOf(correctingIndexingIssues);
         tab.setText(title);
 
-
+        SlideHappyHour slideHappyHour = new SlideHappyHour();
 
         VBox vBox = new VBox();
         vBox.getStyleClass().add("happyHour");
@@ -337,21 +324,24 @@ public class TabController {
         headerTextField.getStyleClass().add("header");
         headerTextField.setPromptText("Type the header here...");
         headerTextField.setOpacity(0.6);
+        headerTextField.textProperty().addListener( e -> slideHappyHour.setHeader(headerTextField.getText()));
+
         ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.fitHeightProperty().bind(vBox.heightProperty().divide(3));
         imageView.fitWidthProperty().bind(vBox.widthProperty());
+
         TextArea textTextArea =  new TextArea();
         textTextArea.setPromptText("Type more text here...");
         textTextArea.setOpacity(0.6);
         textTextArea.getStyleClass().add("text_area");
+        textTextArea.textProperty().addListener( e -> slideHappyHour.setText(textTextArea.getText()));
 
 
         vBox.getChildren().addAll(headerTextField, imageView, textTextArea);
 
 
 
-        SlideHappyHour slideHappyHour = new SlideHappyHour();
         TabNodeHappyHour tabNodeHappyHour = new TabNodeHappyHour(vBox, headerTextField, imageView, textTextArea, slideHappyHour);
         tabCollection.add(tabNodeHappyHour);
 
@@ -360,10 +350,27 @@ public class TabController {
     }
 
 
-    public void savePresentationFromPopUp(){
+    public void savingPresentation(String chosenDate){
 
-        controller.savePresentation(tabCollection);
+        ArrayList<TabNode> presentation = new ArrayList();
+
+
+        for(Tab tab : tabPane.getTabs()){
+
+            for (TabNode tabNode : tabCollection){
+
+                if(tab.getContent() == tabNode.getNode()){
+
+                    presentation.add(tabNode);
+                }
+
+            }
+        }
+
+        controller.savePresentation(presentation, chosenDate);
+        tabCollection.clear();
     }
+
 
 
 

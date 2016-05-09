@@ -75,10 +75,7 @@ public class Layout {
 
         MenuItem m1_3 = new MenuItem("_Save");
         m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
-        m1_3.setOnAction( e -> {
-
-            pickSaveDate();
-        });
+        m1_3.setOnAction( e -> pickSaveDate());
 
         menu1.getItems().addAll(m1_1, m1_2, m1_3);
 
@@ -325,7 +322,11 @@ public class Layout {
         button3.setMaxWidth(Double.MAX_VALUE);
         gridPane.add(button3, 0, 2);
 
-        button1.setOnAction( e -> tabController.savePresentationFromPopUp());
+        button1.setOnAction( e -> {
+            pickSaveDate();
+            savePresentationStage.close();
+            newPresentation();
+        });
         button2.setOnAction( e -> {
             savePresentationStage.close();
             newPresentation();
@@ -367,11 +368,9 @@ public class Layout {
 
         saveBut.setOnAction( e -> {
 
-            while(datePicker.getValue() != null){
-                controller.chooseLocalDate(datePicker.getValue());
-                tabController.savingPresentation();
+            if(datePicker.getValue() != null){
+                tabController.savingPresentation(datePicker.getValue().toString());
                 saveStage.close();
-                return;
             }
         });
     }
