@@ -21,6 +21,7 @@ public class DatabaseSaveAndGet {
             connection = DatabaseConnection.getConnection();
 
             if(connection != null){
+
                 preparedStatement = connection.prepareStatement("INSERT INTO slides(id, column_2) VALUES(DEFAULT, LOAD_FILE())");
 //                ResultSet resultSet = statement.executeQuery("SELECT first_name, last_name FROM login;");
 //                String firstName = resultSet.getString("first_name");

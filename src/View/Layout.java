@@ -406,11 +406,10 @@ public class Layout {
 
         loadBut.setOnAction( e -> {
 
-            while(datePicker.getValue() != null){
-                controller.chooseLocalDate(datePicker.getValue());
-                controller.openPresentation();
+            if(datePicker.getValue() != null){
+                tabController.savingPresentation(datePicker.getValue().toString());
                 loadStage.close();
-                return;
+
             }
         });
     }
