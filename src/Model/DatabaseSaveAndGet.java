@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class DatabaseSaveAndGet {
 
 
-    public void savePresentation(ArrayList<Slide> presentation, String date){
+    public static void savePresentation(ArrayList<Slide> presentation, String date){
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
