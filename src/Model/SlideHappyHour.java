@@ -5,17 +5,37 @@ package Model;
  */
 public class SlideHappyHour extends Slide {
 
+    private String header;
+    private String text;
+    private String imagePath;
+    private final String slideType = "slidehappyhour";
+
+    public SlideHappyHour(String header, String text, String imagePath){
+        this.header = header;
+        this.text = text;
+        this.imagePath = imagePath;
+    }
+
     public SlideHappyHour(){
 
     }
 
-    //todo to be defined later
-
-    String imagePath;
-
-    public SlideHappyHour(String imagePath){
-        this.imagePath = imagePath;
+    public String getHeader(){
+        return header;
     }
+
+    public void setHeader(String header){
+        this.header = header;
+    }
+
+    public String getText(){
+        return text;
+    }
+
+    public void setText(String text){
+        this.text = text;
+    }
+
 
     public String getImagePath(){
         return imagePath;

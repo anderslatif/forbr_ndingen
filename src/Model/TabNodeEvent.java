@@ -1,5 +1,6 @@
 package Model;
 
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -20,6 +21,9 @@ public class TabNodeEvent implements TabNode{
     }
 
 
+    public Node getNode(){
+        return vBox;
+    }
 
     public VBox getVBox(){
         return vBox;
@@ -39,11 +43,12 @@ public class TabNodeEvent implements TabNode{
     }
 
 
-    public SlideEvent getSlideEvent(){
+    public SlideEvent getSlide(){
         return slideEvent;
     }
 
-    public void setSlideEvent(SlideEvent slideEvent){
+
+    public void setSlide(SlideEvent slideEvent){
         this.slideEvent = slideEvent;
     }
 

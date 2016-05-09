@@ -1,5 +1,6 @@
 package Model;
 
+import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -22,6 +23,10 @@ public class TabNodeHappyHour implements TabNode{
         this.imageView = imageView;
         this.textTextArea = textTextField;
         this.slideHappyHour = slideHappyHour;
+    }
+
+    public Node getNode(){
+        return vBox;
     }
 
     public VBox getVBox(){
@@ -56,11 +61,11 @@ public class TabNodeHappyHour implements TabNode{
         this.textTextArea = textTextArea;
     }
 
-    public SlideHappyHour getSlideHappyHour() {
+    public SlideHappyHour getSlide() {
         return slideHappyHour;
     }
 
-    public void setSlideHappyHour(SlideHappyHour slideHappyHour) {
+    public void setSlide(SlideHappyHour slideHappyHour) {
         this.slideHappyHour = slideHappyHour;
     }
 

@@ -12,9 +12,8 @@ import java.util.ArrayList;
 public class DatabaseSaveAndGet {
 
 
-    public void savePresentation(ArrayList<TabNode> presentation, LocalDate date){
+    public void savePresentation(ArrayList<Slide> presentation, String date){
 
-        LocalDate chosenDate = date;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -28,9 +27,7 @@ public class DatabaseSaveAndGet {
 
 
 
-                for(TabNode tabNode: presentation){
-                    System.out.println(tabNode);
-                }
+
 
 
             }
@@ -142,7 +139,7 @@ public class DatabaseSaveAndGet {
 
             if(connection != null){
 
-                String date = slideEvent.getDate();
+                String date = Util.turnBackslashToForward(slideEvent.getDate());
                 String header = Util.escapeApostrophe(slideEvent.getHeader());
                 String textLabel = Util.escapeApostrophe(slideEvent.getText());
 
