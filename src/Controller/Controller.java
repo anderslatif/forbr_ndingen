@@ -52,7 +52,7 @@ public class Controller {
 
 
         DatabaseSaveAndGet databaseSaveAndGet = new DatabaseSaveAndGet();
-        //databaseSaveAndGet.savePresentation(slidePresentation, chosenDate);
+        databaseSaveAndGet.savePresentation(slidePresentation, chosenDate);
     }
 
 

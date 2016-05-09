@@ -7,25 +7,15 @@ import java.time.LocalDate;
  */
 public class SlidePicture extends Slide {
 
-    private LocalDate date;
     private String imagePath;
     private final String slideType = "slidepicture";
 
-    public SlidePicture(LocalDate date, String imagePath) {
-        this.date = date;
+    public SlidePicture(String imagePath) {
         this.imagePath = imagePath;
 
     }
 
     public SlidePicture(){
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public String getImagePath() {

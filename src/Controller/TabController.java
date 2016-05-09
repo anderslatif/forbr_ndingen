@@ -313,7 +313,6 @@ public class TabController {
         String title = String.valueOf(correctingIndexingIssues);
         tab.setText(title);
 
-        SlideHappyHour slideHappyHour = new SlideHappyHour();
 
         VBox vBox = new VBox();
         vBox.getStyleClass().add("happyHour");
@@ -324,7 +323,6 @@ public class TabController {
         headerTextField.getStyleClass().add("header");
         headerTextField.setPromptText("Type the header here...");
         headerTextField.setOpacity(0.6);
-        headerTextField.textProperty().addListener( e -> slideHappyHour.setHeader(headerTextField.getText()));
 
         ImageView imageView = new ImageView();
         imageView.setImage(image);
@@ -335,6 +333,9 @@ public class TabController {
         textTextArea.setPromptText("Type more text here...");
         textTextArea.setOpacity(0.6);
         textTextArea.getStyleClass().add("text_area");
+
+        SlideHappyHour slideHappyHour = new SlideHappyHour();
+        headerTextField.textProperty().addListener( e -> slideHappyHour.setHeader(headerTextField.getText()));
         textTextArea.textProperty().addListener( e -> slideHappyHour.setText(textTextArea.getText()));
 
 
@@ -342,7 +343,7 @@ public class TabController {
 
 
 
-        TabNodeHappyHour tabNodeHappyHour = new TabNodeHappyHour(vBox, headerTextField, imageView, textTextArea, slideHappyHour);
+        TabNodeHappyHour tabNodeHappyHour = new TabNodeHappyHour(vBox, imageView, slideHappyHour);
         tabCollection.add(tabNodeHappyHour);
 
         tab.setContent(vBox);

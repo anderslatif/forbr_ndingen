@@ -16,9 +16,9 @@ public class SlideHappyHour extends Slide {
         this.imagePath = imagePath;
     }
 
-    public SlideHappyHour(){
+    public SlideHappyHour(){}
 
-    }
+
 
     public String getHeader(){
         return header;
