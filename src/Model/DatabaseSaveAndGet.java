@@ -3,6 +3,7 @@ package Model;
 import Controller.Util;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -11,8 +12,9 @@ import java.util.ArrayList;
 public class DatabaseSaveAndGet {
 
 
-    public void savePresentation(ArrayList<TabNode> presentation){
+    public void savePresentation(ArrayList<TabNode> presentation, LocalDate date){
 
+        LocalDate chosenDate = date;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -144,11 +146,12 @@ public class DatabaseSaveAndGet {
                 String header = Util.escapeApostrophe(slideEvent.getHeader());
                 String textLabel = Util.escapeApostrophe(slideEvent.getText());
 
-                String sanitizedPath = Util.turnBackslashToForward(slideEvent.getImagePath());
+                String sanitizedPath = slideEvent.getImagePath();
                 String queryString = "'" + date + "', '" + header + "', '" +
                                           textLabel+ "', '" + sanitizedPath + "'";
 
                 System.out.println(date);
+                System.out.println(sanitizedPath);
 
                 preparedStatement = connection.prepareStatement("INSERT INTO events(slide_date, header, slide_text, image_path) VALUES(" + queryString + ")");
 

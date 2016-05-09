@@ -3,14 +3,22 @@ package Controller;
 import Model.DatabaseSaveAndGet;
 import Model.SlideEvent;
 import Model.TabNode;
+import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
  * Created by Anders on 4/15/2016.
  */
 public class Controller {
+
+    LocalDate chosenDate;
 
     // ArrayList<Slide> presentation = new ArrayList();
 
@@ -29,11 +37,8 @@ public class Controller {
 
     public void savePresentation(ArrayList<TabNode> presentation){
 
-        // pop-up asks for date
-
-
         DatabaseSaveAndGet databaseSaveAndGet = new DatabaseSaveAndGet();
-        databaseSaveAndGet.savePresentation(presentation);
+        databaseSaveAndGet.savePresentation(presentation, chosenDate);
     }
 
 
@@ -44,6 +49,11 @@ public class Controller {
 
     public void saveNewSlideEventToDB(SlideEvent slideEvent){
         DatabaseSaveAndGet.saveNewEventSlide(slideEvent);
+
+    }
+
+    public void chooseLocalDate(LocalDate inputDate){
+        chosenDate = inputDate;
 
     }
 

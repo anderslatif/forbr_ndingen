@@ -19,7 +19,10 @@ public class Main extends Application {
         launch(args);
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 939c08cf1dba3465fabb65018db43a9b4e1535bf
     public void start(Stage primaryStage) throws Exception {
 
 
