@@ -71,7 +71,7 @@ public class Layout {
 
         MenuItem m1_2 = new MenuItem("_Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
-        m1_2.setOnAction( e -> controller.openPresentation());
+        m1_2.setOnAction( e -> pickLoadDate());
 
         MenuItem m1_3 = new MenuItem("_Save");
         m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
@@ -376,6 +376,45 @@ public class Layout {
         });
     }
 
+    public void pickLoadDate(){
+
+        DatePicker datePicker = new DatePicker();
+        TextField headerTextField = new TextField();
+
+        Label label = new Label("Choose date:");
+
+        Button loadBut = new Button("Open");
+        loadBut.setMinWidth(85);
+        Button cancelBut = new Button("Cancel");
+        cancelBut.setMinWidth(85);
+
+        HBox hBox = new HBox();
+        hBox.setPadding(new Insets(0,5,0,5));
+        hBox.getChildren().addAll(loadBut, cancelBut);
+
+        VBox vBox = new VBox();
+        vBox.setPadding(new Insets(5,5,5,5));
+        vBox.getChildren().addAll(label, datePicker, hBox);
+
+        Stage loadStage = new Stage();
+        Scene loadScene = new Scene(vBox, 190, 80);
+
+        loadStage.setScene(loadScene);
+        loadStage.show();
+
+        // Button Actions
+        cancelBut.setOnAction( e -> loadStage.close());
+
+        loadBut.setOnAction( e -> {
+
+            while(datePicker.getValue() != null){
+                controller.chooseLocalDate(datePicker.getValue());
+                controller.openPresentation();
+                loadStage.close();
+                return;
+            }
+        });
+    }
 
 
 
