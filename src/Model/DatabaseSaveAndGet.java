@@ -17,6 +17,16 @@ public class DatabaseSaveAndGet {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
+        for (Slide slide : presentation) {
+
+            String slideDate;
+            String header;
+            String text;
+            String imagePath;
+            String slideType;
+
+        }
+
         try {
             connection = DatabaseConnection.getConnection();
 

@@ -5,4 +5,13 @@ package Model;
  */
 public class Slide {
 
+    private String slideType;
+
+    public String getSlideType() {
+        return slideType;
+    }
+
+    public void setSlideType(String slideType) {
+        this.slideType = slideType;
+    }
 }
