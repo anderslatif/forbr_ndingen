@@ -208,6 +208,7 @@ public class TabController {
             tab.setContent(imageView);
 
             SlidePicture slidePicture = new SlidePicture();
+            slidePicture.setSlideType("SlidePicture");
             TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePicture);
             tabCollection.add(tabNodePicture);
 
@@ -223,6 +224,7 @@ public class TabController {
             tab.setContent(imageView);
 
             SlidePicture slidePicture = new SlidePicture();
+            slidePicture.setSlideType("slidePicture");
             TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePicture);
             tabCollection.add(tabNodePicture);
 
@@ -335,6 +337,7 @@ public class TabController {
         textTextArea.getStyleClass().add("text_area");
 
         SlideHappyHour slideHappyHour = new SlideHappyHour();
+        slideHappyHour.setSlideType("SlideHappyHour");
         headerTextField.textProperty().addListener( e -> slideHappyHour.setHeader(headerTextField.getText()));
         textTextArea.textProperty().addListener( e -> slideHappyHour.setText(textTextArea.getText()));
 

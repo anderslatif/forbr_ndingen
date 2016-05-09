@@ -236,7 +236,7 @@ public class Layout {
         Button doneButton = new Button("Done");
 
         doneButton.setOnAction( e -> {
-            controller.saveNewSlideEventToDB(new SlideEvent(datePicker.getValue().toString(), headerTextField.getText(), textTextField.getText(), eventImagePath));
+            controller.saveNewSlideEventToDB(new SlideEvent("SlideEvent", datePicker.getValue().toString(), headerTextField.getText(), textTextField.getText(), eventImagePath));
             newEventStage.close();
             eventStage.close();
             getEventOverview();

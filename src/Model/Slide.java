@@ -7,6 +7,12 @@ public class Slide {
 
     private String slideType;
 
+    public Slide(){}
+
+    public Slide(String slideType) {
+        this.slideType = slideType;
+    }
+
     public String getSlideType() {
         return slideType;
     }

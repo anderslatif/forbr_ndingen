@@ -9,11 +9,11 @@ public class SlideEvent extends Slide {
     private String header;
     private String text;
     private String imagePath;
-    private final String slideType = "slideevent";
 
     public SlideEvent(){}
 
-    public SlideEvent(String date, String header, String text, String imagePath) {
+    public SlideEvent(String slideType, String date, String header, String text, String imagePath) {
+        super();
         this.date = date;
         this.header = header;
         this.text = text;
@@ -52,7 +52,4 @@ public class SlideEvent extends Slide {
         this.imagePath = imagePath;
     }
 
-    public String getSlideType() {
-        return slideType;
-    }
 }

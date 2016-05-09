@@ -8,9 +8,9 @@ public class SlideHappyHour extends Slide {
     private String header;
     private String text;
     private String imagePath;
-    private final String slideType = "slidehappyhour";
 
-    public SlideHappyHour(String header, String text, String imagePath){
+    public SlideHappyHour(String slideType, String header, String text, String imagePath){
+        super();
         this.header = header;
         this.text = text;
         this.imagePath = imagePath;

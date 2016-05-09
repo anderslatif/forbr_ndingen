@@ -12,60 +12,87 @@ import java.util.ArrayList;
 public class DatabaseSaveAndGet {
 
 
-    public static void savePresentation(ArrayList<Slide> presentation, String date){
+    public static void savePresentation(ArrayList<Slide> presentation, String date) {
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        for (Slide slide : presentation) {
+        for (Slide s : presentation) {
 
             String slideDate;
-            String header;
-            String text;
-            String imagePath;
-            String slideType;
+            String header = null;
+            String text = null;
+            String imagePath = null;
 
-        }
+            String slideType = s.getSlideType();
 
-        try {
-            connection = DatabaseConnection.getConnection();
+            switch (slideType) {
+                case "SlideEvent":
+                    SlideEvent eS = (SlideEvent) s;
+                    slideDate = eS.getDate();
+                    header = eS.getHeader();
+                    text = eS.getText();
+                    imagePath = eS.getImagePath();
+                    break;
 
-            if(connection != null){
+                case "SlidePicture":
+                    SlidePicture pS = (SlidePicture) s;
+                    slideDate = pS.getDate();
+                    imagePath = pS.getImagePath();
+                    break;
 
-                preparedStatement = connection.prepareStatement("INSERT INTO slides(id, column_2) VALUES(DEFAULT, LOAD_FILE())");
+                case "SlideHappyHour":
+                    SlideHappyHour hS = (SlideHappyHour) s;
+                    header = hS.getHeader();
+                    text = hS.getText();
+                    imagePath = hS.getImagePath();
+
+                    break;
+                default:
+                    System.out.println("default");
+
+
+            }
+
+
+            try {
+                connection = DatabaseConnection.getConnection();
+
+                if (connection != null) {
+
+                    String qString1 = "INSERT INTO slides (slide_date, slide_type, header, slide_text, image_path) ";
+                    String qString2 = "Values ('"+date+"', '"+slideType+"', '"+header+"', '"+text+"', '"+imagePath+"')";
+                    preparedStatement = connection.prepareStatement(qString1+qString2);
+                    preparedStatement.executeUpdate();
+
 //                ResultSet resultSet = statement.executeQuery("SELECT first_name, last_name FROM login;");
 //                String firstName = resultSet.getString("first_name");
 
-
-
-
-
-
-
-            }
-
-
-        } catch(Exception e){
-            e.printStackTrace();
-        } finally {
-            if(connection != null){
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
-            }
-            if(preparedStatement != null){
-                try{
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    try {
+                        connection.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
+                if (preparedStatement != null) {
+                    try {
+                        preparedStatement.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
             }
+
 
         }
-
-
     }
 
 
@@ -97,7 +124,7 @@ public class DatabaseSaveAndGet {
                     String imagePath = resultSet.getString("image_path");
 
 
-                    SlideEvent slideEvent = new SlideEvent(date, header, textLabel, imagePath);
+                    SlideEvent slideEvent = new SlideEvent("slideEvent", date, header, textLabel, imagePath);
 
                     eventCollection.add(slideEvent);
 
