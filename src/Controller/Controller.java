@@ -16,14 +16,6 @@ import java.util.ArrayList;
  */
 public class Controller {
 
-    // ArrayList<Slide> presentation = new ArrayList();
-
-    // the list above will be the one we use.. the one below is to try out the database
-
-
-
-
-
 
     public void openPresentation(){
         // let the user enter a date in a pop-up first??
@@ -51,19 +43,15 @@ public class Controller {
         }
 
 
-        DatabaseSaveAndGet databaseSaveAndGet = new DatabaseSaveAndGet();
-        //databaseSaveAndGet.savePresentation(slidePresentation, chosenDate);
+        DatabaseSaveAndGet.savePresentation(slidePresentation, chosenDate);
     }
 
 
 
-/*    public void changeSlidePosition(int index){
 
-    }*/
 
     public void saveNewSlideEventToDB(SlideEvent slideEvent){
         DatabaseSaveAndGet.saveNewEventSlide(slideEvent);
-
     }
 
 

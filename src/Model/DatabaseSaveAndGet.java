@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class DatabaseSaveAndGet {
 
 
-    public void savePresentation(ArrayList<Slide> presentation, String date){
+    public static void savePresentation(ArrayList<Slide> presentation, String date){
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -35,6 +35,7 @@ public class DatabaseSaveAndGet {
                 preparedStatement = connection.prepareStatement("INSERT INTO slides(id, column_2) VALUES(DEFAULT, LOAD_FILE())");
 //                ResultSet resultSet = statement.executeQuery("SELECT first_name, last_name FROM login;");
 //                String firstName = resultSet.getString("first_name");
+
 
 
 

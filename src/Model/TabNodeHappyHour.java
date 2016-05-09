@@ -12,16 +12,12 @@ import javafx.scene.layout.VBox;
 public class TabNodeHappyHour implements TabNode{
 
     VBox vBox;
-    TextField headerTextField;
     ImageView imageView;
-    TextArea textTextArea;
     SlideHappyHour slideHappyHour;
 
-    public TabNodeHappyHour(VBox vBox, TextField headerTextField, ImageView imageView, TextArea textTextField, SlideHappyHour slideHappyHour){
+    public TabNodeHappyHour(VBox vBox, ImageView imageView, SlideHappyHour slideHappyHour){
         this.vBox = vBox;
-        this.headerTextField = headerTextField;
         this.imageView = imageView;
-        this.textTextArea = textTextField;
         this.slideHappyHour = slideHappyHour;
     }
 
@@ -37,13 +33,6 @@ public class TabNodeHappyHour implements TabNode{
         this.vBox = vBox;
     }
 
-    public TextField getHeaderTextField() {
-        return headerTextField;
-    }
-
-    public void setHeaderTextField(TextField headerTextField) {
-        this.headerTextField = headerTextField;
-    }
 
     public ImageView getImageView() {
         return imageView;
@@ -51,14 +40,6 @@ public class TabNodeHappyHour implements TabNode{
 
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
-    }
-
-    public TextArea getTextTextArea() {
-        return textTextArea;
-    }
-
-    public void setTextTextArea(TextArea textTextArea) {
-        this.textTextArea = textTextArea;
     }
 
     public SlideHappyHour getSlide() {

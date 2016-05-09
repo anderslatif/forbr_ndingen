@@ -7,12 +7,19 @@ import java.time.LocalDate;
  */
 public class SlidePicture extends Slide {
 
+<<<<<<< HEAD
     private String date;
     private String imagePath;
     private final String slideType = "slidepicture";
 
     public SlidePicture(String date, String imagePath) {
         this.date = date;
+=======
+    private String imagePath;
+    private final String slideType = "slidepicture";
+
+    public SlidePicture(String imagePath) {
+>>>>>>> cb7d35c528241e4ca63f55aa0f019c640f0faddf
         this.imagePath = imagePath;
 
     }
@@ -20,6 +27,7 @@ public class SlidePicture extends Slide {
     public SlidePicture(){
     }
 
+<<<<<<< HEAD
     public String getDate() {
         return date;
     }
@@ -28,6 +36,8 @@ public class SlidePicture extends Slide {
         this.date = date;
     }
 
+=======
+>>>>>>> cb7d35c528241e4ca63f55aa0f019c640f0faddf
     public String getImagePath() {
         return imagePath;
     }
