@@ -1,5 +1,6 @@
 package Model;
 
+import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -11,17 +12,17 @@ import javafx.scene.layout.VBox;
 public class TabNodeHappyHour implements TabNode{
 
     VBox vBox;
-    TextField headerTextField;
     ImageView imageView;
-    TextArea textTextArea;
     SlideHappyHour slideHappyHour;
 
-    public TabNodeHappyHour(VBox vBox, TextField headerTextField, ImageView imageView, TextArea textTextField, SlideHappyHour slideHappyHour){
+    public TabNodeHappyHour(VBox vBox, ImageView imageView, SlideHappyHour slideHappyHour){
         this.vBox = vBox;
-        this.headerTextField = headerTextField;
         this.imageView = imageView;
-        this.textTextArea = textTextField;
         this.slideHappyHour = slideHappyHour;
+    }
+
+    public Node getNode(){
+        return vBox;
     }
 
     public VBox getVBox(){
@@ -32,13 +33,6 @@ public class TabNodeHappyHour implements TabNode{
         this.vBox = vBox;
     }
 
-    public TextField getHeaderTextField() {
-        return headerTextField;
-    }
-
-    public void setHeaderTextField(TextField headerTextField) {
-        this.headerTextField = headerTextField;
-    }
 
     public ImageView getImageView() {
         return imageView;
@@ -48,19 +42,11 @@ public class TabNodeHappyHour implements TabNode{
         this.imageView = imageView;
     }
 
-    public TextArea getTextTextArea() {
-        return textTextArea;
-    }
-
-    public void setTextTextArea(TextArea textTextArea) {
-        this.textTextArea = textTextArea;
-    }
-
-    public SlideHappyHour getSlideHappyHour() {
+    public SlideHappyHour getSlide() {
         return slideHappyHour;
     }
 
-    public void setSlideHappyHour(SlideHappyHour slideHappyHour) {
+    public void setSlide(SlideHappyHour slideHappyHour) {
         this.slideHappyHour = slideHappyHour;
     }
 

@@ -1,8 +1,6 @@
 package Controller;
 
-import Model.DatabaseSaveAndGet;
-import Model.SlideEvent;
-import Model.TabNode;
+import Model.*;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -18,16 +16,6 @@ import java.util.ArrayList;
  */
 public class Controller {
 
-    LocalDate chosenDate;
-
-    // ArrayList<Slide> presentation = new ArrayList();
-
-    // the list above will be the one we use.. the one below is to try out the database
-
-
-
-
-
 
     public void openPresentation(){
         // let the user enter a date in a pop-up first??
@@ -35,27 +23,38 @@ public class Controller {
         // remember error messages if images or media can't be found
     }
 
-    public void savePresentation(ArrayList<TabNode> presentation){
+    public void savePresentation(ArrayList<TabNode> tabNodePresentation, String chosenDate){
 
-        DatabaseSaveAndGet databaseSaveAndGet = new DatabaseSaveAndGet();
-        databaseSaveAndGet.savePresentation(presentation, chosenDate);
+        ArrayList<Slide> slidePresentation = new ArrayList<>();
+
+        System.out.println(tabNodePresentation.size());
+
+        for(TabNode tabNode : tabNodePresentation){
+
+            slidePresentation.add(tabNode.getSlide());
+
+            if (tabNode.getSlide() instanceof SlideEvent){
+                System.out.println("This tabnode is an event: " + tabNode.getSlide());
+            } else if (tabNode.getSlide() instanceof  SlideHappyHour){
+                System.out.println("This tabnode is happy hour: " + tabNode.getSlide());
+            } else if (tabNode.getSlide() instanceof  SlidePicture){
+                System.out.println("This tabnode is a picture tab: " + tabNode.getSlide());
+            }
+        }
+
+
+        DatabaseSaveAndGet.savePresentation(slidePresentation, chosenDate);
     }
 
 
 
-/*    public void changeSlidePosition(int index){
 
-    }*/
 
     public void saveNewSlideEventToDB(SlideEvent slideEvent){
         DatabaseSaveAndGet.saveNewEventSlide(slideEvent);
-
     }
 
-    public void chooseLocalDate(LocalDate inputDate){
-        chosenDate = inputDate;
 
-    }
 
 
 

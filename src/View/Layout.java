@@ -71,14 +71,11 @@ public class Layout {
 
         MenuItem m1_2 = new MenuItem("_Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
-        m1_2.setOnAction( e -> controller.openPresentation());
+        m1_2.setOnAction( e -> pickADate("Open"));
 
         MenuItem m1_3 = new MenuItem("_Save");
         m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
-        m1_3.setOnAction( e -> {
-
-            pickSaveDate();
-        });
+        m1_3.setOnAction( e -> pickADate("Save"));
 
         menu1.getItems().addAll(m1_1, m1_2, m1_3);
 
@@ -98,11 +95,11 @@ public class Layout {
 
         MenuItem m3_1 = new MenuItem("_Picture slide");
         m3_1.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN));
-        m3_1.setOnAction( e -> tabController.addPictureSlide());
+        m3_1.setOnAction( e -> tabController.addPictureTab());
 
         MenuItem m3_2 = new MenuItem("_Bar Tilbud");
         m3_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
-        m3_2.setOnAction( e -> tabController.addHappyHourSlide());
+        m3_2.setOnAction( e -> tabController.addHappyHourTab());
 
 
         menu3.getItems().addAll(m3_1, m3_2);
@@ -239,7 +236,7 @@ public class Layout {
         Button doneButton = new Button("Done");
 
         doneButton.setOnAction( e -> {
-            controller.saveNewSlideEventToDB(new SlideEvent(datePicker.getValue().toString(), headerTextField.getText(), textTextField.getText(), eventImagePath));
+            controller.saveNewSlideEventToDB(new SlideEvent("SlideEvent", datePicker.getValue().toString(), headerTextField.getText(), textTextField.getText(), eventImagePath));
             newEventStage.close();
             eventStage.close();
             getEventOverview();
@@ -325,7 +322,11 @@ public class Layout {
         button3.setMaxWidth(Double.MAX_VALUE);
         gridPane.add(button3, 0, 2);
 
-        button1.setOnAction( e -> tabController.savePresentationFromPopUp());
+        button1.setOnAction( e -> {
+            pickADate("Save");
+            savePresentationStage.close();
+            newPresentation();
+        });
         button2.setOnAction( e -> {
             savePresentationStage.close();
             newPresentation();
@@ -336,14 +337,14 @@ public class Layout {
         savePresentationStage.show();
     }
 
-    public void pickSaveDate(){
+    public void pickADate(String buttonText){
 
         DatePicker datePicker = new DatePicker();
-        TextField headerTextField = new TextField();
 
         Label label = new Label("Choose date:");
 
-        Button saveBut = new Button("Save");
+        Button saveBut = new Button();
+        saveBut.setText(buttonText);
         saveBut.setMinWidth(85);
         Button cancelBut = new Button("Cancel");
         cancelBut.setMinWidth(85);
@@ -367,16 +368,12 @@ public class Layout {
 
         saveBut.setOnAction( e -> {
 
-            while(datePicker.getValue() != null){
-                controller.chooseLocalDate(datePicker.getValue());
-                tabController.savingPresentation();
+            if(datePicker.getValue() != null){
+                tabController.savingPresentation(datePicker.getValue().toString());
                 saveStage.close();
-                return;
             }
         });
     }
-
-
 
 
 
