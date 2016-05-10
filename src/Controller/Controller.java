@@ -31,18 +31,9 @@ public class Controller {
 
         for(TabNode tabNode : tabNodePresentation){
 
-            System.out.println(tabNode.getSlide());
             slidePresentation.add(tabNode.getSlide());
 
-            if (tabNode.getSlide() instanceof SlideEvent){
-                System.out.println("This tabnode is an event: " + tabNode.getSlide());
-            } else if (tabNode.getSlide() instanceof  SlideHappyHour){
-                System.out.println("This tabnode is happy hour: " + tabNode.getSlide());
-            } else if (tabNode.getSlide() instanceof  SlidePicture){
-                System.out.println("This tabnode is a picture tab: " + tabNode.getSlide());
-            }
         }
-
 
         DatabaseSaveAndGet.savePresentation(slidePresentation, chosenDate);
     }

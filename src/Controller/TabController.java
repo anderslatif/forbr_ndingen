@@ -265,8 +265,8 @@ public class TabController {
 
 
         Image image;
-        if (slideEvent.getImagePath().equals("")){
-            image = new Image("empty.png");
+        if (slideEvent.getImagePath().equals("null")){
+            image = new Image("Empty.png");
         } else {
             image = new Image(slideEvent.getImagePath());
         }
