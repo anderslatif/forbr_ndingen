@@ -1,5 +1,6 @@
 *.class
 
+# Because workspace.xml caused problems
 *.xml
 *.idea
 *.idea/workspace.xml
