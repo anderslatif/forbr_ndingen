@@ -30,13 +30,13 @@ public class DatabaseSaveAndGet {
                     SlideEvent eS = (SlideEvent) s;
                     header = eS.getHeader();
                     text = eS.getText();
-                    imagePath = eS.getImagePath();
+                    imagePath = Util.turnBackslashToForward(eS.getImagePath());
                     System.out.println(imagePath);
                     break;
 
                 case "SlidePicture":
                     SlidePicture pS = (SlidePicture) s;
-                    imagePath = pS.getImagePath();
+                    imagePath = Util.turnBackslashToForward(pS.getImagePath());
                     System.out.println(imagePath);
                     break;
 
@@ -44,8 +44,7 @@ public class DatabaseSaveAndGet {
                     SlideHappyHour hS = (SlideHappyHour) s;
                     header = hS.getHeader();
                     text = hS.getText();
-                    imagePath = hS.getImagePath();
-
+                    imagePath = Util.turnBackslashToForward(hS.getImagePath());
                     break;
                 default:
                     System.out.println("default");
