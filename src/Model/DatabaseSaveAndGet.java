@@ -11,7 +11,6 @@ import java.util.ArrayList;
  */
 public class DatabaseSaveAndGet {
 
-
     public static void savePresentation(ArrayList<Slide> presentation, String date) {
 
         Connection connection = null;
@@ -19,7 +18,6 @@ public class DatabaseSaveAndGet {
 
         for (Slide s : presentation) {
 
-            String slideDate;
             String header = null;
             String text = null;
             String imagePath = null;
@@ -28,17 +26,18 @@ public class DatabaseSaveAndGet {
 
             switch (slideType) {
                 case "SlideEvent":
+                    System.out.println("slideevent");
                     SlideEvent eS = (SlideEvent) s;
-                    slideDate = eS.getDate();
                     header = eS.getHeader();
                     text = eS.getText();
                     imagePath = eS.getImagePath();
+                    System.out.println(imagePath);
                     break;
 
                 case "SlidePicture":
                     SlidePicture pS = (SlidePicture) s;
-                    slideDate = pS.getDate();
                     imagePath = pS.getImagePath();
+                    System.out.println(imagePath);
                     break;
 
                 case "SlideHappyHour":
@@ -51,9 +50,7 @@ public class DatabaseSaveAndGet {
                 default:
                     System.out.println("default");
 
-
             }
-
 
             try {
                 connection = DatabaseConnection.getConnection();
@@ -88,10 +85,7 @@ public class DatabaseSaveAndGet {
                         e.printStackTrace();
                     }
                 }
-
             }
-
-
         }
     }
 

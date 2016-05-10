@@ -31,6 +31,7 @@ public class Controller {
 
         for(TabNode tabNode : tabNodePresentation){
 
+            System.out.println(tabNode.getSlide());
             slidePresentation.add(tabNode.getSlide());
 
             if (tabNode.getSlide() instanceof SlideEvent){

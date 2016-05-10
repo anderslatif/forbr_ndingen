@@ -112,7 +112,6 @@ public class TabController {
 
         Tab tab = tabPane.getSelectionModel().getSelectedItem();
 
-
         if(tab.getContent() instanceof javafx.scene.image.ImageView){
             ImageView currentImageView = (ImageView) tab.getContent();
             currentImageView.setImage(image);
@@ -135,6 +134,8 @@ public class TabController {
         } else if(tab.getContent() instanceof javafx.scene.layout.VBox) {
 
             VBox vBox = (VBox) tab.getContent();
+
+            System.out.println("dette er en SlideHappy");
 
             ImageView currentImageView = null;
 
@@ -224,7 +225,7 @@ public class TabController {
             tab.setContent(imageView);
 
             SlidePicture slidePicture = new SlidePicture();
-            slidePicture.setSlideType("slidePicture");
+            slidePicture.setSlideType("SlidePicture");
             TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePicture);
             tabCollection.add(tabNodePicture);
 
@@ -236,6 +237,8 @@ public class TabController {
     public void addEventTab(SlideEvent slideEvent){
 
         Tab tab;
+
+        slideEvent.setSlideType("SlideEvent");
 
         if(tabCollection.size()>0){
             tab = new Tab();
@@ -350,6 +353,7 @@ public class TabController {
         tabCollection.add(tabNodeHappyHour);
 
         tab.setContent(vBox);
+
 
     }
 
