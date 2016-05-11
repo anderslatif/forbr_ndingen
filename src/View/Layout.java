@@ -225,8 +225,13 @@ public class Layout {
 
         eventBorderPane.setTop(vBox1);
 
+        StackPane stackPane = new StackPane();
         ImageView imageView = new ImageView();
-        eventBorderPane.setCenter(imageView);
+        Label label = new Label("Drop image here.");
+        stackPane.getChildren().addAll(imageView, label);
+        eventBorderPane.setCenter(stackPane);
+
+        //eventBorderPane.setCenter(imageView);
 
         VBox vBox2 = new VBox();
         TextField textTextField = new TextField();

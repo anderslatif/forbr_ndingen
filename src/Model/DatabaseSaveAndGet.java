@@ -13,6 +13,8 @@ public class DatabaseSaveAndGet {
 
     public static void savePresentation(ArrayList<Slide> presentation, String date) {
 
+        deleteSlidesWithThisDate(date);
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -26,7 +28,6 @@ public class DatabaseSaveAndGet {
 
             switch (slideType) {
                 case "SlideEvent":
-                    System.out.println("slideevent");
                     SlideEvent eS = (SlideEvent) s;
                     header = eS.getHeader();
                     text = eS.getText();
@@ -47,7 +48,7 @@ public class DatabaseSaveAndGet {
                     imagePath = Util.turnBackslashToForward(hS.getImagePath());
                     break;
                 default:
-                    System.out.println("default");
+                    System.out.println("Error in savePresentation() in DatabaseSaveAndGet.");
 
             }
 
@@ -87,6 +88,42 @@ public class DatabaseSaveAndGet {
             }
         }
     }
+
+    public static void deleteSlidesWithThisDate(String date){
+        ArrayList<Slide> presentation = null;
+
+        Connection connection = null;
+        Statement statement = null;
+        String sqlQuery = "DELETE FROM slides WHERE slide_date = '"+date+"';";
+
+        try {
+            connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
+            statement.executeUpdate(sqlQuery);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+
 
     public static ArrayList<Slide> openPresentation(String date){
 
@@ -197,9 +234,9 @@ public class DatabaseSaveAndGet {
 
             statement = connection.createStatement();
 
-            LocalDate localDate = LocalDate.now(); // todo find out how I can check if it is later than this date
+            LocalDate localDate = LocalDate.now();
 
-            resultSet = statement.executeQuery("SELECT * FROM events;");
+            resultSet = statement.executeQuery("SELECT * FROM events WHERE slide_date >= '" + localDate + "';");
 
             if(connection != null){
 
@@ -216,10 +253,10 @@ public class DatabaseSaveAndGet {
                     SlideEvent slideEvent = new SlideEvent("slideEvent", date, header, textLabel, imagePath);
 
                     eventCollection.add(slideEvent);
-
-                    //todo finally the ArrayList should be sorted based on the date
-
+                        // todo make the String date into a Date and sort it with Collections.sort
+                        // http://stackoverflow.com/questions/5927109/sort-objects-in-arraylist-by-date
                 }
+
 
             }
 
