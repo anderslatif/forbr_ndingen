@@ -213,9 +213,39 @@ public class TabController {
             TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePicture);
             tabCollection.add(tabNodePicture);
 
+    }
 
+
+    public void addPictureTab(SlidePicture slidePictureToCreate){
+
+        Tab tab;
+        if(tabCollection.size()>0){
+            tab = new Tab();
+            tabPane.getTabs().add(tab);
+        } else {
+            tab = tabPane.getSelectionModel().getSelectedItem();
+        }
+
+        tabPane.getSelectionModel().select(tab);
+        int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 2;
+        String title = String.valueOf(correctingIndexingIssues);
+        tab.setText(title);
+
+        Image image = new Image(slidePictureToCreate.getImagePath());
+
+        ImageView imageView = new ImageView(image);
+        imageView.fitWidthProperty().bind(stage.widthProperty());
+        imageView.fitHeightProperty().bind(stage.heightProperty());
+
+        tab.setContent(imageView);
+
+        SlidePicture slidePicture = new SlidePicture();
+        slidePicture.setSlideType("SlidePicture");
+        TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePicture);
+        tabCollection.add(tabNodePicture);
 
     }
+
 
 
     public void addEventTab(SlideEvent slideEvent){
@@ -440,7 +470,7 @@ public class TabController {
                     addEventTab((SlideEvent) slide);
                     break;
                 case "SlidePicture":
-                    //addPictureTab((SlidePicture) slide);
+                    addPictureTab((SlidePicture) slide);
                     break;
                 case "SlideHappyHour":
                     addHappyHourTab((SlideHappyHour) slide);
