@@ -33,9 +33,6 @@ public class TabController {
         controller = new Controller();
     }
 
-
-
-
     public TabPane getTabPane(){
 
         tabCollection.clear();
@@ -46,7 +43,6 @@ public class TabController {
 
         return tabPane;
     }
-
 
 
     public void initializeTabController(TabPane tabPane){

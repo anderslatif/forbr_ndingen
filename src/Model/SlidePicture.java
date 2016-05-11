@@ -23,7 +23,7 @@ public class SlidePicture extends Slide {
     }
 
     public SlidePicture(String slideType, String date, String imagePath){
-        super();
+        super(slideType);
         this.date = date;
         this.imagePath = imagePath;
     }

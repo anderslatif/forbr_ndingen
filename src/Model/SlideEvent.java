@@ -13,7 +13,7 @@ public class SlideEvent extends Slide {
     public SlideEvent(){}
 
     public SlideEvent(String slideType, String date, String header, String text, String imagePath) {
-        super();
+        super(slideType);
         this.date = date;
         this.header = header;
         this.text = text;

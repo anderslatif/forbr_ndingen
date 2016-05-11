@@ -3,6 +3,7 @@ package View;
 import Controller.Controller;
 import Controller.TabController;
 import Model.DatabaseSaveAndGet;
+import Model.Slide;
 import Model.SlideEvent;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -126,12 +127,15 @@ public class Layout {
     public void newPresentation(){
 
         borderPane.setCenter(tabController.getTabPane());
-
     }
 
 
+    public void openLoadedPresentation(ArrayList<Slide> presentation){
 
+        borderPane.setCenter(tabController.getTabPane());
+        // her skal nok loopes igennem ArrayList presentation for at sortere dem og indlæse dem som TabNodes
 
+    }
 
 
     Stage eventStage;
@@ -368,9 +372,21 @@ public class Layout {
 
         saveBut.setOnAction( e -> {
 
-            if(datePicker.getValue() != null){
-                tabController.savingPresentation(datePicker.getValue().toString());
+            if(datePicker.getValue() != null) {
+
+                if (buttonText.equals("Save")) {
+
+                    tabController.savingPresentation(datePicker.getValue().toString());
+                }
+
+                if (buttonText.equals("Open")) {
+
+                    ArrayList<Slide> presentation = DatabaseSaveAndGet.openPresentation(datePicker.getValue().toString());
+                    openLoadedPresentation(presentation);
+                }
+
                 saveStage.close();
+
             }
         });
     }

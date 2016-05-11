@@ -88,6 +88,100 @@ public class DatabaseSaveAndGet {
         }
     }
 
+    public static ArrayList<Slide> openPresentation(String date){
+
+        ArrayList<Slide> presentation = null;
+
+        Connection connection = null;
+        Statement statement = null;
+        String sqlQuery = "SELECT * FROM slides WHERE slide_date = '"+date+"';";
+
+        ResultSet resultSet = null;
+
+        try {
+            connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
+
+            resultSet = statement.executeQuery(sqlQuery);
+            presentation = resultSetToArrayList(resultSet, date);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return presentation;
+
+    }
+
+    public static ArrayList<Slide> resultSetToArrayList(ResultSet resultSet, String date){
+        ArrayList<Slide> presentation = new ArrayList<>();
+
+        try {
+            while(resultSet.next()){
+
+                String slideType = resultSet.getString("slide_type");
+
+                switch (slideType) {
+                    case "SlideEvent":
+
+                        String eHeader = resultSet.getString("header");
+                        String eText = resultSet.getString("slide_text");
+                        String eImagePath = resultSet.getString("image_path");
+
+                        SlideEvent se = new SlideEvent("SlideEvent", "", eHeader, eText, eImagePath);
+
+                        presentation.add(se);
+
+                        break;
+
+                    case "SlidePicture":
+
+                        String pImagePath = resultSet.getString("image_path");
+
+                        SlidePicture sp = new SlidePicture("SlidePicture", date, pImagePath);
+
+                        presentation.add(sp);
+
+                        break;
+
+                    case "SlideHappyHour":
+
+                        String hHeader = resultSet.getString("header");
+                        String hText = resultSet.getString("slide_text");
+                        String hImagePath = ""+resultSet.getString("image_path");
+
+                        SlideHappyHour sh = new SlideHappyHour("SlideHappyHour", hHeader, hText, hImagePath);
+
+                        presentation.add(sh);
+
+                        break;
+                    default:
+                        System.out.println("default");
+
+                }
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return presentation;
+    }
+
 
 
     public static ArrayList<SlideEvent> loadAllEvents(){
