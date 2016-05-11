@@ -189,15 +189,19 @@ public class TabController {
 
     public void addPictureTab(){
 
+        Tab tab;
         if(tabCollection.size()>0){
-            Tab tab = new Tab();
+            tab = new Tab();
+            tabPane.getTabs().add(tab);
+        } else {
+            tab = tabPane.getSelectionModel().getSelectedItem();
+        }
 
             tabPane.getSelectionModel().select(tab);
             int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 2;
             String title = String.valueOf(correctingIndexingIssues);
             tab.setText(title);
 
-            tabPane.getTabs().add(tab);
             ImageView imageView = new ImageView();
             imageView.fitWidthProperty().bind(stage.widthProperty());
             imageView.fitHeightProperty().bind(stage.heightProperty());
@@ -210,22 +214,6 @@ public class TabController {
             tabCollection.add(tabNodePicture);
 
 
-        } else {
-
-            Tab tab = tabPane.getSelectionModel().getSelectedItem();
-
-            ImageView imageView = new ImageView();
-            imageView.fitWidthProperty().bind(stage.widthProperty());
-            imageView.fitHeightProperty().bind(stage.heightProperty());
-
-            tab.setContent(imageView);
-
-            SlidePicture slidePicture = new SlidePicture();
-            slidePicture.setSlideType("SlidePicture");
-            TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePicture);
-            tabCollection.add(tabNodePicture);
-
-        }
 
     }
 
@@ -350,8 +338,73 @@ public class TabController {
 
         tab.setContent(vBox);
 
+    }
+
+
+    public void addHappyHourTab(SlideHappyHour happyHourSlide){
+
+        Tab tab;
+
+        if(tabCollection.size()>0){
+            tab = new Tab();
+            tabPane.getTabs().add(tab);
+        } else{
+            tab = tabPane.getSelectionModel().getSelectedItem();
+        }
+
+        tabPane.getSelectionModel().select(tab);
+        int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 1;
+        String title = String.valueOf(correctingIndexingIssues);
+        tab.setText(title);
+
+
+        VBox vBox = new VBox();
+        vBox.getStyleClass().add("happyHour");
+
+        Image image;
+        if (happyHourSlide.getImagePath() == null){
+            image = new Image("cocktail.png");
+        } else {
+            image = new Image(happyHourSlide.getImagePath());
+        }
+
+        TextField headerTextField = new TextField();
+        headerTextField.getStyleClass().add("header");
+        headerTextField.setOpacity(0.6);
+        headerTextField.setPromptText("Type the header here...");
+        if (happyHourSlide.getHeader() != null) {
+            headerTextField.setText(happyHourSlide.getHeader());
+        }
+
+        ImageView imageView = new ImageView();
+        imageView.setImage(image);
+        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(3));
+        imageView.fitWidthProperty().bind(vBox.widthProperty());
+
+        TextArea textTextArea =  new TextArea();
+        textTextArea.setOpacity(0.6);
+        textTextArea.getStyleClass().add("text_area");
+        textTextArea.setPromptText("Type more text here...");
+        if (happyHourSlide.getText() != null){
+            textTextArea.setText(happyHourSlide.getText());
+        }
+        SlideHappyHour slideHappyHour = new SlideHappyHour();
+        slideHappyHour.setSlideType("SlideHappyHour");
+        headerTextField.textProperty().addListener( e -> slideHappyHour.setHeader(headerTextField.getText()));
+        textTextArea.textProperty().addListener( e -> slideHappyHour.setText(textTextArea.getText()));
+
+
+        vBox.getChildren().addAll(headerTextField, imageView, textTextArea);
+
+
+
+        TabNodeHappyHour tabNodeHappyHour = new TabNodeHappyHour(vBox, imageView, slideHappyHour);
+        tabCollection.add(tabNodeHappyHour);
+
+        tab.setContent(vBox);
 
     }
+
 
 
     public void savingPresentation(String chosenDate){
@@ -390,7 +443,7 @@ public class TabController {
                     //addPictureTab((SlidePicture) slide);
                     break;
                 case "SlideHappyHour":
-                    addHappyHourTab();
+                    addHappyHourTab((SlideHappyHour) slide);
                     break;
                 default:
                     System.out.println("Error while calling openPresentation() in TabController");
