@@ -27,7 +27,6 @@ public class Controller {
 
         ArrayList<Slide> slidePresentation = new ArrayList<>();
 
-        System.out.println(tabNodePresentation.size());
 
         for(TabNode tabNode : tabNodePresentation){
 

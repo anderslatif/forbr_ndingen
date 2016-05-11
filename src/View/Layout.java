@@ -130,13 +130,6 @@ public class Layout {
     }
 
 
-    public void openLoadedPresentation(ArrayList<Slide> presentation){
-
-        borderPane.setCenter(tabController.getTabPane());
-        // her skal nok loopes igennem ArrayList presentation for at sortere dem og indlæse dem som TabNodes
-
-    }
-
 
     Stage eventStage;
 
@@ -381,8 +374,9 @@ public class Layout {
 
                 if (buttonText.equals("Open")) {
 
+                    newPresentation();
                     ArrayList<Slide> presentation = DatabaseSaveAndGet.openPresentation(datePicker.getValue().toString());
-                    openLoadedPresentation(presentation);
+                    tabController.openPresentation(presentation);
                 }
 
                 saveStage.close();

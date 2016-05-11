@@ -170,7 +170,7 @@ public class DatabaseSaveAndGet {
 
                         break;
                     default:
-                        System.out.println("default");
+                        System.out.println("Error while calling resultSetToArrayList() in DatabaseSaveAndGet");
 
                 }
 
@@ -197,13 +197,15 @@ public class DatabaseSaveAndGet {
 
             statement = connection.createStatement();
 
+            LocalDate localDate = LocalDate.now(); // todo find out how I can check if it is later than this date
+
             resultSet = statement.executeQuery("SELECT * FROM events;");
 
             if(connection != null){
 
                 while(resultSet.next()){
 
-                    //todo check if the date is later than today's date if so we go into an if statement and add the event to the ArrayList
+
 
                     String date = resultSet.getString("slide_date");
                     String header = resultSet.getString("header");

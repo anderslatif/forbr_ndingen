@@ -375,6 +375,32 @@ public class TabController {
         tabCollection.clear();
     }
 
+    public void openPresentation(ArrayList<Slide> presentation){
+
+        tabCollection.clear();
+
+        for(Slide slide : presentation){
+
+            switch (slide.getSlideType()){
+
+                case "SlideEvent":
+                    addEventTab((SlideEvent) slide);
+                    break;
+                case "SlidePicture":
+                    //addPictureTab((SlidePicture) slide);
+                    break;
+                case "SlideHappyHour":
+                    addHappyHourTab();
+                    break;
+                default:
+                    System.out.println("Error while calling openPresentation() in TabController");
+
+
+            }
+
+        }
+
+    }
 
 
 

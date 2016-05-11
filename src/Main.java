@@ -11,6 +11,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
+
 
 public class Main extends Application {
 
@@ -20,7 +22,6 @@ public class Main extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-
 
         Layout view = new Layout();
 
