@@ -1,17 +1,10 @@
-import Model.DatabaseSaveAndGet;
-import Model.SlidePicture;
-import Model.TabNodePicture;
 import View.Layout;
-import Controller.Controller;
-import Controller.Util;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import java.time.LocalDate;
 
 
 public class Main extends Application {

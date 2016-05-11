@@ -32,13 +32,13 @@ public class DatabaseSaveAndGet {
                     header = eS.getHeader();
                     text = eS.getText();
                     imagePath = Util.turnBackslashToForward(eS.getImagePath());
-                    System.out.println(imagePath);
+                    System.out.println("Slide event image path: " + imagePath);
                     break;
 
                 case "SlidePicture":
                     SlidePicture pS = (SlidePicture) s;
                     imagePath = Util.turnBackslashToForward(pS.getImagePath());
-                    System.out.println(imagePath);
+                    System.out.println("Slide Picture image path: " + imagePath);
                     break;
 
                 case "SlideHappyHour":
@@ -46,6 +46,7 @@ public class DatabaseSaveAndGet {
                     header = hS.getHeader();
                     text = hS.getText();
                     imagePath = Util.turnBackslashToForward(hS.getImagePath());
+                    System.out.println("Slide happy hour image path: " + imagePath);
                     break;
                 default:
                     System.out.println("Error in savePresentation() in DatabaseSaveAndGet.");

@@ -1,13 +1,14 @@
-.eventSlidePane{
+.eventSlide{
 
-    -fx-background-image: url("abstract-mosaic-background.png");
-
+    -fx-background-image: url("background.png");
+    -fx-background-size: stretch;
 }
 
 
-.happyHour{
+.happyHourSlide{
 
-    -fx-background-image: url("abstract-mosaic-background.png");
+    -fx-background-image: url("background.png");
+    -fx-background-size: stretch;
 
 }
 

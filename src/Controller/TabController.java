@@ -277,10 +277,15 @@ public class TabController {
         tabPane.getSelectionModel().select(tab);
 
         VBox vBox = new VBox();
-        vBox.getStyleClass().add("eventSlidePane");
+        vBox.getStyleClass().add("eventSlide");
 
-        TextField headerLabel = new TextField(slideEvent.getHeader());
-        headerLabel.setOpacity(0.4);
+        TextField headerLabel;
+        if(slideEvent.getHeader().equals("null")){
+            headerLabel = new TextField();
+        } else {
+            headerLabel = new TextField(slideEvent.getHeader());
+        }
+        headerLabel.setOpacity(0.8);
         headerLabel.getStyleClass().add("header");
         headerLabel.textProperty().addListener( e -> slideEvent.setHeader(headerLabel.getText()));
 
@@ -304,9 +309,14 @@ public class TabController {
         VBox filler2 = new VBox();
         filler2.setPadding(new Insets(40, 0, 0, 0));
 
-        TextArea textTextArea = new TextArea(slideEvent.getText());
+        TextArea textTextArea;
+        if(slideEvent.getText().equals("null")){
+            textTextArea = new TextArea();
+        } else {
+            textTextArea = new TextArea(slideEvent.getText());
+        }
         textTextArea.getStyleClass().add("text_area");
-        textTextArea.setOpacity(0.3);
+        textTextArea.setOpacity(0.8);
         textTextArea.textProperty().addListener( e -> slideEvent.setText(textTextArea.getText()));
 
         filler2.getChildren().add(textTextArea);
@@ -347,23 +357,23 @@ public class TabController {
 
 
         VBox vBox = new VBox();
-        vBox.getStyleClass().add("happyHour");
+        vBox.getStyleClass().add("happyHourSlide");
 
         Image image = new Image("cocktail.png");
 
         TextField headerTextField = new TextField();
         headerTextField.getStyleClass().add("header");
         headerTextField.setPromptText("Type the header here...");
-        headerTextField.setOpacity(0.6);
+        headerTextField.setOpacity(0.8);
 
         ImageView imageView = new ImageView();
         imageView.setImage(image);
-        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(3));
-        imageView.fitWidthProperty().bind(vBox.widthProperty());
+        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(4));
+        imageView.fitWidthProperty().bind(vBox.widthProperty().subtract(20));
 
         TextArea textTextArea =  new TextArea();
         textTextArea.setPromptText("Type more text here...");
-        textTextArea.setOpacity(0.6);
+        textTextArea.setOpacity(0.8);
         textTextArea.getStyleClass().add("text_area");
 
         SlideHappyHour slideHappyHour = new SlideHappyHour();
@@ -408,15 +418,18 @@ public class TabController {
 
 
         VBox vBox = new VBox();
-        vBox.getStyleClass().add("happyHour");
+        vBox.getStyleClass().add("happyHourSlide");
 
-        TextField headerTextField = new TextField();
-        headerTextField.getStyleClass().add("header");
-        headerTextField.setOpacity(0.6);
-        headerTextField.setPromptText("Type the header here...");
-        if (happyHourSlide.getHeader() != null) {
-            headerTextField.setText(happyHourSlide.getHeader());
+        TextField headerTextField;
+        if (happyHourSlide.getHeader().equals("null") || happyHourSlide.getHeader() == null) {
+            headerTextField = new TextField();
+        } else {
+            headerTextField = new TextField(happyHourSlide.getHeader());
         }
+        headerTextField.getStyleClass().add("header");
+        headerTextField.setOpacity(0.8);
+        headerTextField.setPromptText("Type the header here...");
+
 
         Image image;
         if (happyHourSlide.getImagePath().equals("") || happyHourSlide.getImagePath().equals("null") || happyHourSlide.getImagePath() == null){
@@ -428,15 +441,18 @@ public class TabController {
         ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.fitHeightProperty().bind(vBox.heightProperty().divide(3));
-        imageView.fitWidthProperty().bind(vBox.widthProperty());
+        imageView.fitWidthProperty().bind(vBox.widthProperty().subtract(10));
 
-        TextArea textTextArea =  new TextArea();
-        textTextArea.setOpacity(0.6);
+        TextArea textTextArea;
+        if (happyHourSlide.getText().equals("null") || happyHourSlide.getText() != null){
+            textTextArea = new TextArea();
+        } else {
+            textTextArea = new TextArea(happyHourSlide.getText());
+        }
+        textTextArea.setOpacity(0.8);
         textTextArea.getStyleClass().add("text_area");
         textTextArea.setPromptText("Type more text here...");
-        if (happyHourSlide.getText() != null){
-            textTextArea.setText(happyHourSlide.getText());
-        }
+
         SlideHappyHour slideHappyHour = new SlideHappyHour();
         slideHappyHour.setSlideType("SlideHappyHour");
         headerTextField.textProperty().addListener( e -> slideHappyHour.setHeader(headerTextField.getText()));
