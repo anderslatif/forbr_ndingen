@@ -20,11 +20,12 @@ import java.util.ArrayList;
  */
 public class TabController {
 
-    Stage stage;
-    Scene scene;
-    TabPane tabPane;
-    Controller controller;
-    ArrayList<TabNode> tabCollection;
+    private Stage stage;
+    private Scene scene;
+    private TabPane tabPane;
+    private Controller controller;
+    private ArrayList<TabNode> tabCollection;
+    public boolean justSaved = true;
 
     public TabController(Scene scene, Stage stage){
         this.scene = scene;
@@ -36,6 +37,7 @@ public class TabController {
     public TabPane getTabPane(){
 
         tabCollection.clear();
+        justSaved = true;
 
         tabPane = new TabPane();
 
@@ -101,6 +103,7 @@ public class TabController {
 
     public void addPictureToATab(File file){
 
+        justSaved = false;
 
         // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
         String imagePath = "file:///" + file.getAbsoluteFile().toString();
@@ -187,6 +190,8 @@ public class TabController {
 
     public void addPictureTab(){
 
+        justSaved = false;
+
         Tab tab;
         if(tabCollection.size()>0){
             tab = new Tab();
@@ -257,6 +262,8 @@ public class TabController {
 
     public void addEventTab(SlideEvent slideEvent){
 
+        justSaved = false;
+
         slideEvent.setSlideType("SlideEvent");
 
         Tab tab;
@@ -287,7 +294,10 @@ public class TabController {
         }
         headerLabel.setOpacity(0.8);
         headerLabel.getStyleClass().add("header");
-        headerLabel.textProperty().addListener( e -> slideEvent.setHeader(headerLabel.getText()));
+        headerLabel.textProperty().addListener( e -> {
+            slideEvent.setHeader(headerLabel.getText());
+            justSaved = false;
+        });
 
 
         Image image;
@@ -317,7 +327,10 @@ public class TabController {
         }
         textTextArea.getStyleClass().add("text_area");
         textTextArea.setOpacity(0.8);
-        textTextArea.textProperty().addListener( e -> slideEvent.setText(textTextArea.getText()));
+        textTextArea.textProperty().addListener( e -> {
+            slideEvent.setText(textTextArea.getText());
+            justSaved = false;
+        });
 
         filler2.getChildren().add(textTextArea);
 
@@ -334,6 +347,8 @@ public class TabController {
 
 
     public void addHappyHourTab(){
+
+        justSaved = false;
 
         Tab tab;
         if(tabCollection.size()>0){
@@ -378,8 +393,14 @@ public class TabController {
 
         SlideHappyHour slideHappyHour = new SlideHappyHour();
         slideHappyHour.setSlideType("SlideHappyHour");
-        headerTextField.textProperty().addListener( e -> slideHappyHour.setHeader(headerTextField.getText()));
-        textTextArea.textProperty().addListener( e -> slideHappyHour.setText(textTextArea.getText()));
+        headerTextField.textProperty().addListener( e -> {
+            slideHappyHour.setHeader(headerTextField.getText());
+            justSaved = false;
+        });
+        textTextArea.textProperty().addListener( e -> {
+            slideHappyHour.setText(textTextArea.getText());
+            justSaved = false;
+        });
 
 
         vBox.getChildren().addAll(headerTextField, imageView, textTextArea);
@@ -455,8 +476,14 @@ public class TabController {
 
         SlideHappyHour slideHappyHour = new SlideHappyHour();
         slideHappyHour.setSlideType("SlideHappyHour");
-        headerTextField.textProperty().addListener( e -> slideHappyHour.setHeader(headerTextField.getText()));
-        textTextArea.textProperty().addListener( e -> slideHappyHour.setText(textTextArea.getText()));
+        headerTextField.textProperty().addListener( e -> {
+            slideHappyHour.setHeader(headerTextField.getText());
+            justSaved = false;
+        });
+        textTextArea.textProperty().addListener( e -> {
+            slideHappyHour.setText(textTextArea.getText());
+            justSaved = false;
+        });
 
 
         vBox.getChildren().addAll(headerTextField, imageView, textTextArea);
@@ -513,6 +540,7 @@ public class TabController {
                     System.out.println("Error while calling openPresentation() in TabController");
             }
         }
+        justSaved = true;
     }
 
 

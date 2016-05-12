@@ -36,7 +36,7 @@ public class Main extends Application {
 
 /*        primaryStage.setOnCloseRequest( e -> {
             e.consume();
-            view.savePresentationConfirmation();
+            view.savePresentationBeforeClosingAll();
         });*/
         primaryStage.setScene(scene);
         primaryStage.show();

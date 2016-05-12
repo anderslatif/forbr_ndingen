@@ -5,6 +5,7 @@ import Controller.TabController;
 import Model.DatabaseSaveAndGet;
 import Model.Slide;
 import Model.SlideEvent;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -68,7 +69,13 @@ public class Layout {
 
         MenuItem m1_1 = new MenuItem("_New Presentation");
         m1_1.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
-        m1_1.setOnAction( e -> savePresentationConfirmation());
+        m1_1.setOnAction( e -> {
+            if(tabController.justSaved){
+                newPresentation();
+            } else {
+                savePresentationConfirmation("newPresentation");
+            }
+        });
 
         MenuItem m1_2 = new MenuItem("_Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
@@ -294,8 +301,15 @@ public class Layout {
         aboutStage.show();
     }
 
+    public void savePresentationBeforeClosingAll(){
+        if(tabController.justSaved){
+            stage.close();
+        } else {
+            savePresentationConfirmation("closeAll");
+        }
+    }
 
-    public void savePresentationConfirmation(){
+    public void savePresentationConfirmation(String request){
 
         GridPane gridPane = new GridPane();
         Stage savePresentationStage = new Stage();
@@ -324,18 +338,34 @@ public class Layout {
         button3.setMaxWidth(Double.MAX_VALUE);
         gridPane.add(button3, 0, 2);
 
-        button1.setOnAction( e -> {
-            pickADate("Save");
-            savePresentationStage.close();
-            newPresentation();
-        });
-        button2.setOnAction( e -> {
-            savePresentationStage.close();
-            newPresentation();
-        });
-        button3.setOnAction( e -> savePresentationStage.close());
+        if(request.equals("newPresentation")){
+            button1.setOnAction( e -> {
+                pickADate("Save");
+                savePresentationStage.close();
+                newPresentation();
+            });
+            button2.setOnAction( e -> {
+                savePresentationStage.close();
+                newPresentation();
+            });
+            button3.setOnAction( e -> savePresentationStage.close());
+        } else if(request.equals("closeAll")) {
+                button1.setOnAction(e -> {
+                    pickADate("Save");
+                    savePresentationStage.close();
+                    stage.close();
+                });
+                button2.setOnAction(e -> {
+                    savePresentationStage.close();
+                    stage.close();
+                });
+                button3.setOnAction(e -> {
+                    savePresentationStage.close();
+                });
+            }
 
-        savePresentationStage.setScene(savePresentationScene);
+
+            savePresentationStage.setScene(savePresentationScene);
         savePresentationStage.show();
     }
 
