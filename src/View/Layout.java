@@ -273,7 +273,8 @@ public class Layout {
             if (db.hasFiles()) {
                 success = true;
                 for (File file : db.getFiles()) {
-                    eventImagePath = "file:///" + file.getAbsoluteFile().toString();
+
+                    eventImagePath = controller.copyFileToDrive(file);
                     imageView.setImage(new Image(eventImagePath));
                 }
             }

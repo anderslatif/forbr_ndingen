@@ -106,7 +106,9 @@ public class TabController {
         justSaved = false;
 
         // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
-        String imagePath = "file:///" + file.getAbsoluteFile().toString();
+
+        String imagePath = controller.copyFileToDrive(file);
+
         Image image = new Image(imagePath);
 
         Tab tab = tabPane.getSelectionModel().getSelectedItem();
@@ -163,6 +165,7 @@ public class TabController {
 
                     if (tabNodeHappyHour.getImageView() == currentImageView) {
                         SlideHappyHour slideHappyHour = tabNodeHappyHour.getSlide();
+                        System.out.println("printer imagepath "+imagePath);
                         slideHappyHour.setImagePath(imagePath);
                     }
 
@@ -172,7 +175,8 @@ public class TabController {
 
                     if (tabNodeEvent.getImageView() == currentImageView){
                         SlideEvent slideEvent = tabNodeEvent.getSlide();
-                        slideEvent.setImagePath(imagePath);
+                        System.out.println(imagePath);
+                        slideEvent.setImagePath("printer imagepath "+imagePath);
                     }
 
 

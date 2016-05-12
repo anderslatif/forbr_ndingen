@@ -8,6 +8,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -43,6 +46,52 @@ public class Controller {
 
     public void saveNewSlideEventToDB(SlideEvent slideEvent){
         DatabaseSaveAndGet.saveNewEventSlide(slideEvent);
+    }
+
+    public String copyFileToDrive(File file){
+
+        String imagePath = file.getAbsoluteFile().toString();
+
+        FileInputStream in = null;
+        FileOutputStream out = null;
+
+        try{
+            in = new FileInputStream(imagePath);
+            out = new FileOutputStream("FileServer/"+file.getName()); //end-point
+            int myByte;
+
+            //while Loop - Kører så længe inputted ikke er -1
+            while ((myByte = in.read()) != -1){
+                out.write(myByte);
+            }
+
+        } catch (IOException ex1){
+            ex1.printStackTrace();
+
+        }finally {
+
+            try{
+                if (in != null){
+                    in.close();
+                }
+                if (out != null){
+                    out.close();
+                }
+            } catch (IOException ex1){
+                ex1.printStackTrace();
+            }
+
+
+
+        }
+
+        File copiedFile = new File("FileServer/"+file.getName());
+
+        imagePath = "file:///"+copiedFile.getAbsoluteFile().toString();
+
+        return imagePath;
+
+
     }
 
 
