@@ -107,7 +107,7 @@ public class TabController {
 
         // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
 
-        String imagePath = controller.copyFileToDrive(file);
+        String imagePath = "file:///" + file.getAbsoluteFile().toString();
 
         Image image = new Image(imagePath);
 

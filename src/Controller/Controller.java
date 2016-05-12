@@ -35,6 +35,8 @@ public class Controller {
 
             slidePresentation.add(tabNode.getSlide());
 
+            // todo call copyFileToDrive() from here remember to handle slashes
+
         }
 
         DatabaseSaveAndGet.savePresentation(slidePresentation, chosenDate);
@@ -50,7 +52,7 @@ public class Controller {
 
     public String copyFileToDrive(File file){
 
-        String imagePath = file.getAbsoluteFile().toString();
+        String imagePath = Util.turnBackslashToForward(file.getAbsoluteFile().toString());
 
         FileInputStream in = null;
         FileOutputStream out = null;
