@@ -65,8 +65,8 @@ public class Controller {
                 out.write(myByte);
             }
 
-        } catch (IOException ex1){
-            ex1.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
 
         }finally {
 
@@ -77,8 +77,8 @@ public class Controller {
                 if (out != null){
                     out.close();
                 }
-            } catch (IOException ex1){
-                ex1.printStackTrace();
+            } catch (IOException e){
+                e.printStackTrace();
             }
 
 
