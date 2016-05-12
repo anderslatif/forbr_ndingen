@@ -4,7 +4,8 @@ import Controller.Util;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * Created by Anders on 4/21/2016.
@@ -91,7 +92,6 @@ public class DatabaseSaveAndGet {
     }
 
     public static void deleteSlidesWithThisDate(String date){
-        ArrayList<Slide> presentation = null;
 
         Connection connection = null;
         Statement statement = null;
@@ -180,7 +180,7 @@ public class DatabaseSaveAndGet {
                         String eText = resultSet.getString("slide_text");
                         String eImagePath = resultSet.getString("image_path");
 
-                        SlideEvent se = new SlideEvent("SlideEvent", "", eHeader, eText, eImagePath);
+                        SlideEvent se = new SlideEvent("SlideEvent", "", null, eHeader, eText, eImagePath);
 
                         presentation.add(se);
 
@@ -229,6 +229,8 @@ public class DatabaseSaveAndGet {
         ResultSet resultSet = null;
 
         ArrayList<SlideEvent> eventCollection = new ArrayList<>();
+        List<LocalDate> eventDateList = new ArrayList<>();
+        ArrayList<SlideEvent> orderedEventList = new ArrayList<>();
 
         try {
             connection = DatabaseConnection.getConnection();
@@ -244,20 +246,38 @@ public class DatabaseSaveAndGet {
                 while(resultSet.next()){
 
 
-
                     String date = resultSet.getString("slide_date");
                     String header = resultSet.getString("header");
                     String textLabel = resultSet.getString("slide_text");
                     String imagePath = resultSet.getString("image_path");
 
+                    LocalDate dateOfSlideEvent = LocalDate.parse(date);
 
-                    SlideEvent slideEvent = new SlideEvent("slideEvent", date, header, textLabel, imagePath);
+                    SlideEvent slideEvent = new SlideEvent("slideEvent", date, dateOfSlideEvent, header, textLabel, imagePath);
 
                     eventCollection.add(slideEvent);
-                        // todo make the String date into a Date and sort it with Collections.sort
-                        // http://stackoverflow.com/questions/5927109/sort-objects-in-arraylist-by-date
+                    eventDateList.add(dateOfSlideEvent);
+
                 }
 
+/*                Collections.sort(eventCollection, new Comparator<SlideEvent>() {
+                    @Override
+                    public int compare(SlideEvent o1, SlideEvent o2) {
+                        return o1.getLocalDate().compareTo(o2.getLocalDate());
+                    }
+                });*/
+
+                Collections.sort(eventDateList);
+
+                for(LocalDate loco : eventDateList){
+
+                    for(SlideEvent slideEvent : eventCollection){
+
+                        if(loco == slideEvent.getLocalDate()){
+                            orderedEventList.add(slideEvent);
+                        }
+                    }
+                }
 
             }
 
@@ -287,7 +307,7 @@ public class DatabaseSaveAndGet {
                 }
             }
 
-            return eventCollection;
+            return orderedEventList;
         }
 
     }
