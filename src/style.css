@@ -1,6 +1,12 @@
+@font-face {
+    font-family: Contribute;
+    src: url('fonts/Contribute_Bold.otf');
+}
+
+
 .root{
 
-    -fx-font-family: ;
+    -fx-font-family: 'Contribute';
 }
 
 
@@ -26,3 +32,4 @@
 .text_area{
     -fx-font-size: 18px;
 }
+

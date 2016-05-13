@@ -47,8 +47,7 @@ public class Controller {
 
 
             if(slide.getImagePath() != null){  // todo check if the null check is correct, need to check on empty string and null string?
-                System.out.println("Filepath sent to copyFileToDrive: " + Util.turnBackslashToForward(slide.getImagePath()));
-                //slide.setImagePath(copyFileToDrive(Util.turnBackslashToForward(slide.getImagePath())));
+                slide.setImagePath(copyFileToDrive(Util.turnBackslashToForward(slide.getImagePath())));
             }
 
         }
@@ -58,16 +57,17 @@ public class Controller {
 
     public String copyFileToDrive(String filePath){
 
-        File file = new File(filePath);
+        File file = new File(Util.turnBackslashToForward(filePath));
 
-        String imagePath = Util.turnBackslashToForward(file.getAbsoluteFile().toString());
+        System.out.println("Filepath: " + filePath);
+        System.out.println("File: " + file);
 
         FileInputStream in = null;
         FileOutputStream out = null;
 
         try{
-            in = new FileInputStream(imagePath);
-            out = new FileOutputStream("FileServer/"+file.getName()); //end-point
+            in = new FileInputStream(filePath);
+            out = new FileOutputStream("FileServer/"+Util.turnBackslashToForward(file.getName())); //end-point
             int myByte;
 
             //while Loop - Kører så længe inputted ikke er -1
@@ -97,9 +97,12 @@ public class Controller {
 
         File copiedFile = new File("FileServer/"+file.getName());
 
-        imagePath = "file:///"+copiedFile.getAbsoluteFile().toString();
+        filePath = "file:///"+copiedFile.getAbsoluteFile().toString();
 
-        return imagePath;
+        System.out.println("New Copied File: " + copiedFile);
+        System.out.println("New file path: " + filePath);
+
+        return filePath;
 
 
     }
