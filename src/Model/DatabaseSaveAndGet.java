@@ -190,7 +190,7 @@ public class DatabaseSaveAndGet {
 
                         String pImagePath = resultSet.getString("image_path");
 
-                        SlidePicture sp = new SlidePicture("SlidePicture", date, pImagePath);
+                        SlidePicture sp = new SlidePicture("SlidePicture", pImagePath);
 
                         presentation.add(sp);
 
@@ -329,7 +329,7 @@ public class DatabaseSaveAndGet {
                 String header = Util.escapeApostrophe(slideEvent.getHeader());
                 String textLabel = Util.escapeApostrophe(slideEvent.getText());
 
-                String sanitizedPath = slideEvent.getImagePath();
+                String sanitizedPath = Util.turnBackslashToForward(slideEvent.getImagePath());
                 String queryString = "'" + date + "', '" + header + "', '" +
                                           textLabel+ "', '" + sanitizedPath + "'";
 
