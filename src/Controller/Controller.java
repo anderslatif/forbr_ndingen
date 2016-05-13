@@ -47,11 +47,12 @@ public class Controller {
 
 
             if(slide.getImagePath() != null){  // todo check if the null check is correct, need to check on empty string and null string?
-<<<<<<< HEAD
-                System.out.println("Filepath sent to copyFileToDrive: " + Util.turnBackslashToForward(slide.getImagePath()));
-=======
->>>>>>> 8edcc97ee4de0ad6dc42a6f5979c900112c48156
-                slide.setImagePath(copyFileToDrive(Util.turnBackslashToForward(slide.getImagePath())));
+                //System.out.println("Filepath sent to copyFileToDrive: " + Util.turnBackslashToForward(slide.getImagePath()));
+
+                String new_path = copyFileToDrive(slide.getImagePath());
+
+                slide.setImagePath(new_path);
+
             }
 
         }
@@ -61,16 +62,15 @@ public class Controller {
 
     public String copyFileToDrive(String filePath){
 
-        File file = new File(Util.turnBackslashToForward(filePath));
+        String tempPath = Util.turnBackslashToForward(filePath.substring(8));
 
-        System.out.println("Filepath: " + filePath);
-        System.out.println("File: " + file);
+        File file = new File(tempPath);
 
         FileInputStream in = null;
         FileOutputStream out = null;
 
         try{
-            in = new FileInputStream(filePath);
+            in = new FileInputStream(tempPath);
             out = new FileOutputStream("FileServer/"+Util.turnBackslashToForward(file.getName())); //end-point
             int myByte;
 
@@ -99,12 +99,9 @@ public class Controller {
 
         }
 
-        File copiedFile = new File("FileServer/"+file.getName());
+        File copiedFile = new File("FileServer/"+Util.turnBackslashToForward(file.getName()));
 
         filePath = "file:///"+copiedFile.getAbsoluteFile().toString();
-
-        System.out.println("New Copied File: " + copiedFile);
-        System.out.println("New file path: " + filePath);
 
         return filePath;
 

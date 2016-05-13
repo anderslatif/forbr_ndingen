@@ -107,6 +107,8 @@ public class TabController {
 
         // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
 
+        System.out.println(file.getAbsoluteFile().toString());
+
         String imagePath = "file:///" + file.getAbsoluteFile().toString();
 
         Image image = new Image(imagePath);
