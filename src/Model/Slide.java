@@ -6,6 +6,7 @@ package Model;
 public class Slide {
 
     private String slideType;
+    private String imagePath;
 
     public Slide(){}
 
@@ -20,4 +21,16 @@ public class Slide {
     public void setSlideType(String slideType) {
         this.slideType = slideType;
     }
+
+    public String getImagePath(){
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath){
+        this.imagePath = imagePath;
+    }
+
+
+
+
 }

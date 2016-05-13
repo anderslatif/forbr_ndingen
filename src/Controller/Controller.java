@@ -26,6 +26,14 @@ public class Controller {
         // remember error messages if images or media can't be found
     }
 
+
+
+    public void saveNewSlideEventToDB(SlideEvent slideEvent){
+        DatabaseSaveAndGet.saveNewEventSlide(slideEvent);
+    }
+
+
+
     public void savePresentation(ArrayList<TabNode> tabNodePresentation, String chosenDate){
 
         ArrayList<Slide> slidePresentation = new ArrayList<>();
@@ -33,24 +41,24 @@ public class Controller {
 
         for(TabNode tabNode : tabNodePresentation){
 
-            slidePresentation.add(tabNode.getSlide());
+            Slide slide = tabNode.getSlide();
 
-            // todo call copyFileToDrive() from here remember to handle slashes
+            slidePresentation.add(slide);
+
+
+            if(slide.getImagePath() != null){  // todo check if the null check is correct, need to check on empty string and null string?
+                System.out.println("Filepath sent to copyFileToDrive: " + Util.turnBackslashToForward(slide.getImagePath()));
+                //slide.setImagePath(copyFileToDrive(Util.turnBackslashToForward(slide.getImagePath())));
+            }
 
         }
 
         DatabaseSaveAndGet.savePresentation(slidePresentation, chosenDate);
     }
 
+    public String copyFileToDrive(String filePath){
 
-
-
-
-    public void saveNewSlideEventToDB(SlideEvent slideEvent){
-        DatabaseSaveAndGet.saveNewEventSlide(slideEvent);
-    }
-
-    public String copyFileToDrive(File file){
+        File file = new File(filePath);
 
         String imagePath = Util.turnBackslashToForward(file.getAbsoluteFile().toString());
 

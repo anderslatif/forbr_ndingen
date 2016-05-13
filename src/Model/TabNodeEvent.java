@@ -10,9 +10,9 @@ import javafx.scene.layout.VBox;
  */
 public class TabNodeEvent implements TabNode{
 
-    VBox vBox;
-    ImageView imageView;
-    SlideEvent slideEvent;
+    private VBox vBox;
+    private ImageView imageView;
+    private SlideEvent slideEvent;
 
     public TabNodeEvent(VBox vBox, ImageView imageView, SlideEvent slideEvent){
         this.vBox = vBox;
@@ -25,9 +25,6 @@ public class TabNodeEvent implements TabNode{
         return vBox;
     }
 
-    public VBox getVBox(){
-        return vBox;
-    }
 
     public void setVBox(VBox vBox){
         this.vBox = vBox;

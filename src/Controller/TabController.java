@@ -123,7 +123,7 @@ public class TabController {
 
                     TabNodePicture tabNodePicture = (TabNodePicture) tabNode;
 
-                    if(tabNodePicture.getImageNode() == currentImageView){
+                    if(tabNodePicture.getNode() == currentImageView){
                         SlidePicture slidePicture = tabNodePicture.getSlide();
                         slidePicture.setImagePath(imagePath);
                     }
