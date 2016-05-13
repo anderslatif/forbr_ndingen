@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -8,6 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -27,6 +30,7 @@ public class TabController {
     private ArrayList<TabNode> tabCollection;
     public boolean justSaved = true;
 
+
     public TabController(Scene scene, Stage stage){
         this.scene = scene;
         this.stage = stage;
@@ -34,7 +38,11 @@ public class TabController {
         controller = new Controller();
     }
 
-    public TabPane getTabPane(){
+    public int getTabCollectionSize(){
+        return tabCollection.size();
+    }
+
+    public TabPane getNewTabPane(){
 
         tabCollection.clear();
         justSaved = true;
@@ -43,6 +51,10 @@ public class TabController {
 
         initializeTabController(tabPane);
 
+        return tabPane;
+    }
+
+    public TabPane getTabPane(){
         return tabPane;
     }
 
@@ -176,14 +188,8 @@ public class TabController {
                         SlideEvent slideEvent = tabNodeEvent.getSlide();
                         slideEvent.setImagePath(imagePath);
                     }
-
-
                 }
-
-
             }
-
-
         }
 
 

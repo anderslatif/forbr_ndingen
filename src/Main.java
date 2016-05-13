@@ -21,6 +21,7 @@ public class Main extends Application {
 
 
         Scene scene = new Scene(view.getRootLayout());
+        view.initializeLayout(scene, primaryStage);
 
         double compensatingForNotFullView = Screen.getPrimary().getVisualBounds().getHeight() * 0.125;
         primaryStage.setMinHeight(Screen.getPrimary().getVisualBounds().getHeight());
@@ -30,7 +31,6 @@ public class Main extends Application {
 
         scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
 
-        view.initializeLayout(scene, primaryStage);
 
         primaryStage.getIcons().add(new Image("file:src/logo.png"));
 

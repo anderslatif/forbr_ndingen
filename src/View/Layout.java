@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -122,8 +123,12 @@ public class Layout {
         MenuItem m4_1 = new MenuItem("User Manual");
         m4_1.setOnAction( e -> showUserManual());
 
+        MenuItem m4_2 = new MenuItem("Analyze ratio");
+        m4_2.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN));
+        m4_2.setOnAction( e -> analyzeRatio());
 
-        menu4.getItems().addAll(m4_1);
+
+        menu4.getItems().addAll(m4_1, m4_2);
 
         ///////////////////////////////////////
 
@@ -135,9 +140,10 @@ public class Layout {
 
 
 
+
     public void newPresentation(){
 
-        borderPane.setCenter(tabController.getTabPane());
+        borderPane.setCenter(tabController.getNewTabPane());
     }
 
 
@@ -486,6 +492,10 @@ public class Layout {
 
     public void pickADate(String buttonText){
 
+        if(buttonText.equals("Save") && tabController.getTabCollectionSize() == 0){
+            return;
+        }
+
         DatePicker datePicker = new DatePicker();
 
         Label warningLabel = new Label();
@@ -548,6 +558,95 @@ public class Layout {
             }
         });
     }
+
+
+    public void analyzeRatio(){  // this is pure nonsense
+
+        TabPane tabPane = tabController.getTabPane();
+
+        Tab tab = tabPane.getSelectionModel().getSelectedItem();
+
+
+
+        if(tab.getContent() instanceof javafx.scene.image.ImageView){
+            ImageView currentImageView = (ImageView) tab.getContent();
+
+            Image image;
+            if(currentImageView.getImage() == null){
+                return;
+            } else {
+            }
+            image = currentImageView.getImage();
+
+            double ratio = image.getHeight() / image.getWidth();
+
+            if(ratio == 1.5){
+                System.out.println("perfect ratio");
+            } else if(ratio < 1.5){
+                ratio = ratio - 1.5;
+                System.out.println("Your image is " + ratio + " too wide");
+            } else if(ratio > 1.5){
+                ratio = ratio - 1.5;
+                System.out.println("Your image is " + ratio + " too high");
+            }
+
+
+        } else if(tab.getContent() instanceof javafx.scene.layout.VBox) {
+
+            VBox vBox = (VBox) tab.getContent();
+
+            ImageView currentImageView = null;
+
+            for (Node node : vBox.getChildren()) {
+
+                if(node instanceof javafx.scene.image.ImageView){
+                    currentImageView = (ImageView) node;
+                    Image image;
+                    if(currentImageView.getImage() == null){
+                        return;
+                    } else {
+                        image = currentImageView.getImage();
+                    }
+
+
+                    double prefHeight = vBox.getHeight() / 4;
+                    double prefWidth = vBox.getWidth();
+                    double actualHeight = image.getHeight();
+                    double actualWidth = image.getWidth();
+                    double differenceHeight = prefHeight - actualHeight;
+                    double differenceWidth = prefWidth - actualWidth;
+
+                    System.out.println("The height is " + differenceHeight + " off the mark.");
+                    System.out.println("Your width is " + differenceWidth + " off the mark.");
+
+
+                } else if (node instanceof  javafx.scene.layout.VBox){
+
+                    VBox childVBox = (VBox) node;
+
+                    for (Node noodle : childVBox.getChildren()){
+
+                        if(noodle instanceof javafx.scene.image.ImageView){
+                            currentImageView = (ImageView) noodle;
+                            Image image;
+                            if(currentImageView.getImage() == null){
+                                return;
+                            } else {
+                                image = currentImageView.getImage();
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+
+
+    }
+
 
 
 

@@ -20,6 +20,19 @@ public class Util {
         return stringToParse;
     }
 
+    public static String turnBackslashToForwardForFilePath(String stringToParse) {
+
+        stringToParse = "12345678" + stringToParse;
+        if (stringToParse.equals("") || stringToParse.equals("null") || stringToParse == null ){
+            stringToParse += "";
+        } else {
+            stringToParse += stringToParse.replaceAll("\\\\", "/");
+        }
+
+        return stringToParse;
+    }
+
+
 
     public static String escapeApostrophe(String stringToParse){
 

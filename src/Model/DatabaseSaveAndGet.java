@@ -381,7 +381,7 @@ public class DatabaseSaveAndGet {
                 String header = Util.escapeApostrophe(slideEvent.getHeader());
                 String textLabel = Util.escapeApostrophe(slideEvent.getText());
 
-                String imagePath =  Util.turnBackslashToForward(slideEvent.getImagePath());
+                String imagePath =  Util.turnBackslashToForwardForFilePath(slideEvent.getImagePath());
 
                 String queryString = "'" + date + "', '" + startTime + "', '" +header + "', '" +
                                           textLabel+ "', '" + imagePath + "'";
