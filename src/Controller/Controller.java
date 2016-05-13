@@ -104,10 +104,14 @@ public class Controller {
 
         return filePath;
 
-
     }
 
 
+    public void deleteEvent(SlideEvent slideEvent){
+
+        DatabaseSaveAndGet.deleteEventSlide(slideEvent);
+
+    }
 
 
 

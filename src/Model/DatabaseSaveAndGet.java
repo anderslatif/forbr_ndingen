@@ -368,6 +368,43 @@ public class DatabaseSaveAndGet {
     }
 
 
+    public static void deleteEventSlide(SlideEvent slideEvent){
+
+        Connection connection = null;
+        Statement statement = null;
+
+        String date = slideEvent.getDate();
+        String header = slideEvent.getHeader();
+        String slideText = slideEvent.getText();
+        String sqlQuery = "DELETE FROM events WHERE slide_date = '" + date + "' AND header = '" + header +"' AND slide_text = '" + slideText + "'";
+
+        try {
+            connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
+            statement.executeUpdate(sqlQuery);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
 
 
 }
