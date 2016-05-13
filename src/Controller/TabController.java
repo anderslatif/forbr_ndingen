@@ -167,7 +167,6 @@ public class TabController {
 
                     if (tabNodeHappyHour.getImageView() == currentImageView) {
                         SlideHappyHour slideHappyHour = tabNodeHappyHour.getSlide();
-                        System.out.println("printer imagepath "+imagePath);
                         slideHappyHour.setImagePath(imagePath);
                     }
 
@@ -177,8 +176,7 @@ public class TabController {
 
                     if (tabNodeEvent.getImageView() == currentImageView){
                         SlideEvent slideEvent = tabNodeEvent.getSlide();
-                        System.out.println(imagePath);
-                        slideEvent.setImagePath("printer imagepath "+imagePath);
+                        slideEvent.setImagePath(imagePath);
                     }
 
 
