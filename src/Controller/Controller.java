@@ -48,7 +48,7 @@ public class Controller {
 
             if(slide.getImagePath() != null){  // todo check if the null check is correct, need to check on empty string and null string?
                 System.out.println("Filepath sent to copyFileToDrive: " + Util.turnBackslashToForward(slide.getImagePath()));
-                //slide.setImagePath(copyFileToDrive(Util.turnBackslashToForward(slide.getImagePath())));
+                slide.setImagePath(copyFileToDrive(Util.turnBackslashToForward(slide.getImagePath())));
             }
 
         }
