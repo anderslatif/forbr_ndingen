@@ -229,11 +229,17 @@ public class Layout {
         DatePicker datePicker = new DatePicker();
         TextField headerTextField = new TextField();
         vBox1.getChildren().addAll(datePicker, headerTextField);
+        //vBox1.setMaxWidth(100);
+        //vBox1.setMaxHeight(100);
 
         eventBorderPane.setTop(vBox1);
 
         StackPane stackPane = new StackPane();
         ImageView imageView = new ImageView();
+        //imageView.fitHeightProperty().setValue(vBox1.getHeight());
+        //imageView.fitWidthProperty().setValue(vBox1.getWidth());
+        //imageView.maxWidth(vBox1.getWidth());
+
         Label label = new Label("Drop image here.");
         stackPane.getChildren().addAll(imageView, label);
         eventBorderPane.setCenter(stackPane);
