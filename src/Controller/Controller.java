@@ -47,12 +47,16 @@ public class Controller {
 
 
             if(slide.getImagePath() != null){  // todo check if the null check is correct, need to check on empty string and null string?
+<<<<<<< HEAD
                 //System.out.println("Filepath sent to copyFileToDrive: " + Util.turnBackslashToForward(slide.getImagePath()));
 
                 String new_path = copyFileToDrive(slide.getImagePath());
 
                 slide.setImagePath(new_path);
 
+=======
+                slide.setImagePath(copyFileToDrive(Util.turnBackslashToForward(slide.getImagePath())));
+>>>>>>> d2c9cf1e630cd3f15ab4e0e5ff6e99296eafb79f
             }
 
         }
@@ -105,10 +109,14 @@ public class Controller {
 
         return filePath;
 
-
     }
 
 
+    public void deleteEvent(SlideEvent slideEvent){
+
+        DatabaseSaveAndGet.deleteEventSlide(slideEvent);
+
+    }
 
 
 

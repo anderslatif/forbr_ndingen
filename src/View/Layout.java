@@ -179,7 +179,11 @@ public class Layout {
 
             final int indexNow = index-1; // because the index starts from 1 since the program is used by non-programmers
             // final because this is necessary in a lambda expression
-            //todo button1.setOnAction( e -> controller.deleteEvent());
+            button1.setOnAction( e -> {
+                controller.deleteEvent(eventCollection.get(indexNow));
+                eventStage.close();
+                getEventOverview();
+            });
             button2.setOnAction( e -> tabController.addEventTab(eventCollection.get(indexNow)));
 
 
@@ -236,9 +240,8 @@ public class Layout {
 
         StackPane stackPane = new StackPane();
         ImageView imageView = new ImageView();
-        //imageView.fitHeightProperty().setValue(vBox1.getHeight());
-        //imageView.fitWidthProperty().setValue(vBox1.getWidth());
-        //imageView.maxWidth(vBox1.getWidth());
+        imageView.fitHeightProperty().bind(newEventScene.heightProperty().subtract(100));
+        imageView.fitWidthProperty().bind(newEventScene.heightProperty().divide(1.5));
 
         Label label = new Label("Drop image here.");
         stackPane.getChildren().addAll(imageView, label);
