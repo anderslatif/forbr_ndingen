@@ -107,8 +107,6 @@ public class TabController {
 
         // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
 
-        System.out.println(file.getAbsoluteFile().toString());
-
         String imagePath = "file:///" + file.getAbsoluteFile().toString();
 
         Image image = new Image(imagePath);
@@ -303,6 +301,18 @@ public class TabController {
             justSaved = false;
         });
 
+        TextField startTimeLabel;
+        if(slideEvent.getStartTime().equals("null")){
+            startTimeLabel = new TextField();
+        } else {
+            startTimeLabel = new TextField(slideEvent.getStartTime());
+        }
+        startTimeLabel.setOpacity(0.8);
+        startTimeLabel.getStyleClass().add("text_area");
+        startTimeLabel.textProperty().addListener( e -> {
+            slideEvent.setStartTime(startTimeLabel.getText());
+            justSaved = false;
+        });
 
         Image image;
         if (slideEvent.getImagePath().equals("null")){
@@ -317,7 +327,7 @@ public class TabController {
 
         VBox filler1 = new VBox();
         filler1.setPadding(new Insets(20, 0, 0, 0));
-        filler1.getChildren().addAll(headerLabel, imageView);
+        filler1.getChildren().addAll(headerLabel, startTimeLabel, imageView);
 
 
         VBox filler2 = new VBox();
@@ -388,7 +398,7 @@ public class TabController {
         ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.fitHeightProperty().bind(vBox.heightProperty().divide(4));
-        imageView.fitWidthProperty().bind(vBox.widthProperty().subtract(20));
+        imageView.fitWidthProperty().bind(vBox.widthProperty());
 
         TextArea textTextArea =  new TextArea();
         textTextArea.setPromptText("Type more text here...");
@@ -504,6 +514,8 @@ public class TabController {
 
 
     public void savingPresentation(String chosenDate){
+
+        justSaved = true;
 
         ArrayList<TabNode> presentation = new ArrayList();
 

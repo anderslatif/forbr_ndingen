@@ -13,14 +13,14 @@
 .eventSlide{
 
     -fx-background-image: url("background.png");
-    -fx-background-size: stretch;
+    -fx-background-size: contain;
 }
 
 
 .happyHourSlide{
 
     -fx-background-image: url("background.png");
-    -fx-background-size: stretch;
+    -fx-background-size: contain;
 
 }
 

@@ -5,6 +5,7 @@ import Controller.TabController;
 import Model.DatabaseSaveAndGet;
 import Model.Slide;
 import Model.SlideEvent;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -16,9 +17,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -115,8 +119,8 @@ public class Layout {
         ///////////////////////////////////////
         Menu menu4 = new Menu("About");
 
-        MenuItem m4_1 = new MenuItem("About");
-        m4_1.setOnAction( e -> showAbout());
+        MenuItem m4_1 = new MenuItem("User Manual");
+        m4_1.setOnAction( e -> showUserManual());
 
 
         menu4.getItems().addAll(m4_1);
@@ -230,11 +234,20 @@ public class Layout {
 
 
         VBox vBox1 = new VBox();
+
+        HBox hBoxDateTime = new HBox();
         DatePicker datePicker = new DatePicker();
+        datePicker.setPromptText("Select the date");
+        TextField timePicker = new TextField();
+        timePicker.setPromptText("Event starts at... hh:mm");
+        Label popUpLabel = new Label();
+        popUpLabel.setFont(Font.font("bold"));
+        popUpLabel.setTextFill(Color.RED);
+        hBoxDateTime.getChildren().addAll(datePicker, timePicker, popUpLabel);
+
         TextField headerTextField = new TextField();
-        vBox1.getChildren().addAll(datePicker, headerTextField);
-        //vBox1.setMaxWidth(100);
-        //vBox1.setMaxHeight(100);
+        headerTextField.setPromptText("Add the header...");
+        vBox1.getChildren().addAll(hBoxDateTime, headerTextField);
 
         eventBorderPane.setTop(vBox1);
 
@@ -251,14 +264,29 @@ public class Layout {
 
         VBox vBox2 = new VBox();
         TextField textTextField = new TextField();
+        textTextField.setPromptText("Write some text...");
         Button doneButton = new Button("Done");
 
         doneButton.setOnAction( e -> {
-            controller.saveNewSlideEventToDB(new SlideEvent("SlideEvent", datePicker.getValue().toString(),
-                    datePicker.getValue(), headerTextField.getText(), textTextField.getText(), eventImagePath));
-            newEventStage.close();
-            eventStage.close();
-            getEventOverview();
+            if(datePicker.getValue() == null){
+                popUpLabel.setText("You must select a date.");
+                FadeTransition fadeTransition = new FadeTransition(Duration.millis(8000), popUpLabel);
+                fadeTransition.setFromValue(1.0);
+                fadeTransition.setToValue(0.0);
+                fadeTransition.play();
+            } else if(imageView.getImage() == null){
+                popUpLabel.setText("You must add an image.");
+                FadeTransition fadeTransition = new FadeTransition(Duration.millis(8000), popUpLabel);
+                fadeTransition.setFromValue(1.0);
+                fadeTransition.setToValue(0.0);
+                fadeTransition.play();
+            } else {
+                controller.saveNewSlideEventToDB(new SlideEvent("SlideEvent", datePicker.getValue().toString(),
+                        datePicker.getValue(), timePicker.getText(), headerTextField.getText(), textTextField.getText(), eventImagePath));
+                newEventStage.close();
+                eventStage.close();
+                getEventOverview();
+            }
         });
 
         vBox2.getChildren().addAll(textTextField, doneButton);
@@ -296,21 +324,97 @@ public class Layout {
         newEventStage.show();
     }
 
+    public void showUserManual(){
 
-    public void showAbout(){
+        HBox hBox = new HBox();
 
-        VBox vBox = new VBox();
+        Stage userManualStage = new Stage();
+        Scene userManualScene = new Scene(hBox);
 
-        Stage aboutStage = new Stage();
-        Scene aboutScene = new Scene(vBox);
+        TreeItem root = new TreeItem();
+        root.setExpanded(true);
 
-        Label label = new Label("This program has been created by: \n\nAnders, Dennis and Mikkel\n\nDat15A, Førsteårsprojekt - 2016");
-        label.setPadding(new Insets(20, 20, 20, 20));
-        vBox.getChildren().add(label);
 
-        aboutStage.setScene(aboutScene);
-        aboutStage.show();
+        TreeItem treeItem1 = new TreeItem("Velkommen");
+        TreeItem treeItem2 = new TreeItem("Event Oversigten");
+        TreeItem treeItem3 = new TreeItem("Event Slides");
+        TreeItem treeItem4 = new TreeItem("Picture Slides");
+        TreeItem treeItem5 = new TreeItem("Bar Tilbud Slides");
+        TreeItem treeItem6 = new TreeItem("Om Præsentationer");
+        TreeItem treeItem7 = new TreeItem("Raspberry Pi");
+        TreeItem treeItem8 = new TreeItem("Andet");
+
+
+        root.getChildren().addAll(treeItem1, treeItem2, treeItem3, treeItem4, treeItem5, treeItem6, treeItem7, treeItem8);
+
+        TreeView<String> treeView = new TreeView<>(root);
+        treeView.setShowRoot(false);
+
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+
+        treeView.setOnMouseClicked( e -> {
+            TreeItem selectedItem = treeView.getSelectionModel().getSelectedItem();
+            String display = "";
+
+            if(selectedItem.getValue().equals("Velkommen")){
+                display = "Velkommen!\n\n";
+                display += "This program has been created by: \n\nAnders, Dennis and Mikkel\n\nDat15A, Førsteårsprojekt - 2016\n\nFor Forbrændingen.";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Event Oversigten")){
+                display = "Event Oversigten er separat fra oprettelse af de andre typer slides.\n\n";
+                display += "Grunden til det er, at når man opretter et standard slide, så skal man arbejde på det fra starten af, ";
+                display += "men events skal kunne genbruges, så længe de er relevante. Derfor kan de indsættes fra en oversigt.\n\n";
+                display += "Event oversigten viser events i kronologisk rækkefølge. Ingen events før dags dato vises.\n\n";
+                display += "Til sidst kan det nævnes, at man i event oversigten kan klikke \"Add a new Event\" knappen for at oprette et Event Slide.\n\n";
+                display += "Vælg næste punkt i manualen for at lære mere om det.";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Event Slides")){
+                display = "Event Slides består af den dato eventet foregår, et start tidspunkt, en header, noget tekst og et billede.\n\n";
+                display += "For at oprette et Event, skal man som minimum udfylde dato og indsætte et billede. ";
+                display += "Hvis intet billede ønskes, så indsæt en png fil med usynlig baggrund.\n\n";
+                display += "Vær dog opmærksom på, at hvis et event bliver oprettet uden komplet information skal informationen tilføjes senere i præsentationen hver eneste gang.\n";
+                display += "Alternativet er at slette eventet i oversigten og genoprette det.\n\n";
+                display += "Vi håber ikke, at det ikke er for besværligt. Vi anbefaler først at oprette events, når al information og billedet er klar. ";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Picture Slides")){
+                display = "Picture slides er simpelthen ethvert billede der droppes på programmet.\n\n";
+                display += "Billedet vil fylde hele skærmen, så vælg et billede der har den korrekte ratio. Bredden skal være Højden divideret med 1,5.";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Bar Tilbud Slides")){
+                display = "Et bar tilbud slide består af en header, et billede og noget tekst.\n\n";
+                display += "Det er muligt ikke at tilføje et billede til et bar tilbud slide og den sorte baggrund vil så vises i stedet.\n\n";
+                display += "Alle slides må selvfølgelig gerne bruges til andre formål en deres navne. ";
+                display += "Faktisk er Bar Tilbud slidet oplagt at bruge til andre ting med samme format.";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Om Præsentationer")){
+                display = "En præsentation er en samling af slides, der gemmes under en bestemt dato.\n\n";
+                display += "Forsøger man at gemme på en dato hvor der allerede er gemt en præsentation, så overskrives den gamle præsentation. ";
+                display += "Før overskrivningen kommer der en advarsel, som man kan tage stilling til.\n\n";
+                display += "Det er muligt at loade en præsentation, ændre lidt på den eller ej og gemme den under en ny dato. ";
+                display += "Hvis et præsentationsformat ofte går igen, så kan man belejligt gemme det under en dato man kan huske og hente det derfra.\n\n";
+                display += "Det er blot vigtigt at huske på, at TV'erne kun viser den præsentation gemt under dags dato.";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Raspberry Pi")){
+                display = "Vigtige terminal linjer....";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Andet")){
+                display = "Den font der kan ses i dette program og displayes på TV'erne er Forbrændingens egen: Contribute Playtype.\n\n";
+                display += "Filerne gemmes __________.\n\n";
+                display += "MySQL serveren køres på Raspberry Pi'en.";
+                textArea.setText(display);
+            }
+        });
+
+
+        hBox.getChildren().addAll(treeView, textArea);
+
+        userManualStage.setResizable(false);
+        userManualStage.setScene(userManualScene);
+        userManualStage.show();
     }
+
 
     public void savePresentationBeforeClosingAll(){
         if(tabController.justSaved){
@@ -376,13 +480,17 @@ public class Layout {
             }
 
 
-            savePresentationStage.setScene(savePresentationScene);
+        savePresentationStage.setScene(savePresentationScene);
         savePresentationStage.show();
     }
 
     public void pickADate(String buttonText){
 
         DatePicker datePicker = new DatePicker();
+
+        Label warningLabel = new Label();
+        warningLabel.setFont(Font.font("bold"));
+        warningLabel.setTextFill(Color.RED);
 
         Label label = new Label("Choose date:");
 
@@ -398,16 +506,26 @@ public class Layout {
 
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(5,5,5,5));
-        vBox.getChildren().addAll(label, datePicker, hBox);
+        vBox.getChildren().addAll(warningLabel, label, datePicker, hBox);
 
         Stage saveStage = new Stage();
-        Scene saveScene = new Scene(vBox, 190, 80);
+        Scene saveScene = new Scene(vBox, 190, 100);
 
         saveStage.setScene(saveScene);
         saveStage.show();
 
         // Button Actions
         cancelBut.setOnAction( e -> saveStage.close());
+
+        datePicker.setOnAction( e -> {
+            if(DatabaseSaveAndGet.checkIfSlidesAreAlreadySavedOnThisDate(datePicker.getValue().toString())){
+                warningLabel.setText("Overwrite Existing Presentation?");
+                FadeTransition fadeTransition = new FadeTransition(Duration.millis(10000), warningLabel);
+                fadeTransition.setFromValue(1.0);
+                fadeTransition.setToValue(0.0);
+                fadeTransition.play();
+            }
+        });
 
         saveBut.setOnAction( e -> {
 

@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.Util;
+import jdk.jfr.events.ExceptionThrownEvent;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class DatabaseSaveAndGet {
 
         for (Slide s : presentation) {
 
+            String startTime = null;
             String header = null;
             String text = null;
             String imagePath = null;
@@ -30,16 +32,15 @@ public class DatabaseSaveAndGet {
             switch (slideType) {
                 case "SlideEvent":
                     SlideEvent eS = (SlideEvent) s;
+                    startTime = eS.getStartTime();
                     header = eS.getHeader();
                     text = eS.getText();
                     imagePath = Util.turnBackslashToForward(eS.getImagePath());
-                    System.out.println("Slide event image path: " + imagePath);
                     break;
 
                 case "SlidePicture":
                     SlidePicture pS = (SlidePicture) s;
                     imagePath = Util.turnBackslashToForward(pS.getImagePath());
-                    System.out.println("Slide Picture image path: " + imagePath);
                     break;
 
                 case "SlideHappyHour":
@@ -47,7 +48,6 @@ public class DatabaseSaveAndGet {
                     header = hS.getHeader();
                     text = hS.getText();
                     imagePath = Util.turnBackslashToForward(hS.getImagePath());
-                    System.out.println("Slide happy hour image path: " + imagePath);
                     break;
                 default:
                     System.out.println("Error in savePresentation() in DatabaseSaveAndGet.");
@@ -59,8 +59,8 @@ public class DatabaseSaveAndGet {
 
                 if (connection != null) {
 
-                    String qString1 = "INSERT INTO slides (slide_date, slide_type, header, slide_text, image_path) ";
-                    String qString2 = "Values ('"+date+"', '"+slideType+"', '"+header+"', '"+text+"', '"+imagePath+"')";
+                    String qString1 = "INSERT INTO slides (slide_date, start_time, slide_type, header, slide_text, image_path) ";
+                    String qString2 = "Values ('"+date+"', '"+startTime+"', '"+slideType+"', '"+header+"', '"+text+"', '"+imagePath+"')";
                     preparedStatement = connection.prepareStatement(qString1+qString2);
                     preparedStatement.executeUpdate();
 
@@ -124,11 +124,60 @@ public class DatabaseSaveAndGet {
     }
 
 
+    public static boolean checkIfSlidesAreAlreadySavedOnThisDate(String date){
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String sqlQuery = "SELECT * FROM slides WHERE slide_date = '"+date+"';";
+        boolean foundAny = false;
+
+        try {
+            connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sqlQuery);
+
+            if(resultSet.next()){
+                foundAny = true;
+            } else {
+                foundAny = false;
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return foundAny;
+        }
+    }
+
 
 
     public static ArrayList<Slide> openPresentation(String date){
 
-        ArrayList<Slide> presentation = null;
+        ArrayList<Slide> presentation = new ArrayList<>();
 
         Connection connection = null;
         Statement statement = null;
@@ -176,11 +225,12 @@ public class DatabaseSaveAndGet {
                 switch (slideType) {
                     case "SlideEvent":
 
+                        String startTime = resultSet.getString("start_time");
                         String eHeader = resultSet.getString("header");
                         String eText = resultSet.getString("slide_text");
                         String eImagePath = resultSet.getString("image_path");
 
-                        SlideEvent se = new SlideEvent("SlideEvent", "", null, eHeader, eText, eImagePath);
+                        SlideEvent se = new SlideEvent("SlideEvent", "", null, startTime, eHeader, eText, eImagePath);
 
                         presentation.add(se);
 
@@ -239,21 +289,22 @@ public class DatabaseSaveAndGet {
 
             LocalDate localDate = LocalDate.now();
 
-            resultSet = statement.executeQuery("SELECT * FROM events WHERE slide_date >= '" + localDate + "';");
+            resultSet = statement.executeQuery("SELECT * FROM events WHERE event_date >= '" + localDate + "';");
 
             if(connection != null){
 
                 while(resultSet.next()){
 
 
-                    String date = resultSet.getString("slide_date");
+                    String date = resultSet.getString("event_date");
+                    String startTime = resultSet.getString("start_time");
                     String header = resultSet.getString("header");
                     String textLabel = resultSet.getString("slide_text");
                     String imagePath = resultSet.getString("image_path");
 
                     LocalDate dateOfSlideEvent = LocalDate.parse(date);
 
-                    SlideEvent slideEvent = new SlideEvent("slideEvent", date, dateOfSlideEvent, header, textLabel, imagePath);
+                    SlideEvent slideEvent = new SlideEvent("slideEvent", date, dateOfSlideEvent, startTime, header, textLabel, imagePath);
 
                     eventCollection.add(slideEvent);
                     eventDateList.add(dateOfSlideEvent);
@@ -326,22 +377,18 @@ public class DatabaseSaveAndGet {
             if(connection != null){
 
                 String date = Util.turnBackslashToForward(slideEvent.getDate());
+                String startTime = slideEvent.getStartTime();
                 String header = Util.escapeApostrophe(slideEvent.getHeader());
                 String textLabel = Util.escapeApostrophe(slideEvent.getText());
 
-                String sanitizedPath = Util.turnBackslashToForward(slideEvent.getImagePath());
-                String queryString = "'" + date + "', '" + header + "', '" +
-                                          textLabel+ "', '" + sanitizedPath + "'";
+                String imagePath =  Util.turnBackslashToForward(slideEvent.getImagePath());
 
-                System.out.println(date);
-                System.out.println(sanitizedPath);
+                String queryString = "'" + date + "', '" + startTime + "', '" +header + "', '" +
+                                          textLabel+ "', '" + imagePath + "'";
 
-                preparedStatement = connection.prepareStatement("INSERT INTO events(slide_date, header, slide_text, image_path) VALUES(" + queryString + ")");
+                preparedStatement = connection.prepareStatement("INSERT INTO events(event_date, start_time, header, slide_text, image_path) VALUES(" + queryString + ")");
 
                 preparedStatement.execute();
-
-
-
 
             }
 
@@ -376,7 +423,7 @@ public class DatabaseSaveAndGet {
         String date = slideEvent.getDate();
         String header = slideEvent.getHeader();
         String slideText = slideEvent.getText();
-        String sqlQuery = "DELETE FROM events WHERE slide_date = '" + date + "' AND header = '" + header +"' AND slide_text = '" + slideText + "'";
+        String sqlQuery = "DELETE FROM events WHERE event_date = '" + date + "' AND header = '" + header +"' AND slide_text = '" + slideText + "'";
 
         try {
             connection = DatabaseConnection.getConnection();
