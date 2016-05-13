@@ -33,3 +33,8 @@
     -fx-font-size: 18px;
 }
 
+.emptyTabLabel{
+    -fx-font: 20 arial;
+    -fx-font-family: 'Contribute';
+}
+

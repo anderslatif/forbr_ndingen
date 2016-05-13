@@ -26,10 +26,17 @@
 
 
 .header{
+    -fx-font-family: 'Contribute';
     -fx-font-size: 24px;
 }
 
 .text_area{
+    -fx-font-family: 'Contribute';
     -fx-font-size: 18px;
+}
+
+.emptyTabLabel{
+    -fx-font-family: 'Contribute';
+    -fx-font: 20 arial;
 }
 

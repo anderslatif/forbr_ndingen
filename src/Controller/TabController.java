@@ -53,7 +53,7 @@ public class TabController {
 
         Label label = new Label("This tab is Empty \nPlease select a slide type.");
         label.setPadding(new Insets(100, 100, 100, 100));
-        label.setStyle("-fx-font: 20 arial;");
+        label.getStyleClass().add("emptyTabLabel");
 
         firstTab.setContent(label);
 

@@ -45,16 +45,9 @@ public class Controller {
 
             slidePresentation.add(slide);
 
-
-            if(slide.getImagePath() != null  || !slide.getImagePath().equals("null") || !slide.getImagePath().equals("")){
-                //System.out.println("Filepath sent to copyFileToDrive: " + Util.turnBackslashToForward(slide.getImagePath()));
-
-                System.out.println("hello");
+            if(!(slide.getImagePath() == null  || slide.getImagePath().equals("null") || slide.getImagePath().equals(""))){
                 String new_path = copyFileToDrive(slide.getImagePath());
-
                 slide.setImagePath(new_path);
-
-
             }
 
         }
