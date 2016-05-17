@@ -97,6 +97,7 @@ public class Controller {
         File copiedFile = new File("FileServer/"+Util.turnBackslashToForward(file.getName()));
 
         filePath = "file:///"+Util.turnBackslashToForward(copiedFile.getAbsoluteFile().toString());
+        System.out.println(filePath);
 
         return filePath;
 
