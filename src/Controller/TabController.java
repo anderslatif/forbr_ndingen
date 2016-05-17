@@ -39,6 +39,7 @@ public class TabController {
     }
 
     public int getTabCollectionSize(){
+
         return tabCollection.size();
     }
 
@@ -55,11 +56,14 @@ public class TabController {
     }
 
     public TabPane getTabPane(){
+
         return tabPane;
     }
 
 
     public void initializeTabController(TabPane tabPane){
+
+        tabPane.setTabMinHeight(20);
 
         Tab firstTab = new Tab();
 
@@ -107,6 +111,7 @@ public class TabController {
             e.setDropCompleted(success);
             e.consume();
         });
+
 
 
     }
@@ -197,6 +202,7 @@ public class TabController {
 
 
     public void addPictureTab(){
+
 
         justSaved = false;
 
