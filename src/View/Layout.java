@@ -521,7 +521,7 @@ public class Layout {
         vBox.getChildren().addAll(warningLabel, label, datePicker, hBox);
 
         Stage saveStage = new Stage();
-        Scene saveScene = new Scene(vBox, 190, 100);
+        Scene saveScene = new Scene(vBox, 190, 120);
 
         saveStage.setScene(saveScene);
         saveStage.show();
