@@ -153,7 +153,7 @@ public class Layout {
     public void getEventOverview(){
 
         eventStage = new Stage();
-        Scene eventScene = new Scene(getEventBorderPane());
+        Scene eventScene = new Scene(getEventBorderPane(), 1100, 600);
 
         eventStage.setScene(eventScene);
         eventStage.show();
@@ -184,6 +184,7 @@ public class Layout {
             }
             Label header = new Label(slideEvent.getHeader());
             header.setPadding(new Insets(0, 10, 0, 0));
+            header.setMaxWidth(80);
             Button button1 = new Button("Delete");
             Button button2 = new Button("Insert Event " + index);
 
