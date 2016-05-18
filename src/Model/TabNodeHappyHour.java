@@ -11,9 +11,9 @@ import javafx.scene.layout.VBox;
  */
 public class TabNodeHappyHour implements TabNode{
 
-    VBox vBox;
-    ImageView imageView;
-    SlideHappyHour slideHappyHour;
+    private VBox vBox;
+    private ImageView imageView;
+    private SlideHappyHour slideHappyHour;
 
     public TabNodeHappyHour(VBox vBox, ImageView imageView, SlideHappyHour slideHappyHour){
         this.vBox = vBox;
@@ -25,14 +25,9 @@ public class TabNodeHappyHour implements TabNode{
         return vBox;
     }
 
-    public VBox getVBox(){
-        return vBox;
-    }
-
     public void setVBox(VBox vBox){
         this.vBox = vBox;
     }
-
 
     public ImageView getImageView() {
         return imageView;

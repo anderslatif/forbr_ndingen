@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -8,6 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -20,11 +23,13 @@ import java.util.ArrayList;
  */
 public class TabController {
 
-    Stage stage;
-    Scene scene;
-    TabPane tabPane;
-    Controller controller;
-    ArrayList<TabNode> tabCollection;
+    private Stage stage;
+    private Scene scene;
+    private TabPane tabPane;
+    private Controller controller;
+    private ArrayList<TabNode> tabCollection;
+    public boolean justSaved = true;
+
 
     public TabController(Scene scene, Stage stage){
         this.scene = scene;
@@ -33,12 +38,15 @@ public class TabController {
         controller = new Controller();
     }
 
+    public int getTabCollectionSize(){
 
+        return tabCollection.size();
+    }
 
-
-    public TabPane getTabPane(){
+    public TabPane getNewTabPane(){
 
         tabCollection.clear();
+        justSaved = true;
 
         tabPane = new TabPane();
 
@@ -47,15 +55,21 @@ public class TabController {
         return tabPane;
     }
 
+    public TabPane getTabPane(){
+
+        return tabPane;
+    }
 
 
     public void initializeTabController(TabPane tabPane){
+
+        tabPane.setTabMinHeight(20);
 
         Tab firstTab = new Tab();
 
         Label label = new Label("This tab is Empty \nPlease select a slide type.");
         label.setPadding(new Insets(100, 100, 100, 100));
-        label.setStyle("-fx-font: 20 arial;");
+        label.getStyleClass().add("emptyTabLabel");
 
         firstTab.setContent(label);
 
@@ -99,19 +113,22 @@ public class TabController {
         });
 
 
+
     }
 
 
 
     public void addPictureToATab(File file){
 
+        justSaved = false;
 
         // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
+
         String imagePath = "file:///" + file.getAbsoluteFile().toString();
+
         Image image = new Image(imagePath);
 
         Tab tab = tabPane.getSelectionModel().getSelectedItem();
-
 
         if(tab.getContent() instanceof javafx.scene.image.ImageView){
             ImageView currentImageView = (ImageView) tab.getContent();
@@ -123,7 +140,7 @@ public class TabController {
 
                     TabNodePicture tabNodePicture = (TabNodePicture) tabNode;
 
-                    if(tabNodePicture.getImageNode() == currentImageView){
+                    if(tabNodePicture.getNode() == currentImageView){
                         SlidePicture slidePicture = tabNodePicture.getSlide();
                         slidePicture.setImagePath(imagePath);
                     }
@@ -176,14 +193,8 @@ public class TabController {
                         SlideEvent slideEvent = tabNodeEvent.getSlide();
                         slideEvent.setImagePath(imagePath);
                     }
-
-
                 }
-
-
             }
-
-
         }
 
 
@@ -192,78 +203,132 @@ public class TabController {
 
     public void addPictureTab(){
 
-        if(tabCollection.size()>0){
-            Tab tab = new Tab();
 
-            tabPane.getSelectionModel().select(tab);
-            int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 2;
-            String title = String.valueOf(correctingIndexingIssues);
-            tab.setText(title);
-
-            tabPane.getTabs().add(tab);
-            ImageView imageView = new ImageView();
-            imageView.fitWidthProperty().bind(stage.widthProperty());
-            imageView.fitHeightProperty().bind(stage.heightProperty());
-
-            tab.setContent(imageView);
-
-            SlidePicture slidePicture = new SlidePicture();
-            slidePicture.setSlideType("SlidePicture");
-            TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePicture);
-            tabCollection.add(tabNodePicture);
-
-
-        } else {
-
-            Tab tab = tabPane.getSelectionModel().getSelectedItem();
-
-            ImageView imageView = new ImageView();
-            imageView.fitWidthProperty().bind(stage.widthProperty());
-            imageView.fitHeightProperty().bind(stage.heightProperty());
-
-            tab.setContent(imageView);
-
-            SlidePicture slidePicture = new SlidePicture();
-            slidePicture.setSlideType("slidePicture");
-            TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePicture);
-            tabCollection.add(tabNodePicture);
-
-        }
-
-    }
-
-
-    public void addEventTab(SlideEvent slideEvent){
+        justSaved = false;
 
         Tab tab;
-
         if(tabCollection.size()>0){
             tab = new Tab();
             tabPane.getTabs().add(tab);
-        } else{
+            int correctingIndexingIssues = tabPane.getTabs().size();
+            String title = String.valueOf(correctingIndexingIssues);
+            tab.setText(title);
+        } else {
             tab = tabPane.getSelectionModel().getSelectedItem();
+            tabPane.getSelectionModel().select(tab);
+            int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 1;
+            String title = String.valueOf(correctingIndexingIssues);
+            tab.setText(title);
         }
 
 
         tabPane.getSelectionModel().select(tab);
-        int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 1;
-        String title = String.valueOf(correctingIndexingIssues);
-        tab.setText(title);
+
+        ImageView imageView = new ImageView();
+        imageView.fitWidthProperty().bind(stage.widthProperty());
+        imageView.fitHeightProperty().bind(stage.heightProperty());
+
+        tab.setContent(imageView);
+
+        SlidePicture slidePicture = new SlidePicture();
+        slidePicture.setSlideType("SlidePicture");
+        TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePicture);
+        tabCollection.add(tabNodePicture);
+
+    }
 
 
+    public void addPictureTab(SlidePicture slidePictureToCreate){
+
+        Tab tab;
+        if(tabCollection.size()>0){
+            tab = new Tab();
+            tabPane.getTabs().add(tab);
+            int correctingIndexingIssues = tabPane.getTabs().size()+ 1;
+            String title = String.valueOf(correctingIndexingIssues);
+            tab.setText(title);
+        } else {
+            tab = tabPane.getSelectionModel().getSelectedItem();
+            tabPane.getSelectionModel().select(tab);
+            int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 2;
+            String title = String.valueOf(correctingIndexingIssues);
+            tab.setText(title);
+        }
+
+        tabPane.getSelectionModel().select(tab);
+
+        Image image = new Image(slidePictureToCreate.getImagePath());
+
+        ImageView imageView = new ImageView(image);
+        imageView.fitWidthProperty().bind(stage.widthProperty());
+        imageView.fitHeightProperty().bind(stage.heightProperty());
+
+        tab.setContent(imageView);
+
+        SlidePicture slidePicture = new SlidePicture();
+        slidePicture.setSlideType("SlidePicture");
+        TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePicture);
+        tabCollection.add(tabNodePicture);
+
+    }
+
+
+
+    public void addEventTab(SlideEvent slideEvent){
+
+        justSaved = false;
+
+        slideEvent.setSlideType("SlideEvent");
+
+        Tab tab;
+        if(tabCollection.size()>0){
+            tab = new Tab();
+            tabPane.getTabs().add(tab);
+            int correctingIndexingIssues = tabPane.getTabs().size();
+            String title = String.valueOf(correctingIndexingIssues);
+            tab.setText(title);
+        } else {
+            tab = tabPane.getSelectionModel().getSelectedItem();
+            tabPane.getSelectionModel().select(tab);
+            int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 1;
+            String title = String.valueOf(correctingIndexingIssues);
+            tab.setText(title);
+        }
+
+        tabPane.getSelectionModel().select(tab);
 
         VBox vBox = new VBox();
-        vBox.getStyleClass().add("eventSlidePane");
+        vBox.getStyleClass().add("eventSlide");
 
-        TextField headerLabel = new TextField(slideEvent.getHeader());
-        headerLabel.setOpacity(0.4);
+        TextField headerLabel;
+        if(slideEvent.getHeader().equals("null")){
+            headerLabel = new TextField();
+        } else {
+            headerLabel = new TextField(slideEvent.getHeader());
+        }
+        headerLabel.setOpacity(0.8);
         headerLabel.getStyleClass().add("header");
-        headerLabel.textProperty().addListener( e -> slideEvent.setHeader(headerLabel.getText()));
+        headerLabel.textProperty().addListener( e -> {
+            slideEvent.setHeader(headerLabel.getText());
+            justSaved = false;
+        });
 
+        TextField startTimeLabel;
+        if(slideEvent.getStartTime().equals("null")){
+            startTimeLabel = new TextField();
+        } else {
+            startTimeLabel = new TextField(slideEvent.getStartTime());
+        }
+        startTimeLabel.setOpacity(0.8);
+        startTimeLabel.getStyleClass().add("text_area");
+        startTimeLabel.textProperty().addListener( e -> {
+            slideEvent.setStartTime(startTimeLabel.getText());
+            justSaved = false;
+        });
 
         Image image;
-        if (slideEvent.getImagePath().equals("")){
-            image = new Image("empty.png");
+        if (slideEvent.getImagePath().equals("null")){
+            image = new Image("Empty.png");
         } else {
             image = new Image(slideEvent.getImagePath());
         }
@@ -274,16 +339,24 @@ public class TabController {
 
         VBox filler1 = new VBox();
         filler1.setPadding(new Insets(20, 0, 0, 0));
-        filler1.getChildren().addAll(headerLabel, imageView);
+        filler1.getChildren().addAll(headerLabel, startTimeLabel, imageView);
 
 
         VBox filler2 = new VBox();
         filler2.setPadding(new Insets(40, 0, 0, 0));
 
-        TextArea textTextArea = new TextArea(slideEvent.getText());
+        TextArea textTextArea;
+        if(slideEvent.getText().equals("null")){
+            textTextArea = new TextArea();
+        } else {
+            textTextArea = new TextArea(slideEvent.getText());
+        }
         textTextArea.getStyleClass().add("text_area");
-        textTextArea.setOpacity(0.3);
-        textTextArea.textProperty().addListener( e -> slideEvent.setText(textTextArea.getText()));
+        textTextArea.setOpacity(0.8);
+        textTextArea.textProperty().addListener( e -> {
+            slideEvent.setText(textTextArea.getText());
+            justSaved = false;
+        });
 
         filler2.getChildren().add(textTextArea);
 
@@ -301,13 +374,21 @@ public class TabController {
 
     public void addHappyHourTab(){
 
-        Tab tab;
+        justSaved = false;
 
+        Tab tab;
         if(tabCollection.size()>0){
             tab = new Tab();
             tabPane.getTabs().add(tab);
-        } else{
+            int correctingIndexingIssues = tabPane.getTabs().size()+ 1;
+            String title = String.valueOf(correctingIndexingIssues);
+            tab.setText(title);
+        } else {
             tab = tabPane.getSelectionModel().getSelectedItem();
+            tabPane.getSelectionModel().select(tab);
+            int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 2;
+            String title = String.valueOf(correctingIndexingIssues);
+            tab.setText(title);
         }
 
         tabPane.getSelectionModel().select(tab);
@@ -317,29 +398,35 @@ public class TabController {
 
 
         VBox vBox = new VBox();
-        vBox.getStyleClass().add("happyHour");
+        vBox.getStyleClass().add("happyHourSlide");
 
         Image image = new Image("cocktail.png");
 
         TextField headerTextField = new TextField();
         headerTextField.getStyleClass().add("header");
         headerTextField.setPromptText("Type the header here...");
-        headerTextField.setOpacity(0.6);
+        headerTextField.setOpacity(0.8);
 
         ImageView imageView = new ImageView();
         imageView.setImage(image);
-        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(3));
+        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(4));
         imageView.fitWidthProperty().bind(vBox.widthProperty());
 
         TextArea textTextArea =  new TextArea();
         textTextArea.setPromptText("Type more text here...");
-        textTextArea.setOpacity(0.6);
+        textTextArea.setOpacity(0.8);
         textTextArea.getStyleClass().add("text_area");
 
         SlideHappyHour slideHappyHour = new SlideHappyHour();
         slideHappyHour.setSlideType("SlideHappyHour");
-        headerTextField.textProperty().addListener( e -> slideHappyHour.setHeader(headerTextField.getText()));
-        textTextArea.textProperty().addListener( e -> slideHappyHour.setText(textTextArea.getText()));
+        headerTextField.textProperty().addListener( e -> {
+            slideHappyHour.setHeader(headerTextField.getText());
+            justSaved = false;
+        });
+        textTextArea.textProperty().addListener( e -> {
+            slideHappyHour.setText(textTextArea.getText());
+            justSaved = false;
+        });
 
 
         vBox.getChildren().addAll(headerTextField, imageView, textTextArea);
@@ -354,10 +441,95 @@ public class TabController {
     }
 
 
+    public void addHappyHourTab(SlideHappyHour happyHourSlide){
+
+        Tab tab;
+        if(tabCollection.size()>0){
+            tab = new Tab();
+            tabPane.getTabs().add(tab);
+            int correctingIndexingIssues = tabPane.getTabs().size()+ 1;
+            String title = String.valueOf(correctingIndexingIssues);
+            tab.setText(title);
+        } else {
+            tab = tabPane.getSelectionModel().getSelectedItem();
+            tabPane.getSelectionModel().select(tab);
+            int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 2;
+            String title = String.valueOf(correctingIndexingIssues);
+            tab.setText(title);
+        }
+
+        tabPane.getSelectionModel().select(tab);
+        int correctingIndexingIssues = tabPane.getSelectionModel().getSelectedIndex() + 1;
+        String title = String.valueOf(correctingIndexingIssues);
+        tab.setText(title);
+
+
+        VBox vBox = new VBox();
+        vBox.getStyleClass().add("happyHourSlide");
+
+        TextField headerTextField;
+        if (happyHourSlide.getHeader().equals("null") || happyHourSlide.getHeader() == null) {
+            headerTextField = new TextField();
+        } else {
+            headerTextField = new TextField(happyHourSlide.getHeader());
+        }
+        headerTextField.getStyleClass().add("header");
+        headerTextField.setOpacity(0.8);
+        headerTextField.setPromptText("Type the header here...");
+
+
+        Image image;
+        if (happyHourSlide.getImagePath().equals("") || happyHourSlide.getImagePath().equals("null") || happyHourSlide.getImagePath() == null){
+            image = new Image("cocktail.png");
+        } else {
+            image = new Image(happyHourSlide.getImagePath());
+        }
+
+        ImageView imageView = new ImageView();
+        imageView.setImage(image);
+        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(3));
+        imageView.fitWidthProperty().bind(vBox.widthProperty().subtract(10));
+
+        TextArea textTextArea;
+        if (happyHourSlide.getText().equals("null") || happyHourSlide.getText() != null){
+            textTextArea = new TextArea();
+        } else {
+            textTextArea = new TextArea(happyHourSlide.getText());
+        }
+        textTextArea.setOpacity(0.8);
+        textTextArea.getStyleClass().add("text_area");
+        textTextArea.setPromptText("Type more text here...");
+
+        SlideHappyHour slideHappyHour = new SlideHappyHour();
+        slideHappyHour.setSlideType("SlideHappyHour");
+        headerTextField.textProperty().addListener( e -> {
+            slideHappyHour.setHeader(headerTextField.getText());
+            justSaved = false;
+        });
+        textTextArea.textProperty().addListener( e -> {
+            slideHappyHour.setText(textTextArea.getText());
+            justSaved = false;
+        });
+
+
+        vBox.getChildren().addAll(headerTextField, imageView, textTextArea);
+
+
+
+        TabNodeHappyHour tabNodeHappyHour = new TabNodeHappyHour(vBox, imageView, slideHappyHour);
+        tabCollection.add(tabNodeHappyHour);
+
+        tab.setContent(vBox);
+
+    }
+
+
+
     public void savingPresentation(String chosenDate){
 
-        ArrayList<TabNode> presentation = new ArrayList();
+        justSaved = true;
 
+        ArrayList<TabNode> presentation = new ArrayList();
 
         for(Tab tab : tabPane.getTabs()){
 
@@ -370,11 +542,34 @@ public class TabController {
 
             }
         }
-
         controller.savePresentation(presentation, chosenDate);
         tabCollection.clear();
     }
 
+
+    public void openPresentation(ArrayList<Slide> presentation){
+
+        tabCollection.clear();
+
+        for(Slide slide : presentation){
+
+            switch (slide.getSlideType()){
+
+                case "SlideEvent":
+                    addEventTab((SlideEvent) slide);
+                    break;
+                case "SlidePicture":
+                    addPictureTab((SlidePicture) slide);
+                    break;
+                case "SlideHappyHour":
+                    addHappyHourTab((SlideHappyHour) slide);
+                    break;
+                default:
+                    System.out.println("Error while calling openPresentation() in TabController");
+            }
+        }
+        justSaved = true;
+    }
 
 
 

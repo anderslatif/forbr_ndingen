@@ -3,20 +3,27 @@ package View;
 import Controller.Controller;
 import Controller.TabController;
 import Model.DatabaseSaveAndGet;
+import Model.Slide;
 import Model.SlideEvent;
+import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -67,7 +74,13 @@ public class Layout {
 
         MenuItem m1_1 = new MenuItem("_New Presentation");
         m1_1.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
-        m1_1.setOnAction( e -> savePresentationConfirmation());
+        m1_1.setOnAction( e -> {
+            if(tabController.justSaved){
+                newPresentation();
+            } else {
+                savePresentationConfirmation("newPresentation");
+            }
+        });
 
         MenuItem m1_2 = new MenuItem("_Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
@@ -107,11 +120,15 @@ public class Layout {
         ///////////////////////////////////////
         Menu menu4 = new Menu("About");
 
-        MenuItem m4_1 = new MenuItem("About");
-        m4_1.setOnAction( e -> showAbout());
+        MenuItem m4_1 = new MenuItem("User Manual");
+        m4_1.setOnAction( e -> showUserManual());
+
+        MenuItem m4_2 = new MenuItem("Analyze ratio");
+        m4_2.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN));
+        m4_2.setOnAction( e -> analyzeRatio());
 
 
-        menu4.getItems().addAll(m4_1);
+        menu4.getItems().addAll(m4_1, m4_2);
 
         ///////////////////////////////////////
 
@@ -123,14 +140,12 @@ public class Layout {
 
 
 
+
+
     public void newPresentation(){
 
-        borderPane.setCenter(tabController.getTabPane());
-
+        borderPane.setCenter(tabController.getNewTabPane());
     }
-
-
-
 
 
 
@@ -139,7 +154,7 @@ public class Layout {
     public void getEventOverview(){
 
         eventStage = new Stage();
-        Scene eventScene = new Scene(getEventBorderPane());
+        Scene eventScene = new Scene(getEventBorderPane(), 1100, 600);
 
         eventStage.setScene(eventScene);
         eventStage.show();
@@ -170,12 +185,17 @@ public class Layout {
             }
             Label header = new Label(slideEvent.getHeader());
             header.setPadding(new Insets(0, 10, 0, 0));
+            header.setMaxWidth(80);
             Button button1 = new Button("Delete");
             Button button2 = new Button("Insert Event " + index);
 
             final int indexNow = index-1; // because the index starts from 1 since the program is used by non-programmers
             // final because this is necessary in a lambda expression
-            //todo button1.setOnAction( e -> controller.deleteEvent());
+            button1.setOnAction( e -> {
+                controller.deleteEvent(eventCollection.get(indexNow));
+                eventStage.close();
+                getEventOverview();
+            });
             button2.setOnAction( e -> tabController.addEventTab(eventCollection.get(indexNow)));
 
 
@@ -222,24 +242,59 @@ public class Layout {
 
 
         VBox vBox1 = new VBox();
+
+        HBox hBoxDateTime = new HBox();
         DatePicker datePicker = new DatePicker();
+        datePicker.setPromptText("Select the date");
+        TextField timePicker = new TextField();
+        timePicker.setPromptText("Event starts at... hh:mm");
+        Label popUpLabel = new Label();
+        popUpLabel.setFont(Font.font("bold"));
+        popUpLabel.setTextFill(Color.RED);
+        hBoxDateTime.getChildren().addAll(datePicker, timePicker, popUpLabel);
+
         TextField headerTextField = new TextField();
-        vBox1.getChildren().addAll(datePicker, headerTextField);
+        headerTextField.setPromptText("Add the header...");
+        vBox1.getChildren().addAll(hBoxDateTime, headerTextField);
 
         eventBorderPane.setTop(vBox1);
 
+        StackPane stackPane = new StackPane();
         ImageView imageView = new ImageView();
-        eventBorderPane.setCenter(imageView);
+        imageView.fitHeightProperty().bind(newEventScene.heightProperty().subtract(100));
+        imageView.fitWidthProperty().bind(newEventScene.heightProperty().divide(1.5));
+
+        Label label = new Label("Drop image here.");
+        stackPane.getChildren().addAll(imageView, label);
+        eventBorderPane.setCenter(stackPane);
+
+        //eventBorderPane.setCenter(imageView);
 
         VBox vBox2 = new VBox();
         TextField textTextField = new TextField();
+        textTextField.setPromptText("Write some text...");
         Button doneButton = new Button("Done");
 
         doneButton.setOnAction( e -> {
-            controller.saveNewSlideEventToDB(new SlideEvent("SlideEvent", datePicker.getValue().toString(), headerTextField.getText(), textTextField.getText(), eventImagePath));
-            newEventStage.close();
-            eventStage.close();
-            getEventOverview();
+            if(datePicker.getValue() == null){
+                popUpLabel.setText("You must select a date.");
+                FadeTransition fadeTransition = new FadeTransition(Duration.millis(8000), popUpLabel);
+                fadeTransition.setFromValue(1.0);
+                fadeTransition.setToValue(0.0);
+                fadeTransition.play();
+            } else if(imageView.getImage() == null){
+                popUpLabel.setText("You must add an image.");
+                FadeTransition fadeTransition = new FadeTransition(Duration.millis(8000), popUpLabel);
+                fadeTransition.setFromValue(1.0);
+                fadeTransition.setToValue(0.0);
+                fadeTransition.play();
+            } else {
+                controller.saveNewSlideEventToDB(new SlideEvent("SlideEvent", datePicker.getValue().toString(),
+                        datePicker.getValue(), timePicker.getText(), headerTextField.getText(), textTextField.getText(), eventImagePath));
+                newEventStage.close();
+                eventStage.close();
+                getEventOverview();
+            }
         });
 
         vBox2.getChildren().addAll(textTextField, doneButton);
@@ -263,6 +318,7 @@ public class Layout {
             if (db.hasFiles()) {
                 success = true;
                 for (File file : db.getFiles()) {
+
                     eventImagePath = "file:///" + file.getAbsoluteFile().toString();
                     imageView.setImage(new Image(eventImagePath));
                 }
@@ -276,24 +332,107 @@ public class Layout {
         newEventStage.show();
     }
 
+    public void showUserManual(){
 
-    public void showAbout(){
+        HBox hBox = new HBox();
 
-        VBox vBox = new VBox();
+        Stage userManualStage = new Stage();
+        Scene userManualScene = new Scene(hBox);
 
-        Stage aboutStage = new Stage();
-        Scene aboutScene = new Scene(vBox);
+        TreeItem root = new TreeItem();
+        root.setExpanded(true);
 
-        Label label = new Label("This program has been created by: \n\nAnders, Dennis and Mikkel\n\nDat15A, Førsteårsprojekt - 2016");
-        label.setPadding(new Insets(20, 20, 20, 20));
-        vBox.getChildren().add(label);
 
-        aboutStage.setScene(aboutScene);
-        aboutStage.show();
+        TreeItem treeItem1 = new TreeItem("Velkommen");
+        TreeItem treeItem2 = new TreeItem("Event Oversigten");
+        TreeItem treeItem3 = new TreeItem("Event Slides");
+        TreeItem treeItem4 = new TreeItem("Picture Slides");
+        TreeItem treeItem5 = new TreeItem("Bar Tilbud Slides");
+        TreeItem treeItem6 = new TreeItem("Om Præsentationer");
+        TreeItem treeItem7 = new TreeItem("Raspberry Pi");
+        TreeItem treeItem8 = new TreeItem("Andet");
+
+
+        root.getChildren().addAll(treeItem1, treeItem2, treeItem3, treeItem4, treeItem5, treeItem6, treeItem7, treeItem8);
+
+        TreeView<String> treeView = new TreeView<>(root);
+        treeView.setShowRoot(false);
+
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+
+        treeView.setOnMouseClicked( e -> {
+            TreeItem selectedItem = treeView.getSelectionModel().getSelectedItem();
+            String display = "";
+
+            if(selectedItem.getValue().equals("Velkommen")){
+                display = "Velkommen!\n\n";
+                display += "This program has been created by: \n\nAnders, Dennis and Mikkel\n\nDat15A, Førsteårsprojekt - 2016\n\nFor Forbrændingen.";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Event Oversigten")){
+                display = "Event Oversigten er separat fra oprettelse af de andre typer slides.\n\n";
+                display += "Grunden til det er, at når man opretter et standard slide, så skal man arbejde på det fra starten af, ";
+                display += "men events skal kunne genbruges, så længe de er relevante. Derfor kan de indsættes fra en oversigt.\n\n";
+                display += "Event oversigten viser events i kronologisk rækkefølge. Ingen events før dags dato vises.\n\n";
+                display += "Til sidst kan det nævnes, at man i event oversigten kan klikke \"Add a new Event\" knappen for at oprette et Event Slide.\n\n";
+                display += "Vælg næste punkt i manualen for at lære mere om det.";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Event Slides")){
+                display = "Event Slides består af den dato eventet foregår, et start tidspunkt, en header, noget tekst og et billede.\n\n";
+                display += "For at oprette et Event, skal man som minimum udfylde dato og indsætte et billede. ";
+                display += "Hvis intet billede ønskes, så indsæt en png fil med usynlig baggrund.\n\n";
+                display += "Vær dog opmærksom på, at hvis et event bliver oprettet uden komplet information skal informationen tilføjes senere i præsentationen hver eneste gang.\n";
+                display += "Alternativet er at slette eventet i oversigten og genoprette det.\n\n";
+                display += "Vi håber ikke, at det ikke er for besværligt. Vi anbefaler først at oprette events, når al information og billedet er klar. ";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Picture Slides")){
+                display = "Picture slides er simpelthen ethvert billede der droppes på programmet.\n\n";
+                display += "Billedet vil fylde hele skærmen, så vælg et billede der har den korrekte ratio. Bredden skal være Højden divideret med 1,5.";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Bar Tilbud Slides")){
+                display = "Et bar tilbud slide består af en header, et billede og noget tekst.\n\n";
+                display += "Det er muligt ikke at tilføje et billede til et bar tilbud slide og den sorte baggrund vil så vises i stedet.\n\n";
+                display += "Alle slides må selvfølgelig gerne bruges til andre formål en deres navne. ";
+                display += "Faktisk er Bar Tilbud slidet oplagt at bruge til andre ting med samme format.";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Om Præsentationer")){
+                display = "En præsentation er en samling af slides, der gemmes under en bestemt dato.\n\n";
+                display += "Forsøger man at gemme på en dato hvor der allerede er gemt en præsentation, så overskrives den gamle præsentation. ";
+                display += "Før overskrivningen kommer der en advarsel, som man kan tage stilling til.\n\n";
+                display += "Det er muligt at loade en præsentation, ændre lidt på den eller ej og gemme den under en ny dato. ";
+                display += "Hvis et præsentationsformat ofte går igen, så kan man belejligt gemme det under en dato man kan huske og hente det derfra.\n\n";
+                display += "Det er blot vigtigt at huske på, at TV'erne kun viser den præsentation gemt under dags dato.";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Raspberry Pi")){
+                display = "Vigtige terminal linjer....";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Andet")){
+                display = "Den font der kan ses i dette program og displayes på TV'erne er Forbrændingens egen: Contribute Playtype.\n\n";
+                display += "Filerne gemmes __________.\n\n";
+                display += "MySQL serveren køres på Raspberry Pi'en.";
+                textArea.setText(display);
+            }
+        });
+
+
+        hBox.getChildren().addAll(treeView, textArea);
+
+        userManualStage.setResizable(false);
+        userManualStage.setScene(userManualScene);
+        userManualStage.show();
     }
 
 
-    public void savePresentationConfirmation(){
+    public void savePresentationBeforeClosingAll(){
+        if(tabController.justSaved){
+            stage.close();
+        } else {
+            savePresentationConfirmation("closeAll");
+        }
+    }
+
+    public void savePresentationConfirmation(String request){
 
         GridPane gridPane = new GridPane();
         Stage savePresentationStage = new Stage();
@@ -322,16 +461,32 @@ public class Layout {
         button3.setMaxWidth(Double.MAX_VALUE);
         gridPane.add(button3, 0, 2);
 
-        button1.setOnAction( e -> {
-            pickADate("Save");
-            savePresentationStage.close();
-            newPresentation();
-        });
-        button2.setOnAction( e -> {
-            savePresentationStage.close();
-            newPresentation();
-        });
-        button3.setOnAction( e -> savePresentationStage.close());
+        if(request.equals("newPresentation")){
+            button1.setOnAction( e -> {
+                pickADate("Save");
+                savePresentationStage.close();
+                newPresentation();
+            });
+            button2.setOnAction( e -> {
+                savePresentationStage.close();
+                newPresentation();
+            });
+            button3.setOnAction( e -> savePresentationStage.close());
+        } else if(request.equals("closeAll")) {
+                button1.setOnAction(e -> {
+                    pickADate("Save");
+                    savePresentationStage.close();
+                    stage.close();
+                });
+                button2.setOnAction(e -> {
+                    savePresentationStage.close();
+                    stage.close();
+                });
+                button3.setOnAction(e -> {
+                    savePresentationStage.close();
+                });
+            }
+
 
         savePresentationStage.setScene(savePresentationScene);
         savePresentationStage.show();
@@ -339,7 +494,15 @@ public class Layout {
 
     public void pickADate(String buttonText){
 
+        if(buttonText.equals("Save") && tabController.getTabCollectionSize() == 0){
+            return;
+        }
+
         DatePicker datePicker = new DatePicker();
+
+        Label warningLabel = new Label();
+        warningLabel.setFont(Font.font("bold"));
+        warningLabel.setTextFill(Color.RED);
 
         Label label = new Label("Choose date:");
 
@@ -355,10 +518,10 @@ public class Layout {
 
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(5,5,5,5));
-        vBox.getChildren().addAll(label, datePicker, hBox);
+        vBox.getChildren().addAll(warningLabel, label, datePicker, hBox);
 
         Stage saveStage = new Stage();
-        Scene saveScene = new Scene(vBox, 190, 80);
+        Scene saveScene = new Scene(vBox, 190, 120);
 
         saveStage.setScene(saveScene);
         saveStage.show();
@@ -366,14 +529,126 @@ public class Layout {
         // Button Actions
         cancelBut.setOnAction( e -> saveStage.close());
 
+        datePicker.setOnAction( e -> {
+            if(DatabaseSaveAndGet.checkIfSlidesAreAlreadySavedOnThisDate(datePicker.getValue().toString())){
+                warningLabel.setText("Overwrite Existing Presentation?");
+                FadeTransition fadeTransition = new FadeTransition(Duration.millis(10000), warningLabel);
+                fadeTransition.setFromValue(1.0);
+                fadeTransition.setToValue(0.0);
+                fadeTransition.play();
+            }
+        });
+
         saveBut.setOnAction( e -> {
 
-            if(datePicker.getValue() != null){
-                tabController.savingPresentation(datePicker.getValue().toString());
+            if(datePicker.getValue() != null) {
+
+                if (buttonText.equals("Save")) {
+
+                    tabController.savingPresentation(datePicker.getValue().toString());
+                }
+
+                if (buttonText.equals("Open")) {
+
+                    newPresentation();
+                    ArrayList<Slide> presentation = DatabaseSaveAndGet.openPresentation(datePicker.getValue().toString());
+                    tabController.openPresentation(presentation);
+                }
+
                 saveStage.close();
+
             }
         });
     }
+
+
+    public void analyzeRatio(){  // this is pure nonsense
+
+        TabPane tabPane = tabController.getTabPane();
+
+        Tab tab = tabPane.getSelectionModel().getSelectedItem();
+
+
+
+        if(tab.getContent() instanceof javafx.scene.image.ImageView){
+            ImageView currentImageView = (ImageView) tab.getContent();
+
+            Image image;
+            if(currentImageView.getImage() == null){
+                return;
+            } else {
+            }
+            image = currentImageView.getImage();
+
+            double ratio = image.getHeight() / image.getWidth();
+
+            if(ratio == 1.5){
+                System.out.println("perfect ratio");
+            } else if(ratio < 1.5){
+                ratio = ratio - 1.5;
+                System.out.println("Your image is " + ratio + " too wide");
+            } else if(ratio > 1.5){
+                ratio = ratio - 1.5;
+                System.out.println("Your image is " + ratio + " too high");
+            }
+
+
+        } else if(tab.getContent() instanceof javafx.scene.layout.VBox) {
+
+            VBox vBox = (VBox) tab.getContent();
+
+            ImageView currentImageView = null;
+
+            for (Node node : vBox.getChildren()) {
+
+                if(node instanceof javafx.scene.image.ImageView){
+                    currentImageView = (ImageView) node;
+                    Image image;
+                    if(currentImageView.getImage() == null){
+                        return;
+                    } else {
+                        image = currentImageView.getImage();
+                    }
+
+
+                    double prefHeight = vBox.getHeight() / 4;
+                    double prefWidth = vBox.getWidth();
+                    double actualHeight = image.getHeight();
+                    double actualWidth = image.getWidth();
+                    double differenceHeight = prefHeight - actualHeight;
+                    double differenceWidth = prefWidth - actualWidth;
+
+                    System.out.println("The height is " + differenceHeight + " off the mark.");
+                    System.out.println("Your width is " + differenceWidth + " off the mark.");
+
+
+                } else if (node instanceof  javafx.scene.layout.VBox){
+
+                    VBox childVBox = (VBox) node;
+
+                    for (Node noodle : childVBox.getChildren()){
+
+                        if(noodle instanceof javafx.scene.image.ImageView){
+                            currentImageView = (ImageView) noodle;
+                            Image image;
+                            if(currentImageView.getImage() == null){
+                                return;
+                            } else {
+                                image = currentImageView.getImage();
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+
+
+    }
+
 
 
 

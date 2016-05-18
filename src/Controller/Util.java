@@ -11,7 +11,7 @@ public class Util {
 
     public static String turnBackslashToForward(String stringToParse) {
 
-        if (stringToParse.equals("")){
+        if (stringToParse.equals("") || stringToParse.equals("null") || stringToParse == null ){
             stringToParse = "";
         } else {
             stringToParse = stringToParse.replaceAll("\\\\", "/");
@@ -19,6 +19,18 @@ public class Util {
 
         return stringToParse;
     }
+
+    public static String turnBackslashToForwardForFilePath(String stringToParse) {
+
+        if (stringToParse.equals("") || stringToParse.equals("null") || stringToParse == null ){
+            stringToParse = "";
+        } else {
+            stringToParse = stringToParse.replaceAll("\\\\", "/");
+        }
+
+        return stringToParse;
+    }
+
 
 
     public static String escapeApostrophe(String stringToParse){

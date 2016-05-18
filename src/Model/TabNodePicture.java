@@ -24,9 +24,6 @@ public class TabNodePicture implements TabNode {
         return imageNode;
     }
 
-    public ImageView getImageNode() {
-        return imageNode;
-    }
 
     public void setImageNode(ImageView imageNode) {
         this.imageNode = imageNode;

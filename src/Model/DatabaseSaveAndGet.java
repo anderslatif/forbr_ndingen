@@ -1,25 +1,28 @@
 package Model;
 
 import Controller.Util;
+import jdk.jfr.events.ExceptionThrownEvent;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * Created by Anders on 4/21/2016.
  */
 public class DatabaseSaveAndGet {
 
-
     public static void savePresentation(ArrayList<Slide> presentation, String date) {
+
+        deleteSlidesWithThisDate(date);
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         for (Slide s : presentation) {
 
-            String slideDate;
+            String startTime = null;
             String header = null;
             String text = null;
             String imagePath = null;
@@ -29,39 +32,35 @@ public class DatabaseSaveAndGet {
             switch (slideType) {
                 case "SlideEvent":
                     SlideEvent eS = (SlideEvent) s;
-                    slideDate = eS.getDate();
+                    startTime = eS.getStartTime();
                     header = eS.getHeader();
                     text = eS.getText();
-                    imagePath = eS.getImagePath();
+                    imagePath = Util.turnBackslashToForward(eS.getImagePath());
                     break;
 
                 case "SlidePicture":
                     SlidePicture pS = (SlidePicture) s;
-                    slideDate = pS.getDate();
-                    imagePath = pS.getImagePath();
+                    imagePath = Util.turnBackslashToForward(pS.getImagePath());
                     break;
 
                 case "SlideHappyHour":
                     SlideHappyHour hS = (SlideHappyHour) s;
                     header = hS.getHeader();
                     text = hS.getText();
-                    imagePath = hS.getImagePath();
-
+                    imagePath = Util.turnBackslashToForward(hS.getImagePath());
                     break;
                 default:
-                    System.out.println("default");
-
+                    System.out.println("Error in savePresentation() in DatabaseSaveAndGet.");
 
             }
-
 
             try {
                 connection = DatabaseConnection.getConnection();
 
                 if (connection != null) {
 
-                    String qString1 = "INSERT INTO slides (slide_date, slide_type, header, slide_text, image_path) ";
-                    String qString2 = "Values ('"+date+"', '"+slideType+"', '"+header+"', '"+text+"', '"+imagePath+"')";
+                    String qString1 = "INSERT INTO slides (slide_date, start_time, slide_type, header, slide_text, image_path) ";
+                    String qString2 = "Values ('"+date+"', '"+startTime+"', '"+slideType+"', '"+header+"', '"+text+"', '"+imagePath+"')";
                     preparedStatement = connection.prepareStatement(qString1+qString2);
                     preparedStatement.executeUpdate();
 
@@ -88,11 +87,187 @@ public class DatabaseSaveAndGet {
                         e.printStackTrace();
                     }
                 }
+            }
+        }
+    }
 
+    public static void deleteSlidesWithThisDate(String date){
+
+        Connection connection = null;
+        Statement statement = null;
+        String sqlQuery = "DELETE FROM slides WHERE slide_date = '"+date+"';";
+
+        try {
+            connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
+            statement.executeUpdate(sqlQuery);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    public static boolean checkIfSlidesAreAlreadySavedOnThisDate(String date){
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String sqlQuery = "SELECT * FROM slides WHERE slide_date = '"+date+"';";
+        boolean foundAny = false;
+
+        try {
+            connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sqlQuery);
+
+            if(resultSet.next()){
+                foundAny = true;
+            } else {
+                foundAny = false;
             }
 
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return foundAny;
         }
+    }
+
+
+
+    public static ArrayList<Slide> openPresentation(String date){
+
+        ArrayList<Slide> presentation = new ArrayList<>();
+
+        Connection connection = null;
+        Statement statement = null;
+        String sqlQuery = "SELECT * FROM slides WHERE slide_date = '"+date+"';";
+
+        ResultSet resultSet = null;
+
+        try {
+            connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
+
+            resultSet = statement.executeQuery(sqlQuery);
+            presentation = resultSetToArrayList(resultSet, date);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return presentation;
+
+    }
+
+    public static ArrayList<Slide> resultSetToArrayList(ResultSet resultSet, String date){
+        ArrayList<Slide> presentation = new ArrayList<>();
+
+        try {
+            while(resultSet.next()){
+
+                String slideType = resultSet.getString("slide_type");
+
+                switch (slideType) {
+                    case "SlideEvent":
+
+                        String startTime = resultSet.getString("start_time");
+                        String eHeader = resultSet.getString("header");
+                        String eText = resultSet.getString("slide_text");
+                        String eImagePath = resultSet.getString("image_path");
+
+                        SlideEvent se = new SlideEvent("SlideEvent", "", null, startTime, eHeader, eText, eImagePath);
+
+                        presentation.add(se);
+
+                        break;
+
+                    case "SlidePicture":
+
+                        String pImagePath = resultSet.getString("image_path");
+
+                        SlidePicture sp = new SlidePicture("SlidePicture", pImagePath);
+
+                        presentation.add(sp);
+
+                        break;
+
+                    case "SlideHappyHour":
+
+                        String hHeader = resultSet.getString("header");
+                        String hText = resultSet.getString("slide_text");
+                        String hImagePath = ""+resultSet.getString("image_path");
+
+                        SlideHappyHour sh = new SlideHappyHour("SlideHappyHour", hHeader, hText, hImagePath);
+
+                        presentation.add(sh);
+
+                        break;
+                    default:
+                        System.out.println("Error while calling resultSetToArrayList() in DatabaseSaveAndGet");
+
+                }
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return presentation;
     }
 
 
@@ -104,32 +279,55 @@ public class DatabaseSaveAndGet {
         ResultSet resultSet = null;
 
         ArrayList<SlideEvent> eventCollection = new ArrayList<>();
+        List<LocalDate> eventDateList = new ArrayList<>();
+        ArrayList<SlideEvent> orderedEventList = new ArrayList<>();
 
         try {
             connection = DatabaseConnection.getConnection();
 
             statement = connection.createStatement();
 
-            resultSet = statement.executeQuery("SELECT * FROM events;");
+            LocalDate localDate = LocalDate.now();
+
+            resultSet = statement.executeQuery("SELECT * FROM events WHERE event_date >= '" + localDate + "';");
 
             if(connection != null){
 
                 while(resultSet.next()){
 
-                    //todo check if the date is later than today's date if so we go into an if statement and add the event to the ArrayList
 
-                    String date = resultSet.getString("slide_date");
+                    String date = resultSet.getString("event_date");
+                    String startTime = resultSet.getString("start_time");
                     String header = resultSet.getString("header");
                     String textLabel = resultSet.getString("slide_text");
                     String imagePath = resultSet.getString("image_path");
 
+                    LocalDate dateOfSlideEvent = LocalDate.parse(date);
 
-                    SlideEvent slideEvent = new SlideEvent("slideEvent", date, header, textLabel, imagePath);
+                    SlideEvent slideEvent = new SlideEvent("slideEvent", date, dateOfSlideEvent, startTime, header, textLabel, imagePath);
 
                     eventCollection.add(slideEvent);
+                    eventDateList.add(dateOfSlideEvent);
 
-                    //todo finally the ArrayList should be sorted based on the date
+                }
 
+/*                Collections.sort(eventCollection, new Comparator<SlideEvent>() {
+                    @Override
+                    public int compare(SlideEvent o1, SlideEvent o2) {
+                        return o1.getLocalDate().compareTo(o2.getLocalDate());
+                    }
+                });*/
+
+                Collections.sort(eventDateList);
+
+                for(LocalDate loco : eventDateList){
+
+                    for(SlideEvent slideEvent : eventCollection){
+
+                        if(loco == slideEvent.getLocalDate()){
+                            orderedEventList.add(slideEvent);
+                        }
+                    }
                 }
 
             }
@@ -160,7 +358,7 @@ public class DatabaseSaveAndGet {
                 }
             }
 
-            return eventCollection;
+            return orderedEventList;
         }
 
     }
@@ -179,22 +377,18 @@ public class DatabaseSaveAndGet {
             if(connection != null){
 
                 String date = Util.turnBackslashToForward(slideEvent.getDate());
+                String startTime = slideEvent.getStartTime();
                 String header = Util.escapeApostrophe(slideEvent.getHeader());
                 String textLabel = Util.escapeApostrophe(slideEvent.getText());
 
-                String sanitizedPath = slideEvent.getImagePath();
-                String queryString = "'" + date + "', '" + header + "', '" +
-                                          textLabel+ "', '" + sanitizedPath + "'";
+                String imagePath =  Util.turnBackslashToForward(slideEvent.getImagePath());
 
-                System.out.println(date);
-                System.out.println(sanitizedPath);
+                String queryString = "'" + date + "', '" + startTime + "', '" +header + "', '" +
+                                          textLabel+ "', '" + imagePath + "'";
 
-                preparedStatement = connection.prepareStatement("INSERT INTO events(slide_date, header, slide_text, image_path) VALUES(" + queryString + ")");
+                preparedStatement = connection.prepareStatement("INSERT INTO events(event_date, start_time, header, slide_text, image_path) VALUES(" + queryString + ")");
 
                 preparedStatement.execute();
-
-
-
 
             }
 
@@ -217,6 +411,43 @@ public class DatabaseSaveAndGet {
                 }
             }
 
+        }
+    }
+
+
+    public static void deleteEventSlide(SlideEvent slideEvent){
+
+        Connection connection = null;
+        Statement statement = null;
+
+        String date = slideEvent.getDate();
+        String header = slideEvent.getHeader();
+        String slideText = slideEvent.getText();
+        String sqlQuery = "DELETE FROM events WHERE event_date = '" + date + "' AND header = '" + header +"' AND slide_text = '" + slideText + "'";
+
+        try {
+            connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
+            statement.executeUpdate(sqlQuery);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

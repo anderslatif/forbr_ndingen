@@ -11,7 +11,6 @@ public interface TabNode {
 
     Slide getSlide();
 
-    //void setSlide(Slide slide);
 
 
 }

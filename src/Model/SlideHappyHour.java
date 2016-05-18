@@ -7,10 +7,10 @@ public class SlideHappyHour extends Slide {
 
     private String header;
     private String text;
-    private String imagePath;
+    private String imagePath = "";
 
     public SlideHappyHour(String slideType, String header, String text, String imagePath){
-        super();
+        super(slideType);
         this.header = header;
         this.text = text;
         this.imagePath = imagePath;

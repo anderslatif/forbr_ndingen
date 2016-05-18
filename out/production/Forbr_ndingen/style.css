@@ -1,21 +1,40 @@
-.eventSlidePane{
+@font-face {
+    font-family: Contribute;
+    src: url('fonts/Contribute_Playtype.otf');
+}
 
-    -fx-background-image: url("abstract-mosaic-background.png");
+.root{
 
+    -fx-font-family: 'Contribute';
 }
 
 
-.happyHour{
+.eventSlide{
 
-    -fx-background-image: url("abstract-mosaic-background.png");
-
+    -fx-background-image: url("background.png");
+    -fx-background-size: contain;
 }
 
+
+.happyHourSlide{
+
+    -fx-background-image: url("background.png");
+    -fx-background-size: contain;
+
+}
 
 .header{
+    -fx-font-family: 'Contribute';
     -fx-font-size: 24px;
 }
 
 .text_area{
+    -fx-font-family: 'Contribute';
     -fx-font-size: 18px;
 }
+
+.emptyTabLabel{
+    -fx-font-family: 'Contribute';
+    -fx-font: 20 arial;
+}
+
