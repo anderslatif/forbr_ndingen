@@ -6,10 +6,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-
-
 public class Main extends Application {
-
 
     public static void main(String[] args) {
         launch(args);
@@ -18,7 +15,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         Layout view = new Layout();
-
 
         Scene scene = new Scene(view.getRootLayout());
         view.initializeLayout(scene, primaryStage);

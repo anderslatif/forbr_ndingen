@@ -3,7 +3,6 @@
     src: url('fonts/Contribute_Playtype.otf');
 }
 
-
 .root{
 
     -fx-font-family: 'Contribute';
@@ -13,23 +12,29 @@
 .eventSlide{
 
     -fx-background-image: url("background.png");
-    -fx-background-size: stretch;
+    -fx-background-size: contain;
 }
 
 
 .happyHourSlide{
 
     -fx-background-image: url("background.png");
-    -fx-background-size: stretch;
+    -fx-background-size: contain;
 
 }
 
-
 .header{
+    -fx-font-family: 'Contribute';
     -fx-font-size: 24px;
 }
 
 .text_area{
+    -fx-font-family: 'Contribute';
     -fx-font-size: 18px;
+}
+
+.emptyTabLabel{
+    -fx-font-family: 'Contribute';
+    -fx-font: 20 arial;
 }
 
