@@ -12,10 +12,6 @@ public class Main extends Application {
         launch(args);
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 29c64c33afd6f6e0a600051db2ad5a7ec688869e
     public void start(Stage primaryStage) throws Exception {
 
         Layout view = new Layout();
