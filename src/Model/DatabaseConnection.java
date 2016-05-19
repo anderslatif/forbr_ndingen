@@ -8,8 +8,16 @@ import java.sql.DriverManager;
  */
 public class DatabaseConnection {
 
-    public static Connection getConnection(){
-        Connection connection = null;
+    private Connection connection;
+
+    private static DatabaseConnection DBInstance = new DatabaseConnection();
+
+    public static DatabaseConnection getInstance(){
+        return DBInstance;
+    }
+
+    private DatabaseConnection(){
+        connection = null;
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -18,6 +26,9 @@ public class DatabaseConnection {
         } catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public Connection getConnection(){
 
         return connection;
 
