@@ -530,12 +530,14 @@ public class Layout {
         cancelBut.setOnAction( e -> saveStage.close());
 
         datePicker.setOnAction( e -> {
-            if(DatabaseSaveAndGet.checkIfSlidesAreAlreadySavedOnThisDate(datePicker.getValue().toString())){
-                warningLabel.setText("Overwrite Existing Presentation?");
-                FadeTransition fadeTransition = new FadeTransition(Duration.millis(10000), warningLabel);
-                fadeTransition.setFromValue(1.0);
-                fadeTransition.setToValue(0.0);
-                fadeTransition.play();
+            if(buttonText.equals("Save")){
+                if(DatabaseSaveAndGet.checkIfSlidesAreAlreadySavedOnThisDate(datePicker.getValue().toString())){
+                    warningLabel.setText("Overwrite Existing Presentation?");
+                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(10000), warningLabel);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.play();
+                }
             }
         });
 
