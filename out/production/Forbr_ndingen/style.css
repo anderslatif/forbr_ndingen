@@ -3,7 +3,6 @@
     src: url('fonts/Contribute_Playtype.otf');
 }
 
-
 .root{
 
     -fx-font-family: 'Contribute';
@@ -23,7 +22,6 @@
     -fx-background-size: contain;
 
 }
-
 
 .header{
     -fx-font-family: 'Contribute';
