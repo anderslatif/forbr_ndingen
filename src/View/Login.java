@@ -20,14 +20,13 @@ import java.sql.Statement;
 public class Login{
 
 
-    static Connection connection = null;
-    static Stage stage;
-    static TextField text1;
-    static TextField text2;
+    Connection connection = null;
+    TextField text1;
+    TextField text2;
+    boolean access = false;
 
 
-    public static GridPane loginScreen() {
-        //BorderPane root = new BorderPane();
+    public GridPane loginScreen() {
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20, 20, 20, 20));
@@ -57,7 +56,7 @@ public class Login{
 
 
 
-    public static boolean loginAttempt(){
+    public void loginAttempt(){
 
         try {
             connection = DatabaseConnection.getConnection();
@@ -72,7 +71,7 @@ public class Login{
                     String lastName = resultSet.getString("last_name");
 
                     if(text1.getText().equals(firstName) && text2.getText().equals(lastName)){
-                        return true;
+                        access = true;
                     }
                 }
 
@@ -89,10 +88,14 @@ public class Login{
                     e.printStackTrace();
                 }
             }
-        return false;
+
             // check if null and try catch properly when closing statement and resultSet
 
         }
+    }
+
+    public boolean accessAllowed(){
+        return access;
     }
 
 
