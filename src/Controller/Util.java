@@ -35,8 +35,10 @@ public class Util {
 
     public static String escapeApostrophe(String stringToParse){
 
-        stringToParse = stringToParse.replaceAll("'", "\\\\'");
-        stringToParse = stringToParse.replaceAll("\"", "\\\\\"");
+        if (stringToParse.equals("") || stringToParse.equals("null") || stringToParse == null ){
+            stringToParse = stringToParse.replaceAll("'", "\\\\'");
+            stringToParse = stringToParse.replaceAll("\"", "\\\\\"");
+        }
 
         return stringToParse;
 

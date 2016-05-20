@@ -32,22 +32,53 @@ public class DatabaseSaveAndGet {
             switch (slideType) {
                 case "SlideEvent":
                     SlideEvent eS = (SlideEvent) s;
-                    startTime = eS.getStartTime();
-                    header = eS.getHeader();
-                    text = eS.getText();
+
+                    if(eS.getStartTime() == null){
+                        startTime = eS.getStartTime();
+                    } else {
+                        startTime = Util.escapeApostrophe(eS.getStartTime());
+                    }
+                    if(eS.getHeader() == null){
+                        header = eS.getHeader();
+                    } else {
+                        header = Util.escapeApostrophe(eS.getHeader());
+                    }
+                    if(eS.getText() == null){
+                        text = eS.getText();
+                    } else {
+                        text = Util.escapeApostrophe(eS.getText());
+                    }
                     imagePath = Util.turnBackslashToForward(eS.getImagePath());
+
                     break;
 
                 case "SlidePicture":
                     SlidePicture pS = (SlidePicture) s;
-                    imagePath = Util.turnBackslashToForward(pS.getImagePath());
+
+                    if(pS.getImagePath() == null){
+                        imagePath = pS.getImagePath();
+                    } else{
+                        imagePath = Util.turnBackslashToForward(pS.getImagePath());
+                    }
                     break;
 
                 case "SlideHappyHour":
                     SlideHappyHour hS = (SlideHappyHour) s;
-                    header = hS.getHeader();
-                    text = hS.getText();
-                    imagePath = Util.turnBackslashToForward(hS.getImagePath());
+
+                    if(hS.getHeader() == null){
+                        header = hS.getHeader();
+                    } else {
+                        header = Util.turnBackslashToForward(hS.getHeader());
+                    }
+                    if(hS.getText() == null){
+                        text = hS.getText();
+                    } else {
+                        text = Util.turnBackslashToForward(hS.getText());
+                    }
+
+                    if(!(hS.getImagePath() == null  || hS.getImagePath().equals("null") || hS.getImagePath().equals(""))){
+                        imagePath = Util.turnBackslashToForward(hS.getImagePath());
+                    }
                     break;
                 default:
                     System.out.println("Error in savePresentation() in DatabaseSaveAndGet.");

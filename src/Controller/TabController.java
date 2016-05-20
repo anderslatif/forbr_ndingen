@@ -543,7 +543,6 @@ public class TabController {
             }
         }
         controller.savePresentation(presentation, chosenDate);
-        tabCollection.clear();
     }
 
 
