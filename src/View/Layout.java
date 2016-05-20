@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -261,7 +262,7 @@ public class Layout {
 
         StackPane stackPane = new StackPane();
         ImageView imageView = new ImageView();
-        imageView.fitHeightProperty().bind(newEventScene.heightProperty().subtract(100));
+        imageView.fitHeightProperty().bind(newEventScene.heightProperty().subtract(110));
         imageView.fitWidthProperty().bind(newEventScene.heightProperty().divide(1.5));
 
         Label label = new Label("Drop image here.");
@@ -271,6 +272,7 @@ public class Layout {
         //eventBorderPane.setCenter(imageView);
 
         VBox vBox2 = new VBox();
+
         TextField textTextField = new TextField();
         textTextField.setPromptText("Write some text...");
         Button doneButton = new Button("Done");
@@ -296,8 +298,10 @@ public class Layout {
                 getEventOverview();
             }
         });
+        HBox hBox1 = new HBox();
 
-        vBox2.getChildren().addAll(textTextField, doneButton);
+        hBox1.getChildren().addAll(doneButton);
+        vBox2.getChildren().addAll(textTextField, hBox1);
         eventBorderPane.setBottom(vBox2);
 
 
