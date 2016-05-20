@@ -498,6 +498,10 @@ public class Layout {
             return;
         }
 
+        if(buttonText.equals("Open") && tabController.justSaved == false){
+            savePresentationConfirmation("SaveAndOpen");
+        }
+
         DatePicker datePicker = new DatePicker();
 
         Label warningLabel = new Label();
