@@ -18,10 +18,11 @@ public class Main extends Application {
 
         Layout view = new Layout();
 
-        //Scene scene = new Scene(view.getRootLayout());
-        //Login l = new Login(){};
         Scene scene = new Scene(Login.loginScreen());
-        view.initializeLayout(scene, primaryStage);
+
+        //Scene scene = new Scene(view.getRootLayout());
+        //view.initializeLayout(scene, primaryStage);
+
 
 
         double menuPlusTabHeaderHeight = view.getMenuBar().getHeight() + 20;
@@ -31,7 +32,7 @@ public class Main extends Application {
 
 //        primaryStage.setMinHeight(height);
 //        primaryStage.setMinWidth(width);
-//
+
 
         scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
 

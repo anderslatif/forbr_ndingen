@@ -1,27 +1,21 @@
 package View;
 
 import Model.DatabaseConnection;
-import javafx.application.Application;
+import com.mysql.jdbc.Statement;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 
 public class Login{
 
 
-    static Connection connection = null;
-    static Stage stage;
     static TextField text1;
     static TextField text2;
 
@@ -41,7 +35,7 @@ public class Login{
 
         Button button = new Button("Go");
 
-        button.setOnAction( e -> loginAttempt());
+        //button.setOnAction( e -> loginAttempt());
 
         gridPane.add(label1, 0, 0);
         gridPane.add(text1, 1, 0);
@@ -59,11 +53,14 @@ public class Login{
 
     public static boolean loginAttempt(){
 
+        Connection connection = null;
+        Statement statement = null;
+
         try {
             connection = DatabaseConnection.getConnection();
 
             if(connection != null){
-                Statement statement = connection.createStatement();
+                 statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT first_name, last_name FROM login;");
 
                 while(resultSet.next()){
