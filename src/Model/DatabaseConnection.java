@@ -2,6 +2,7 @@ package Model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
 
 /**
  * Created by Anders on 4/21/2016.
