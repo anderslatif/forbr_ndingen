@@ -86,7 +86,7 @@ public class DatabaseSaveAndGet {
             }
 
             try {
-                connection = DatabaseConnection.getInstance().getConnection();
+                connection = DatabaseConnection.getConnection();
 
                 if (connection != null) {
 
@@ -129,7 +129,7 @@ public class DatabaseSaveAndGet {
         String sqlQuery = "DELETE FROM slides WHERE slide_date = '"+date+"';";
 
         try {
-            connection = DatabaseConnection.getInstance().getConnection();
+            connection = DatabaseConnection.getConnection();
             statement = connection.createStatement();
             statement.executeUpdate(sqlQuery);
 
@@ -164,7 +164,7 @@ public class DatabaseSaveAndGet {
         boolean foundAny = false;
 
         try {
-            connection = DatabaseConnection.getInstance().getConnection();
+            connection = DatabaseConnection.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sqlQuery);
 
@@ -217,7 +217,7 @@ public class DatabaseSaveAndGet {
         ResultSet resultSet = null;
 
         try {
-            connection = DatabaseConnection.getInstance().getConnection();
+            connection = DatabaseConnection.getConnection();
             statement = connection.createStatement();
 
             resultSet = statement.executeQuery(sqlQuery);
@@ -314,7 +314,7 @@ public class DatabaseSaveAndGet {
         ArrayList<SlideEvent> orderedEventList = new ArrayList<>();
 
         try {
-            connection = DatabaseConnection.getInstance().getConnection();
+            connection = DatabaseConnection.getConnection();
 
             statement = connection.createStatement();
 
@@ -403,7 +403,7 @@ public class DatabaseSaveAndGet {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = DatabaseConnection.getInstance().getConnection();
+            connection = DatabaseConnection.getConnection();
 
             if(connection != null){
 
@@ -457,7 +457,7 @@ public class DatabaseSaveAndGet {
         String sqlQuery = "DELETE FROM events WHERE event_date = '" + date + "' AND header = '" + header +"' AND slide_text = '" + slideText + "'";
 
         try {
-            connection = DatabaseConnection.getInstance().getConnection();
+            connection = DatabaseConnection.getConnection();
             statement = connection.createStatement();
             statement.executeUpdate(sqlQuery);
 

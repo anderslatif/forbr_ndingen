@@ -1,8 +1,10 @@
 import View.Layout;
 
+import View.Login;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -16,7 +18,9 @@ public class Main extends Application {
 
         Layout view = new Layout();
 
-        Scene scene = new Scene(view.getRootLayout());
+        //Scene scene = new Scene(view.getRootLayout());
+        //Login l = new Login(){};
+        Scene scene = new Scene(Login.loginScreen());
         view.initializeLayout(scene, primaryStage);
 
 
@@ -25,9 +29,9 @@ public class Main extends Application {
         double height = Screen.getPrimary().getVisualBounds().getHeight();
         double width = (Screen.getPrimary().getVisualBounds().getHeight()-menuPlusTabHeaderHeight) /1.7777;
 
-        primaryStage.setMinHeight(height);
-        primaryStage.setMinWidth(width);
-
+//        primaryStage.setMinHeight(height);
+//        primaryStage.setMinWidth(width);
+//
 
         scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
 
@@ -39,6 +43,7 @@ public class Main extends Application {
             e.consume();
             view.savePresentationBeforeClosingAll();
         });*/
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }

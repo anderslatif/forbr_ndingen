@@ -9,17 +9,8 @@ import java.sql.Statement;
  */
 public class DatabaseConnection {
 
-    private Connection connection;
-    private Statement statement;
-
-    private static DatabaseConnection DBInstance = new DatabaseConnection();
-
-    public static DatabaseConnection getInstance(){
-        return DBInstance;
-    }
-
-    private DatabaseConnection(){
-        connection = null;
+    public static Connection getConnection(){
+        Connection connection = null;
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -28,29 +19,10 @@ public class DatabaseConnection {
         } catch(Exception e){
             e.printStackTrace();
         }
-    }
 
-    public Statement prepareStatement(String sqlString) {
-        try {
-            Statement preparedStatement = connection.prepareStatement(sqlString);
-            return preparedStatement;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public Statement createStatement(){
-        try{
-            Statement createdStatement = connection.createStatement();
-            return createdStatement;
-        }catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
-    public Connection getConnection(){
         return connection;
+
     }
+
 
 }
