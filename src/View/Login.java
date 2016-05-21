@@ -60,7 +60,7 @@ public class Login{
             connection = DatabaseConnection.getConnection();
 
             if(connection != null){
-                 statement = connection.createStatement();
+                 //statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT first_name, last_name FROM login;");
 
                 while(resultSet.next()){

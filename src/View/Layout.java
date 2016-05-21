@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -22,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -41,11 +43,11 @@ public class Layout {
     Controller controller;
     TabController tabController;
 
-    public void initializeLayout(Scene scene, Stage stage){
+    public void initializeLayout(Scene scene, Stage stage, Layout layout){
         this.scene = scene;
         this.stage = stage;
         controller = new Controller();
-        tabController = new TabController(scene, stage);
+        tabController = new TabController(scene, stage, layout);
         newPresentation();
 
 
@@ -64,7 +66,7 @@ public class Layout {
     }
 
 
-
+    //MenuItem m1_3; // this is the Save MenuItem, we keep it here to grey it out when successfully saving
 
     public MenuBar getMenuBar(){
 
@@ -94,15 +96,8 @@ public class Layout {
         menu1.getItems().addAll(m1_1, m1_2, m1_3);
 
         ///////////////////////////////////////
-        Menu menu2 = new Menu("Events");
+        //Menu menu2 = new Menu("Events");
 
-        MenuItem m2_1 = new MenuItem("_Events");
-
-        m2_1.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
-        m2_1.setOnAction( e -> getEventOverview());
-
-
-        menu2.getItems().addAll(m2_1);
 
         ///////////////////////////////////////
         Menu menu3 = new Menu("Add a Slide");
@@ -115,8 +110,11 @@ public class Layout {
         m3_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
         m3_2.setOnAction( e -> tabController.addHappyHourTab());
 
+        MenuItem m3_3 = new MenuItem("_Events");
+        m3_3.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
+        m3_3.setOnAction( e -> getEventOverview());
 
-        menu3.getItems().addAll(m3_1, m3_2);
+        menu3.getItems().addAll(m3_1, m3_2, m3_3);
 
         ///////////////////////////////////////
         Menu menu4 = new Menu("About");
@@ -133,7 +131,7 @@ public class Layout {
 
         ///////////////////////////////////////
 
-        menuBar.getMenus().addAll(menu1, menu2, menu3, menu4);
+        menuBar.getMenus().addAll(menu1, menu3, menu4);
 
         return menuBar;
     }
@@ -155,7 +153,10 @@ public class Layout {
     public void getEventOverview(){
 
         eventStage = new Stage();
-        Scene eventScene = new Scene(getEventBorderPane(), 1100, 600);
+        Scene eventScene = new Scene(getEventBorderPane(), 1100, 450);
+
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        eventStage.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 500);
 
         eventStage.setScene(eventScene);
         eventStage.show();
@@ -486,10 +487,18 @@ public class Layout {
                     savePresentationStage.close();
                     stage.close();
                 });
-                button3.setOnAction(e -> {
+                button3.setOnAction(e -> savePresentationStage.close());
+            } else if(request.equals("saveAndOpen")){
+                button1.setOnAction(e -> {
+                    pickADate("SaveAndOpen");
                     savePresentationStage.close();
                 });
-            }
+                button2.setOnAction(e -> {
+                    pickADate("Open...");
+                    savePresentationStage.close();
+                });
+                button3.setOnAction(e -> savePresentationStage.close());
+        }
 
 
         savePresentationStage.setScene(savePresentationScene);
@@ -499,12 +508,10 @@ public class Layout {
     public void pickADate(String buttonText){
 
         if(buttonText.equals("Save") && tabController.getTabCollectionSize() == 0){
+            // we should inform that there is nothing to save
             return;
         }
 
-        if(buttonText.equals("Open") && tabController.justSaved == false){
-            savePresentationConfirmation("SaveAndOpen");
-        }
 
         DatePicker datePicker = new DatePicker();
 
@@ -534,6 +541,11 @@ public class Layout {
         saveStage.setScene(saveScene);
         saveStage.show();
 
+        if(buttonText.equals("Open") && tabController.justSaved == false){
+            saveStage.close();
+            savePresentationConfirmation("saveAndOpen");
+        }
+
         // Button Actions
         cancelBut.setOnAction( e -> saveStage.close());
 
@@ -553,16 +565,19 @@ public class Layout {
 
             if(datePicker.getValue() != null) {
 
-                if (buttonText.equals("Save")) {
-
+                if(buttonText.equals("Save")) {
                     tabController.savingPresentation(datePicker.getValue().toString());
                 }
 
-                if (buttonText.equals("Open")) {
-
+                if(buttonText.equals("Open") || buttonText.equals("Open...")) {
                     newPresentation();
                     ArrayList<Slide> presentation = DatabaseSaveAndGet.openPresentation(datePicker.getValue().toString());
                     tabController.openPresentation(presentation);
+                }
+
+                if(buttonText.equals("SaveAndOpen")){
+                    tabController.savingPresentation(datePicker.getValue().toString());
+                    pickADate("Open");
                 }
 
                 saveStage.close();
@@ -570,6 +585,8 @@ public class Layout {
             }
         });
     }
+
+
 
 
     public void analyzeRatio(){  // this is pure nonsense

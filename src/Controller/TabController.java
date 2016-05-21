@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import View.Layout;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -25,15 +26,18 @@ public class TabController {
 
     private Stage stage;
     private Scene scene;
+    private Layout layout;
     private TabPane tabPane;
     private Controller controller;
     private ArrayList<TabNode> tabCollection;
     public boolean justSaved = true;
 
 
-    public TabController(Scene scene, Stage stage){
+
+    public TabController(Scene scene, Stage stage, Layout layout){
         this.scene = scene;
         this.stage = stage;
+        this.layout = layout;
         tabCollection = new ArrayList<>();
         controller = new Controller();
     }
@@ -49,6 +53,7 @@ public class TabController {
         justSaved = true;
 
         tabPane = new TabPane();
+        tabPane.setTabMinWidth(40);
 
         initializeTabController(tabPane);
 
@@ -67,7 +72,7 @@ public class TabController {
 
         Tab firstTab = new Tab();
 
-        Label label = new Label("This tab is Empty \nPlease select a slide type.");
+        Label label = new Label("New Presentation!\n\nThis tab is Empty \nPlease select a slide type.");
         label.setPadding(new Insets(100, 100, 100, 100));
         label.getStyleClass().add("emptyTabLabel");
 
@@ -85,6 +90,9 @@ public class TabController {
             for(Tab tab : tabPane.getTabs()){
                 tab.setText(String.valueOf(tabText));
                 tabText++;
+            }
+            if(tabPane.getTabs().size() == 0){
+                layout.newPresentation();
             }
         });
 
@@ -112,10 +120,7 @@ public class TabController {
             e.consume();
         });
 
-
-
     }
-
 
 
     public void addPictureToATab(File file){
