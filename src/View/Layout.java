@@ -8,6 +8,7 @@ import Model.SlideEvent;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -50,7 +51,6 @@ public class Layout {
         tabController = new TabController(scene, stage, layout);
         newPresentation();
 
-
     }
 
 
@@ -66,7 +66,6 @@ public class Layout {
     }
 
 
-    //MenuItem m1_3; // this is the Save MenuItem, we keep it here to grey it out when successfully saving
 
     public MenuBar getMenuBar(){
 
@@ -138,6 +137,26 @@ public class Layout {
 
 
 
+    public void setBottomLabelMessage(String message){
+
+        Label bottomLabel = new Label();
+        bottomLabel.setMaxHeight(10);
+        borderPane.setBottom(bottomLabel);
+
+        bottomLabel.setTextFill(Color.RED);
+        bottomLabel.setMaxWidth(Double.MAX_VALUE);
+        bottomLabel.setAlignment(Pos.CENTER);
+        bottomLabel.getStyleClass().add("bottomLabel");
+
+        bottomLabel.setText(message);
+
+        borderPane.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                borderPane.setBottom(null);
+            }
+        });
+    }
 
 
 
@@ -264,7 +283,7 @@ public class Layout {
         StackPane stackPane = new StackPane();
         ImageView imageView = new ImageView();
         imageView.fitHeightProperty().bind(newEventScene.heightProperty().subtract(110));
-        imageView.fitWidthProperty().bind(newEventScene.heightProperty().divide(1.5));
+        imageView.fitWidthProperty().bind(newEventScene.widthProperty());
 
         Label label = new Label("Drop image here.");
         stackPane.getChildren().addAll(imageView, label);
@@ -508,7 +527,7 @@ public class Layout {
     public void pickADate(String buttonText){
 
         if(buttonText.equals("Save") && tabController.getTabCollectionSize() == 0){
-            // we should inform that there is nothing to save
+            setBottomLabelMessage("You have nothing to save.");
             return;
         }
 

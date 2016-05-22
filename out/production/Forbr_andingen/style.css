@@ -37,3 +37,10 @@
     -fx-font-family: 'Contribute';
     -fx-font: 20 arial;
 }
+
+.bottomLabel{
+    font-family: ContributeBold;
+    src: url('fonts/Contribute_Bold.otf');
+    -fx-font-family: ContributeBold;
+    -fx-font-size: 14px;
+}

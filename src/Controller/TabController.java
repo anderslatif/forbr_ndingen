@@ -2,6 +2,11 @@ package Controller;
 
 import Model.*;
 import View.Layout;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -9,15 +14,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Anders on 4/26/2016.
@@ -83,6 +86,47 @@ public class TabController {
         firstTab.setText(title);
         tabPane.getTabs().addAll(firstTab);
 
+
+
+/*        final KeyCombination keyCombinationShiftLeft = new KeyCodeCombination(KeyCode.LEFT, KeyCombination.SHIFT_DOWN);
+        final KeyCombination keyCombinationShiftRight = new KeyCodeCombination(KeyCode.RIGHT, KeyCombination.SHIFT_DOWN);
+
+        tabPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(keyCombinationShiftLeft.match(event)){
+                    Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+                    int indexOfSelectedTab = tabPane.getSelectionModel().getSelectedIndex();
+                    ArrayList<Tab> tabList = new ArrayList<Tab>();
+
+                    for(Tab tabs : tabPane.getTabs()){  //getTabs() returns an ObservableList but we need an ArrayList
+                        tabList.add(tabs);
+                    }
+
+                    //tabPane.getTabs().clear();
+                    System.out.println("size " + tabList.size());
+
+                    for(int i = 0; i < tabCollection.size(); i++){
+
+                        System.out.println("index of selected tab: " + indexOfSelectedTab);
+                        System.out.println("i" + i);
+
+
+
+                        if(indexOfSelectedTab == (i+1)){
+                            System.out.println("moving the tab");
+                            tabPane.getTabs().add(selectedTab);
+                        } else {
+                            tabPane.getTabs().add(tabList.get(i));
+                        }
+                    }
+
+
+                } else if(keyCombinationShiftRight.match(event)){
+                    System.out.println("shift right");
+                }
+            }
+        });*/
 
 
         tabPane.getSelectionModel().selectedItemProperty().addListener( (ov, oldTab, newTab) -> {
@@ -356,6 +400,8 @@ public class TabController {
         } else {
             textTextArea = new TextArea(slideEvent.getText());
         }
+        textTextArea.setMaxWidth(scene.getWidth());
+        textTextArea.setWrapText(true);
         textTextArea.getStyleClass().add("text_area");
         textTextArea.setOpacity(0.8);
         textTextArea.textProperty().addListener( e -> {
@@ -532,6 +578,7 @@ public class TabController {
 
     public void savingPresentation(String chosenDate){
 
+        layout.setBottomLabelMessage("Presentation has been saved.");
         justSaved = true;
 
         ArrayList<TabNode> presentation = new ArrayList();
