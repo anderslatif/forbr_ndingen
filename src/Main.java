@@ -1,10 +1,8 @@
-import View.Layout;
+import view.Layout;
 
-import View.Login;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -28,8 +26,8 @@ public class Main extends Application {
         primaryStage.setMinHeight(height);
         primaryStage.setMinWidth(width);
 
-
-
+        System.out.println(Thread.activeCount());
+        System.out.println(Thread.getAllStackTraces());
 
 
         scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());

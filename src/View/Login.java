@@ -1,6 +1,6 @@
-package View;
+package view;
 
-import Model.DatabaseConnection;
+import model.DatabaseConnection;
 import com.mysql.jdbc.Statement;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;

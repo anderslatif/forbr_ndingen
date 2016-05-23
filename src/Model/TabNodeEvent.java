@@ -1,8 +1,7 @@
-package Model;
+package model;
 
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**

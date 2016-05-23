@@ -1,6 +1,6 @@
-package Model;
+package model;
 
-import Controller.Util;
+import controller.Util;
 
 import java.sql.*;
 import java.time.LocalDate;

@@ -1,6 +1,4 @@
-package Model;
-
-import java.time.LocalDate;
+package model;
 
 /**
  * Created by Mikkel on 01/05/2016.

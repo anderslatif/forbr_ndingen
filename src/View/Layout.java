@@ -1,18 +1,15 @@
-package View;
+package view;
 
-import Controller.Controller;
-import Controller.TabController;
-import Model.DatabaseSaveAndGet;
-import Model.Slide;
-import Model.SlideEvent;
+import controller.Controller;
+import controller.TabController;
+import model.DatabaseSaveAndGet;
+import model.Slide;
+import model.SlideEvent;
 import javafx.animation.FadeTransition;
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,18 +18,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Anders on 4/21/2016.
