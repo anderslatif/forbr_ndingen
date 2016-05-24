@@ -1,7 +1,6 @@
 package view;
 
 import model.DatabaseConnection;
-import com.mysql.jdbc.Statement;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class Login{
@@ -20,7 +20,6 @@ public class Login{
     TextField text1;
     TextField text2;
     boolean access = false;
-
 
 
     public GridPane loginScreen() {
@@ -57,16 +56,13 @@ public class Login{
 
         Connection connection = null;
         Statement statement = null;
+
         try {
             connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
 
             if(connection != null){
-<<<<<<< HEAD
-                ResultSet resultSet = statement.executeQuery("SELECT username, password FROM logins;");
-=======
-                 //statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT first_name, last_name FROM login;");
->>>>>>> 58ae9f9ebc76f34d5714c9a4425637faf306d1ce
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM logins;");
 
                 while(resultSet.next()){
 
@@ -74,7 +70,7 @@ public class Login{
                     String password = resultSet.getString("password");
 
                     if(text1.getText().equals(userName) && text2.getText().equals(password)){
-                        access = true;
+
                     }
                 }
 
@@ -82,12 +78,15 @@ public class Login{
 
 
         } catch(Exception e){
+            System.out.println("fuck off");
             e.printStackTrace();
         } finally {
             if(connection != null){
                 try {
+                    System.out.println("closed");
                     connection.close();
                 } catch (SQLException e) {
+                    System.out.println("fuck off finally");
                     e.printStackTrace();
                 }
             }
