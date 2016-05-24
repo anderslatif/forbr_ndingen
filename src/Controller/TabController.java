@@ -1,17 +1,14 @@
-package Controller;
+package controller;
 
-import Model.*;
-import javafx.event.EventHandler;
+import model.*;
+import view.Layout;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -25,15 +22,18 @@ public class TabController {
 
     private Stage stage;
     private Scene scene;
+    private Layout layout;
     private TabPane tabPane;
     private Controller controller;
     private ArrayList<TabNode> tabCollection;
     public boolean justSaved = true;
 
 
-    public TabController(Scene scene, Stage stage){
+
+    public TabController(Scene scene, Stage stage, Layout layout){
         this.scene = scene;
         this.stage = stage;
+        this.layout = layout;
         tabCollection = new ArrayList<>();
         controller = new Controller();
     }
@@ -49,6 +49,7 @@ public class TabController {
         justSaved = true;
 
         tabPane = new TabPane();
+        tabPane.setTabMinWidth(40);
 
         initializeTabController(tabPane);
 
@@ -67,7 +68,7 @@ public class TabController {
 
         Tab firstTab = new Tab();
 
-        Label label = new Label("This tab is Empty \nPlease select a slide type.");
+        Label label = new Label("New Presentation!\n\nThis tab is Empty \nPlease select a slide type.");
         label.setPadding(new Insets(100, 100, 100, 100));
         label.getStyleClass().add("emptyTabLabel");
 
@@ -80,11 +81,55 @@ public class TabController {
 
 
 
+/*        final KeyCombination keyCombinationShiftLeft = new KeyCodeCombination(KeyCode.LEFT, KeyCombination.SHIFT_DOWN);
+        final KeyCombination keyCombinationShiftRight = new KeyCodeCombination(KeyCode.RIGHT, KeyCombination.SHIFT_DOWN);
+
+        tabPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(keyCombinationShiftLeft.match(event)){
+                    Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+                    int indexOfSelectedTab = tabPane.getSelectionModel().getSelectedIndex();
+                    ArrayList<Tab> tabList = new ArrayList<Tab>();
+
+                    for(Tab tabs : tabPane.getTabs()){  //getTabs() returns an ObservableList but we need an ArrayList
+                        tabList.add(tabs);
+                    }
+
+                    //tabPane.getTabs().clear();
+                    System.out.println("size " + tabList.size());
+
+                    for(int i = 0; i < tabCollection.size(); i++){
+
+                        System.out.println("index of selected tab: " + indexOfSelectedTab);
+                        System.out.println("i" + i);
+
+
+
+                        if(indexOfSelectedTab == (i+1)){
+                            System.out.println("moving the tab");
+                            tabPane.getTabs().add(selectedTab);
+                        } else {
+                            tabPane.getTabs().add(tabList.get(i));
+                        }
+                    }
+
+
+                } else if(keyCombinationShiftRight.match(event)){
+                    System.out.println("shift right");
+                }
+            }
+        });*/
+
+
         tabPane.getSelectionModel().selectedItemProperty().addListener( (ov, oldTab, newTab) -> {
             int tabText = 1;
             for(Tab tab : tabPane.getTabs()){
                 tab.setText(String.valueOf(tabText));
                 tabText++;
+            }
+            if(tabPane.getTabs().size() == 0){
+                layout.newPresentation();
             }
         });
 
@@ -112,10 +157,7 @@ public class TabController {
             e.consume();
         });
 
-
-
     }
-
 
 
     public void addPictureToATab(File file){
@@ -351,6 +393,8 @@ public class TabController {
         } else {
             textTextArea = new TextArea(slideEvent.getText());
         }
+        textTextArea.setMaxWidth(scene.getWidth());
+        textTextArea.setWrapText(true);
         textTextArea.getStyleClass().add("text_area");
         textTextArea.setOpacity(0.8);
         textTextArea.textProperty().addListener( e -> {
@@ -527,6 +571,7 @@ public class TabController {
 
     public void savingPresentation(String chosenDate){
 
+        layout.setBottomLabelMessage("Presentation has been saved.");
         justSaved = true;
 
         ArrayList<TabNode> presentation = new ArrayList();

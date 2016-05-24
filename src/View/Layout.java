@@ -1,16 +1,15 @@
-package View;
+package view;
 
-import Controller.Controller;
-import Controller.TabController;
-import Model.DatabaseSaveAndGet;
-import Model.Slide;
-import Model.SlideEvent;
+import controller.Controller;
+import controller.TabController;
+import model.DatabaseSaveAndGet;
+import model.Slide;
+import model.SlideEvent;
 import javafx.animation.FadeTransition;
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.CacheHint;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,15 +19,12 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Anders on 4/21/2016.
@@ -40,13 +36,12 @@ public class Layout {
     Controller controller;
     TabController tabController;
 
-    public void initializeLayout(Scene scene, Stage stage){
+    public void initializeLayout(Scene scene, Stage stage, Layout layout){
         this.scene = scene;
         this.stage = stage;
         controller = new Controller();
-        tabController = new TabController(scene, stage);
+        tabController = new TabController(scene, stage, layout);
         newPresentation();
-
 
     }
 
@@ -61,7 +56,6 @@ public class Layout {
 
         return borderPane;
     }
-
 
 
 
@@ -93,15 +87,8 @@ public class Layout {
         menu1.getItems().addAll(m1_1, m1_2, m1_3);
 
         ///////////////////////////////////////
-        Menu menu2 = new Menu("Events");
+        //Menu menu2 = new Menu("Events");
 
-        MenuItem m2_1 = new MenuItem("_Events");
-
-        m2_1.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
-        m2_1.setOnAction( e -> getEventOverview());
-
-
-        menu2.getItems().addAll(m2_1);
 
         ///////////////////////////////////////
         Menu menu3 = new Menu("Add a Slide");
@@ -114,8 +101,11 @@ public class Layout {
         m3_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
         m3_2.setOnAction( e -> tabController.addHappyHourTab());
 
+        MenuItem m3_3 = new MenuItem("_Events");
+        m3_3.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
+        m3_3.setOnAction( e -> getEventOverview());
 
-        menu3.getItems().addAll(m3_1, m3_2);
+        menu3.getItems().addAll(m3_1, m3_2, m3_3);
 
         ///////////////////////////////////////
         Menu menu4 = new Menu("About");
@@ -132,13 +122,33 @@ public class Layout {
 
         ///////////////////////////////////////
 
-        menuBar.getMenus().addAll(menu1, menu2, menu3, menu4);
+        menuBar.getMenus().addAll(menu1, menu3, menu4);
 
         return menuBar;
     }
 
 
 
+    public void setBottomLabelMessage(String message){
+
+        Label bottomLabel = new Label();
+        bottomLabel.setMaxHeight(10);
+        borderPane.setBottom(bottomLabel);
+
+        bottomLabel.setTextFill(Color.RED);
+        bottomLabel.setMaxWidth(Double.MAX_VALUE);
+        bottomLabel.setAlignment(Pos.CENTER);
+        bottomLabel.getStyleClass().add("bottomLabel");
+
+        bottomLabel.setText(message);
+
+        borderPane.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                borderPane.setBottom(null);
+            }
+        });
+    }
 
 
 
@@ -154,7 +164,10 @@ public class Layout {
     public void getEventOverview(){
 
         eventStage = new Stage();
-        Scene eventScene = new Scene(getEventBorderPane(), 1100, 600);
+        Scene eventScene = new Scene(getEventBorderPane(), 1100, 450);
+
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        eventStage.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 500);
 
         eventStage.setScene(eventScene);
         eventStage.show();
@@ -261,8 +274,8 @@ public class Layout {
 
         StackPane stackPane = new StackPane();
         ImageView imageView = new ImageView();
-        imageView.fitHeightProperty().bind(newEventScene.heightProperty().subtract(100));
-        imageView.fitWidthProperty().bind(newEventScene.heightProperty().divide(1.5));
+        imageView.fitHeightProperty().bind(newEventScene.heightProperty().subtract(110));
+        imageView.fitWidthProperty().bind(newEventScene.widthProperty());
 
         Label label = new Label("Drop image here.");
         stackPane.getChildren().addAll(imageView, label);
@@ -271,6 +284,7 @@ public class Layout {
         //eventBorderPane.setCenter(imageView);
 
         VBox vBox2 = new VBox();
+
         TextField textTextField = new TextField();
         textTextField.setPromptText("Write some text...");
         Button doneButton = new Button("Done");
@@ -296,8 +310,10 @@ public class Layout {
                 getEventOverview();
             }
         });
+        HBox hBox1 = new HBox();
 
-        vBox2.getChildren().addAll(textTextField, doneButton);
+        hBox1.getChildren().addAll(doneButton);
+        vBox2.getChildren().addAll(textTextField, hBox1);
         eventBorderPane.setBottom(vBox2);
 
 
@@ -482,10 +498,18 @@ public class Layout {
                     savePresentationStage.close();
                     stage.close();
                 });
-                button3.setOnAction(e -> {
+                button3.setOnAction(e -> savePresentationStage.close());
+            } else if(request.equals("saveAndOpen")){
+                button1.setOnAction(e -> {
+                    pickADate("SaveAndOpen");
                     savePresentationStage.close();
                 });
-            }
+                button2.setOnAction(e -> {
+                    pickADate("Open...");
+                    savePresentationStage.close();
+                });
+                button3.setOnAction(e -> savePresentationStage.close());
+        }
 
 
         savePresentationStage.setScene(savePresentationScene);
@@ -495,12 +519,10 @@ public class Layout {
     public void pickADate(String buttonText){
 
         if(buttonText.equals("Save") && tabController.getTabCollectionSize() == 0){
+            setBottomLabelMessage("You have nothing to save.");
             return;
         }
 
-        if(buttonText.equals("Open") && tabController.justSaved == false){
-            savePresentationConfirmation("SaveAndOpen");
-        }
 
         DatePicker datePicker = new DatePicker();
 
@@ -530,6 +552,11 @@ public class Layout {
         saveStage.setScene(saveScene);
         saveStage.show();
 
+        if(buttonText.equals("Open") && tabController.justSaved == false){
+            saveStage.close();
+            savePresentationConfirmation("saveAndOpen");
+        }
+
         // Button Actions
         cancelBut.setOnAction( e -> saveStage.close());
 
@@ -549,16 +576,19 @@ public class Layout {
 
             if(datePicker.getValue() != null) {
 
-                if (buttonText.equals("Save")) {
-
+                if(buttonText.equals("Save")) {
                     tabController.savingPresentation(datePicker.getValue().toString());
                 }
 
-                if (buttonText.equals("Open")) {
-
+                if(buttonText.equals("Open") || buttonText.equals("Open...")) {
                     newPresentation();
                     ArrayList<Slide> presentation = DatabaseSaveAndGet.openPresentation(datePicker.getValue().toString());
                     tabController.openPresentation(presentation);
+                }
+
+                if(buttonText.equals("SaveAndOpen")){
+                    tabController.savingPresentation(datePicker.getValue().toString());
+                    pickADate("Open");
                 }
 
                 saveStage.close();
@@ -566,6 +596,8 @@ public class Layout {
             }
         });
     }
+
+
 
 
     public void analyzeRatio(){  // this is pure nonsense

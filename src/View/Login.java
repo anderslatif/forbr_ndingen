@@ -1,6 +1,6 @@
-package View;
+package view;
 
-import Model.DatabaseConnection;
+import model.DatabaseConnection;
 import com.mysql.jdbc.Statement;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -61,7 +61,12 @@ public class Login{
             connection = DatabaseConnection.getConnection();
 
             if(connection != null){
+<<<<<<< HEAD
                 ResultSet resultSet = statement.executeQuery("SELECT username, password FROM logins;");
+=======
+                 //statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT first_name, last_name FROM login;");
+>>>>>>> 58ae9f9ebc76f34d5714c9a4425637faf306d1ce
 
                 while(resultSet.next()){
 

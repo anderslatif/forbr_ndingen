@@ -1,17 +1,11 @@
-package Controller;
+package controller;
 
-import Model.*;
-import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import model.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -20,18 +14,9 @@ import java.util.ArrayList;
 public class Controller {
 
 
-    public void openPresentation(){
-        // let the user enter a date in a pop-up first??
-        // is there a more convenient way to display the slides? perhaps a description/theme/tags for each slide would be apt
-        // remember error messages if images or media can't be found
-    }
-
-
-
     public void saveNewSlideEventToDB(SlideEvent slideEvent){
         DatabaseSaveAndGet.saveNewEventSlide(slideEvent);
     }
-
 
 
     public void savePresentation(ArrayList<TabNode> tabNodePresentation, String chosenDate){
@@ -90,8 +75,6 @@ public class Controller {
                 e.printStackTrace();
             }
 
-
-
         }
 
         File copiedFile = new File("FileServer/"+Util.turnBackslashToForward(file.getName()));
@@ -109,7 +92,6 @@ public class Controller {
         DatabaseSaveAndGet.deleteEventSlide(slideEvent);
 
     }
-
 
 
 }

@@ -1,10 +1,8 @@
-import View.Layout;
+import view.Layout;
 
-import View.Login;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -18,6 +16,7 @@ public class Main extends Application {
 
         Layout view = new Layout();
 
+<<<<<<< HEAD
         Login l = new Login(){};
         Scene scene = new Scene(l.loginScreen());
         if(l.accessAllowed()) {
@@ -29,14 +28,25 @@ public class Main extends Application {
         //view.initializeLayout(scene, primaryStage);
 
 
+=======
+        //Scene scene = new Scene(Login.loginScreen());
+>>>>>>> 58ae9f9ebc76f34d5714c9a4425637faf306d1ce
 
+        Scene scene = new Scene(view.getRootLayout());
+        view.initializeLayout(scene, primaryStage, view);
         double menuPlusTabHeaderHeight = view.getMenuBar().getHeight() + 20;
-
         double height = Screen.getPrimary().getVisualBounds().getHeight();
         double width = (Screen.getPrimary().getVisualBounds().getHeight()-menuPlusTabHeaderHeight) /1.7777;
+        primaryStage.setMinHeight(height);
+        primaryStage.setMinWidth(width);
 
+<<<<<<< HEAD
         //primaryStage.setMinHeight(height);
         //primaryStage.setMinWidth(width);
+=======
+        System.out.println(Thread.activeCount());
+        System.out.println(Thread.getAllStackTraces());
+>>>>>>> 58ae9f9ebc76f34d5714c9a4425637faf306d1ce
 
 
         scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
