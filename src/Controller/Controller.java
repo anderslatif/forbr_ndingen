@@ -33,6 +33,7 @@ public class Controller {
             if(!(slide.getImagePath() == null  || slide.getImagePath().equals("null") || slide.getImagePath().equals(""))){
                 String new_path = copyFileToDrive(slide.getImagePath());
                 slide.setImagePath(new_path);
+                System.out.println("new path: " + new_path);
             }
 
         }
