@@ -26,15 +26,9 @@ public class Main extends Application {
         primaryStage.setMinHeight(height);
         primaryStage.setMinWidth(width);
 
-        System.out.println(Thread.activeCount());
-        System.out.println(Thread.getAllStackTraces());
-
 
         scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
-
-
         primaryStage.getIcons().add(new Image("file:src/logo.png"));
-
 
 /*        primaryStage.setOnCloseRequest( e -> {
             e.consume();
