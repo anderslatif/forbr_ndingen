@@ -1,7 +1,10 @@
 package view;
 
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import model.DatabaseConnection;
-import com.mysql.jdbc.Statement;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,31 +14,43 @@ import javafx.scene.layout.GridPane;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class Login{
 
 
-    static TextField text1;
-    static TextField text2;
+    Connection connection = null;
+    TextField text1;
+    TextField text2;
+    boolean access = false;
+    Stage loginStage;
 
 
-    public static GridPane loginScreen() {
-        //BorderPane root = new BorderPane();
+    public void logIn(Layout layout){
+
+        loginStage = new Stage();
+        Scene eventScene = new Scene(loginScreen(layout));
+
+        loginStage.setScene(eventScene);
+        loginStage.show();
+    }
+
+    public GridPane loginScreen(Layout layout) {
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20, 20, 20, 20));
 
 
-        Label label1 = new Label("first_name");
+        Label label1 = new Label("User name");
         text1 = new TextField();
 
-        Label label2 = new Label("last_name");
+        Label label2 = new Label("Password");
         text2 = new TextField();
 
         Button button = new Button("Go");
 
-        //button.setOnAction( e -> loginAttempt());
+        button.setOnAction( e -> loginAttempt(layout));
 
         gridPane.add(label1, 0, 0);
         gridPane.add(text1, 1, 0);
@@ -48,28 +63,27 @@ public class Login{
     }
 
 
-
-
-
-    public static boolean loginAttempt(){
+    public void loginAttempt(Layout layout){
 
         Connection connection = null;
         Statement statement = null;
 
         try {
             connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
 
             if(connection != null){
-                 //statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT first_name, last_name FROM login;");
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM logins;");
 
                 while(resultSet.next()){
 
-                    String firstName = resultSet.getString("first_name");
-                    String lastName = resultSet.getString("last_name");
+                    String userName = resultSet.getString("username");
+                    String password = resultSet.getString("password");
 
-                    if(text1.getText().equals(firstName) && text2.getText().equals(lastName)){
-                        return true;
+                    if(text1.getText().equals(userName) && text2.getText().equals(password)){
+                        access = true;
+                        layout.undisableMenus();
+                        loginStage.close();
                     }
                 }
 
@@ -86,9 +100,17 @@ public class Login{
                     e.printStackTrace();
                 }
             }
-        return false;
+
             // check if null and try catch properly when closing statement and resultSet
 
+        }
+    }
+
+    public void accessAllowed(){
+        if(access){
+            System.out.println("You are logged in");
+        }else{
+            System.out.println("You are not logged in");
         }
     }
 

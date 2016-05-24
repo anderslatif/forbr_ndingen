@@ -30,7 +30,4 @@ public class Slide {
         this.imagePath = imagePath;
     }
 
-
-
-
 }
