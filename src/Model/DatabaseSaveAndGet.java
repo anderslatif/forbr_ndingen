@@ -273,6 +273,8 @@ public class DatabaseSaveAndGet {
 
                         presentation.add(sp);
 
+                        System.out.println("loaded imagepath: "+pImagePath);
+
                         break;
 
                     case "SlideHappyHour":

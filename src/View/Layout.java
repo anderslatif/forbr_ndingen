@@ -2,6 +2,8 @@ package view;
 
 import controller.Controller;
 import controller.TabController;
+import javafx.event.ActionEvent;
+import javafx.stage.Modality;
 import model.DatabaseSaveAndGet;
 import model.Slide;
 import model.SlideEvent;
@@ -550,6 +552,8 @@ public class Layout {
         Scene saveScene = new Scene(vBox, 190, 120);
 
         saveStage.setScene(saveScene);
+        saveStage.initModality(Modality.WINDOW_MODAL);
+        saveStage.initOwner(stage.getScene().getWindow());
         saveStage.show();
 
         if(buttonText.equals("Open") && tabController.justSaved == false){
@@ -574,6 +578,7 @@ public class Layout {
 
         saveBut.setOnAction( e -> {
 
+
             if(datePicker.getValue() != null) {
 
                 if(buttonText.equals("Save")) {
@@ -583,6 +588,7 @@ public class Layout {
                 if(buttonText.equals("Open") || buttonText.equals("Open...")) {
                     newPresentation();
                     ArrayList<Slide> presentation = DatabaseSaveAndGet.openPresentation(datePicker.getValue().toString());
+                    System.out.println("Path fra Layout "+presentation.get(0).getImagePath());
                     tabController.openPresentation(presentation);
                 }
 
@@ -682,8 +688,6 @@ public class Layout {
             }
 
         }
-
-
 
     }
 

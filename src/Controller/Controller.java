@@ -21,19 +21,26 @@ public class Controller {
 
     public void savePresentation(ArrayList<TabNode> tabNodePresentation, String chosenDate){
 
+
         ArrayList<Slide> slidePresentation = new ArrayList<>();
 
 
         for(TabNode tabNode : tabNodePresentation){
 
-            Slide slide = tabNode.getSlide();
 
-            slidePresentation.add(slide);
+            Slide slide = tabNode.getSlide();
+            System.out.println(slide.getImagePath());
 
             if(!(slide.getImagePath() == null  || slide.getImagePath().equals("null") || slide.getImagePath().equals(""))){
+                System.out.println("når ind i 1");
+                System.out.println(slide.getImagePath());
                 String new_path = copyFileToDrive(slide.getImagePath());
                 slide.setImagePath(new_path);
                 System.out.println("new path: " + new_path);
+                slidePresentation.add(slide);
+            } else {
+                System.out.println("når ind i 2");
+                slidePresentation.add(slide);
             }
 
         }
@@ -81,7 +88,6 @@ public class Controller {
         File copiedFile = new File("FileServer/"+Util.turnBackslashToForward(file.getName()));
 
         filePath = "file:///"+Util.turnBackslashToForward(copiedFile.getAbsoluteFile().toString());
-        System.out.println(filePath);
 
         return filePath;
 

@@ -124,6 +124,7 @@ public class TabController {
         justSaved = false;
 
         // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
+        System.out.println(file.getAbsolutePath().toString());
 
         String imagePath = "file:///" + file.getAbsoluteFile().toString();
 
@@ -241,6 +242,7 @@ public class TabController {
 
     public void addPictureTab(SlidePicture slidePictureToCreate){
 
+
         Tab tab;
         if(tabCollection.size()>0){
             tab = new Tab();
@@ -258,7 +260,15 @@ public class TabController {
 
         tabPane.getSelectionModel().select(tab);
 
+/*        Image image;
+        if(slidePictureToCreate.getImagePath().equals("null")){
+            image = new Image(slidePictureToCreate.getImagePath());
+        } else {
+            image = new Image("Empty.png");
+        }*/
+
         Image image = new Image(slidePictureToCreate.getImagePath());
+
 
         ImageView imageView = new ImageView(image);
         imageView.fitWidthProperty().bind(stage.widthProperty());
@@ -266,9 +276,8 @@ public class TabController {
 
         tab.setContent(imageView);
 
-        SlidePicture slidePicture = new SlidePicture();
-        slidePicture.setSlideType("SlidePicture");
-        TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePicture);
+
+        TabNodePicture tabNodePicture = new TabNodePicture(imageView, slidePictureToCreate);
         tabCollection.add(tabNodePicture);
 
     }
@@ -542,6 +551,14 @@ public class TabController {
             for (TabNode tabNode : tabCollection){
 
                 if(tab.getContent() == tabNode.getNode()){
+
+                    if(tab.getContent() instanceof javafx.scene.image.ImageView){
+                        System.out.println("A: Slide imagepath: " + tabNode.getSlide().getImagePath());
+                        System.out.println("A: Slide " + tabNode.getSlide());
+
+
+
+                    }
 
                     presentation.add(tabNode);
                 }

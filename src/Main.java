@@ -23,7 +23,7 @@ public class Main extends Application {
         double menuPlusTabHeaderHeight = view.getMenuBar().getHeight() + 20;
         double height = Screen.getPrimary().getVisualBounds().getHeight();
         double width = (Screen.getPrimary().getVisualBounds().getHeight()-menuPlusTabHeaderHeight) /1.7777;
-        primaryStage.setMinHeight(height);
+        primaryStage.setMinHeight(height-5);
         primaryStage.setMinWidth(width);
         primaryStage.setResizable(false);
 
