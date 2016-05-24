@@ -445,7 +445,7 @@ public class TabController {
         VBox vBox = new VBox();
         vBox.getStyleClass().add("happyHourSlide");
 
-        Image image = new Image("drop_image_here.png");
+        Image image = new Image("dropimage.png");
 
         TextField headerTextField = new TextField();
         headerTextField.getStyleClass().add("header");
