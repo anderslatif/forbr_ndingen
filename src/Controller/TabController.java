@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.EventHandler;
 import model.*;
 import view.Layout;
 import javafx.geometry.Insets;
@@ -80,6 +81,51 @@ public class TabController {
         tabPane.getTabs().addAll(firstTab);
 
 
+<<<<<<< HEAD
+=======
+
+        final KeyCombination keyCombinationShiftLeft = new KeyCodeCombination(KeyCode.LEFT, KeyCombination.SHIFT_DOWN);
+        final KeyCombination keyCombinationShiftRight = new KeyCodeCombination(KeyCode.RIGHT, KeyCombination.SHIFT_DOWN);
+
+        tabPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(keyCombinationShiftLeft.match(event)){
+                    Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+                    int indexOfSelectedTab = tabPane.getSelectionModel().getSelectedIndex();
+                    ArrayList<Tab> tabList = new ArrayList<Tab>();
+
+                    for(Tab tabs : tabPane.getTabs()){  //getTabs() returns an ObservableList but we need an ArrayList
+                        tabList.add(tabs);
+                    }
+
+                    //tabPane.getTabs().clear();
+                    System.out.println("size " + tabList.size());
+
+                    for(int i = 0; i < tabCollection.size(); i++){
+
+                        System.out.println("index of selected tab: " + indexOfSelectedTab);
+                        System.out.println("i" + i);
+
+
+
+                        if(indexOfSelectedTab == (i+1)){
+                            System.out.println("moving the tab");
+                            tabPane.getTabs().add(selectedTab);
+                        } else {
+                            tabPane.getTabs().add(tabList.get(i));
+                        }
+                    }
+
+
+                } else if(keyCombinationShiftRight.match(event)){
+                    System.out.println("shift right");
+                }
+            }
+        });
+
+
+>>>>>>> 2a018cd1cafdefb902cbd6f8a90770a530e9f8e1
         tabPane.getSelectionModel().selectedItemProperty().addListener( (ov, oldTab, newTab) -> {
             int tabText = 1;
             for(Tab tab : tabPane.getTabs()){
@@ -402,7 +448,7 @@ public class TabController {
         VBox vBox = new VBox();
         vBox.getStyleClass().add("happyHourSlide");
 
-        Image image = new Image("cocktail.png");
+        Image image = new Image("drop_image_here.png");
 
         TextField headerTextField = new TextField();
         headerTextField.getStyleClass().add("header");
