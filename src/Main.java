@@ -25,6 +25,7 @@ public class Main extends Application {
         double width = (Screen.getPrimary().getVisualBounds().getHeight()-menuPlusTabHeaderHeight) /1.7777;
         primaryStage.setMinHeight(height);
         primaryStage.setMinWidth(width);
+        primaryStage.setResizable(false);
 
 
         scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
