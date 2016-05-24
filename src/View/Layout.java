@@ -35,7 +35,7 @@ public class Layout {
     Scene scene;
     Controller controller;
     TabController tabController;
-    //Login login = new Login();
+    Login login = new Login();
 
     public void initializeLayout(Scene scene, Stage stage, Layout layout){
         this.scene = scene;
@@ -84,11 +84,12 @@ public class Layout {
         MenuItem m1_3 = new MenuItem("_Save");
         m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
         m1_3.setOnAction( e -> pickADate("Save"));
-//
-//        MenuItem m1_4 = new MenuItem("_Log in");
-//        m1_4.setOnAction( event -> login.loginScreen());
 
-        menu1.getItems().addAll(m1_1, m1_2, m1_3);
+        MenuItem m1_4 = new MenuItem("_Log in");
+        m1_4.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
+        m1_4.setOnAction( event -> login.logIn());
+
+        menu1.getItems().addAll(m1_1, m1_2, m1_3, m1_4);
 
         ///////////////////////////////////////
         //Menu menu2 = new Menu("Events");

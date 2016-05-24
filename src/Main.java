@@ -31,6 +31,9 @@ public class Main extends Application {
 
 
         primaryStage.getIcons().add(new Image("file:src/logo.png"));
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
 

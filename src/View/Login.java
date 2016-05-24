@@ -1,5 +1,9 @@
 package view;
 
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import model.DatabaseConnection;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -20,7 +24,17 @@ public class Login{
     TextField text1;
     TextField text2;
     boolean access = false;
+    Stage loginStage;
 
+
+    public void logIn(){
+
+        loginStage = new Stage();
+        Scene eventScene = new Scene(loginScreen());
+
+        loginStage.setScene(eventScene);
+        loginStage.show();
+    }
 
     public GridPane loginScreen() {
 
@@ -49,9 +63,6 @@ public class Login{
     }
 
 
-
-
-
     public void loginAttempt(){
 
         Connection connection = null;
@@ -70,7 +81,8 @@ public class Login{
                     String password = resultSet.getString("password");
 
                     if(text1.getText().equals(userName) && text2.getText().equals(password)){
-
+                        access = true;
+                        System.out.println(access);
                     }
                 }
 
@@ -78,15 +90,12 @@ public class Login{
 
 
         } catch(Exception e){
-            System.out.println("fuck off");
             e.printStackTrace();
         } finally {
             if(connection != null){
                 try {
-                    System.out.println("closed");
                     connection.close();
                 } catch (SQLException e) {
-                    System.out.println("fuck off finally");
                     e.printStackTrace();
                 }
             }
