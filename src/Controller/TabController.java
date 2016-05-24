@@ -413,7 +413,7 @@ public class TabController {
         ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.fitHeightProperty().bind(vBox.heightProperty().divide(4));
-        imageView.fitWidthProperty().bind(vBox.widthProperty());
+        imageView.fitWidthProperty().bind(scene.widthProperty());
 
         TextArea textTextArea =  new TextArea();
         textTextArea.setPromptText("Type more text here...");
