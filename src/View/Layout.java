@@ -97,7 +97,7 @@ public class Layout {
         m3_1.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN));
         m3_1.setOnAction( e -> tabController.addPictureTab());
 
-        MenuItem m3_2 = new MenuItem("_Bar Tilbud");
+        MenuItem m3_2 = new MenuItem("_Bar Slide");
         m3_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
         m3_2.setOnAction( e -> tabController.addHappyHourTab());
 

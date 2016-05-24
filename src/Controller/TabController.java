@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.EventHandler;
 import model.*;
 import view.Layout;
 import javafx.geometry.Insets;
@@ -81,7 +82,7 @@ public class TabController {
 
 
 
-/*        final KeyCombination keyCombinationShiftLeft = new KeyCodeCombination(KeyCode.LEFT, KeyCombination.SHIFT_DOWN);
+        final KeyCombination keyCombinationShiftLeft = new KeyCodeCombination(KeyCode.LEFT, KeyCombination.SHIFT_DOWN);
         final KeyCombination keyCombinationShiftRight = new KeyCodeCombination(KeyCode.RIGHT, KeyCombination.SHIFT_DOWN);
 
         tabPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -119,7 +120,7 @@ public class TabController {
                     System.out.println("shift right");
                 }
             }
-        });*/
+        });
 
 
         tabPane.getSelectionModel().selectedItemProperty().addListener( (ov, oldTab, newTab) -> {
@@ -444,7 +445,7 @@ public class TabController {
         VBox vBox = new VBox();
         vBox.getStyleClass().add("happyHourSlide");
 
-        Image image = new Image("cocktail.png");
+        Image image = new Image("drop_image_here.png");
 
         TextField headerTextField = new TextField();
         headerTextField.getStyleClass().add("header");
