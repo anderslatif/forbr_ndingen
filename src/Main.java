@@ -29,7 +29,6 @@ public class Main extends Application {
 
         scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
 
-
         primaryStage.getIcons().add(new Image("file:src/logo.png"));
 
         primaryStage.setScene(scene);

@@ -58,16 +58,17 @@ public class Layout {
         return borderPane;
     }
 
-
+    Menu menu1; Menu menu3; Menu menu4; Menu menu5;
+    MenuItem m1_1;MenuItem m1_2; MenuItem m1_3;
+    MenuItem m3_1;MenuItem m3_2; MenuItem m3_3;
 
     public MenuBar getMenuBar(){
-
         MenuBar menuBar = new MenuBar();
 
         ///////////////////////////////////////
-        Menu menu1 = new Menu("File");
+        menu1 = new Menu("File");
 
-        MenuItem m1_1 = new MenuItem("_New Presentation");
+         m1_1 = new MenuItem("_New Presentation");
         m1_1.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
         m1_1.setOnAction( e -> {
             if(tabController.justSaved){
@@ -77,43 +78,42 @@ public class Layout {
             }
         });
 
-        MenuItem m1_2 = new MenuItem("_Open");
+         m1_2 = new MenuItem("_Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         m1_2.setOnAction( e -> pickADate("Open"));
 
-        MenuItem m1_3 = new MenuItem("_Save");
+         m1_3 = new MenuItem("_Save");
         m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
         m1_3.setOnAction( e -> pickADate("Save"));
 
-        MenuItem m1_4 = new MenuItem("_Log in");
-        m1_4.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
-        m1_4.setOnAction( event -> login.logIn());
 
-        menu1.getItems().addAll(m1_1, m1_2, m1_3, m1_4);
+
+        menu1.getItems().addAll(m1_1, m1_2, m1_3);
 
         ///////////////////////////////////////
         //Menu menu2 = new Menu("Events");
 
 
         ///////////////////////////////////////
-        Menu menu3 = new Menu("Add a Slide");
+         menu3 = new Menu("Add a Slide");
 
-        MenuItem m3_1 = new MenuItem("_Picture slide");
+         m3_1 = new MenuItem("_Picture slide");
         m3_1.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN));
         m3_1.setOnAction( e -> tabController.addPictureTab());
 
-        MenuItem m3_2 = new MenuItem("_Bar Slide");
+         m3_2 = new MenuItem("_Bar Slide");
         m3_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
         m3_2.setOnAction( e -> tabController.addHappyHourTab());
 
-        MenuItem m3_3 = new MenuItem("_Events");
+         m3_3 = new MenuItem("_Events");
         m3_3.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
         m3_3.setOnAction( e -> getEventOverview());
+
 
         menu3.getItems().addAll(m3_1, m3_2, m3_3);
 
         ///////////////////////////////////////
-        Menu menu4 = new Menu("About");
+         menu4 = new Menu("About");
 
         MenuItem m4_1 = new MenuItem("User Manual");
         m4_1.setOnAction( e -> showUserManual());
@@ -126,8 +126,20 @@ public class Layout {
         menu4.getItems().addAll(m4_1, m4_2);
 
         ///////////////////////////////////////
+         menu5 = new Menu("Log In");
 
-        menuBar.getMenus().addAll(menu1, menu3, menu4);
+        MenuItem m5_1 = new MenuItem("_Log in");
+        m5_1.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
+        m5_1.setOnAction( event -> login.logIn(this));
+
+        MenuItem m5_2 = new MenuItem("_Check login");
+        m5_2.setOnAction(event -> login.accessAllowed());
+
+        menu5.getItems().addAll(m5_1, m5_2);
+        /////////////////////////////////////////
+
+        menuBar.getMenus().addAll(menu1, menu3, menu4, menu5);
+
 
         return menuBar;
     }
@@ -692,8 +704,16 @@ public class Layout {
 
     }
 
-
-
-
+    public void undisableMenus(){
+        m1_1.setDisable(false); m1_2.setDisable(false); m1_3.setDisable(false);
+        m3_1.setDisable(false); m3_2.setDisable(false); m3_3.setDisable(false);
+        System.out.println("undisabled!");
+        System.out.println(m1_1.isDisable());
+        System.out.println(m1_2.isDisable());
+        System.out.println(m1_3.isDisable());
+        System.out.println(m3_1.isDisable());
+        System.out.println(m3_2.isDisable());
+        System.out.println(m3_3.isDisable());
+    }
 
 }

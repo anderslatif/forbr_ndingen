@@ -27,16 +27,16 @@ public class Login{
     Stage loginStage;
 
 
-    public void logIn(){
+    public void logIn(Layout layout){
 
         loginStage = new Stage();
-        Scene eventScene = new Scene(loginScreen());
+        Scene eventScene = new Scene(loginScreen(layout));
 
         loginStage.setScene(eventScene);
         loginStage.show();
     }
 
-    public GridPane loginScreen() {
+    public GridPane loginScreen(Layout layout) {
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20, 20, 20, 20));
@@ -50,7 +50,7 @@ public class Login{
 
         Button button = new Button("Go");
 
-        button.setOnAction( e -> loginAttempt());
+        button.setOnAction( e -> loginAttempt(layout));
 
         gridPane.add(label1, 0, 0);
         gridPane.add(text1, 1, 0);
@@ -63,7 +63,7 @@ public class Login{
     }
 
 
-    public void loginAttempt(){
+    public void loginAttempt(Layout layout){
 
         Connection connection = null;
         Statement statement = null;
@@ -82,7 +82,8 @@ public class Login{
 
                     if(text1.getText().equals(userName) && text2.getText().equals(password)){
                         access = true;
-                        System.out.println(access);
+                        layout.undisableMenus();
+                        loginStage.close();
                     }
                 }
 
@@ -105,8 +106,12 @@ public class Login{
         }
     }
 
-    public boolean accessAllowed(){
-        return access;
+    public void accessAllowed(){
+        if(access){
+            System.out.println("You are logged in");
+        }else{
+            System.out.println("You are not logged in");
+        }
     }
 
 
