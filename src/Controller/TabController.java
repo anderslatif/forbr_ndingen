@@ -543,7 +543,8 @@ public class TabController {
 
 
 
-    public void savingPresentation(String chosenDate){
+    public void savingPresentation(String chosenDate, Layout view){
+
 
         layout.setBottomLabelMessage("Presentation has been saved.");
         justSaved = true;
@@ -556,20 +557,20 @@ public class TabController {
 
                 if(tab.getContent() == tabNode.getNode()){
 
-                    if(tab.getContent() instanceof javafx.scene.image.ImageView){
+                    /*if(tab.getContent() instanceof javafx.scene.image.ImageView){
                         System.out.println("A: Slide imagepath: " + tabNode.getSlide().getImagePath());
                         System.out.println("A: Slide " + tabNode.getSlide());
 
 
 
-                    }
+                    }*/
 
                     presentation.add(tabNode);
                 }
 
             }
         }
-        controller.savePresentation(presentation, chosenDate);
+        controller.savePresentation(presentation, chosenDate, view);
     }
 
 

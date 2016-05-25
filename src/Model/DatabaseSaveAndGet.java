@@ -1,6 +1,7 @@
 package model;
 
 import controller.Util;
+import view.Layout;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -11,7 +12,8 @@ import java.util.*;
  */
 public class DatabaseSaveAndGet {
 
-    public static void savePresentation(ArrayList<Slide> presentation, String date) {
+
+    public static void savePresentation(ArrayList<Slide> presentation, String date, Layout view) {
 
         deleteSlidesWithThisDate(date);
 
@@ -118,6 +120,11 @@ public class DatabaseSaveAndGet {
                 }
             }
         }
+        if(Layout.newPresentation == true){
+            view.newPresentation();
+            Layout.newPresentation = false;
+        }
+
     }
 
     public static void deleteSlidesWithThisDate(String date){

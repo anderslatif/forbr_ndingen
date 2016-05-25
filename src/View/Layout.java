@@ -27,6 +27,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Anders on 4/21/2016.
@@ -38,6 +39,7 @@ public class Layout {
     Controller controller;
     TabController tabController;
     Login login = new Login();
+    public static boolean newPresentation = false;
 
     public void initializeLayout(Scene scene, Stage stage, Layout layout){
         this.scene = scene;
@@ -498,11 +500,12 @@ public class Layout {
 
         if(request.equals("newPresentation")){
             button1.setOnAction( e -> {
-                //synchronized (this){
-                    pickADate("Save");
-                //}
+
+                newPresentation = true;
+                pickADate("Save");
                 savePresentationStage.close();
-                newPresentation();
+
+
             });
             button2.setOnAction( e -> {
                 savePresentationStage.close();
@@ -603,7 +606,7 @@ public class Layout {
             if(datePicker.getValue() != null) {
 
                 if(buttonText.equals("Save")) {
-                    tabController.savingPresentation(datePicker.getValue().toString());
+                    tabController.savingPresentation(datePicker.getValue().toString(), this);
                 }
 
                 if(buttonText.equals("Open") || buttonText.equals("Open...")) {
@@ -613,7 +616,7 @@ public class Layout {
                 }
 
                 if(buttonText.equals("SaveAndOpen")){
-                    tabController.savingPresentation(datePicker.getValue().toString());
+                    tabController.savingPresentation(datePicker.getValue().toString(), this);
                     pickADate("Open");
                 }
 

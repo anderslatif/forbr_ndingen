@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import view.Layout;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,7 +20,7 @@ public class Controller {
     }
 
 
-    public void savePresentation(ArrayList<TabNode> tabNodePresentation, String chosenDate){
+    public void savePresentation(ArrayList<TabNode> tabNodePresentation, String chosenDate, Layout view){
 
 
         ArrayList<Slide> slidePresentation = new ArrayList<>();
@@ -32,20 +33,16 @@ public class Controller {
             System.out.println(slide.getImagePath());
 
             if(!(slide.getImagePath() == null  || slide.getImagePath().equals("null") || slide.getImagePath().equals(""))){
-                System.out.println("når ind i 1");
-                System.out.println(slide.getImagePath());
                 String new_path = copyFileToDrive(slide.getImagePath());
                 slide.setImagePath(new_path);
-                System.out.println("new path: " + new_path);
                 slidePresentation.add(slide);
             } else {
-                System.out.println("når ind i 2");
                 slidePresentation.add(slide);
             }
 
         }
 
-        DatabaseSaveAndGet.savePresentation(slidePresentation, chosenDate);
+        DatabaseSaveAndGet.savePresentation(slidePresentation, chosenDate, view);
     }
 
     public String copyFileToDrive(String filePath){
