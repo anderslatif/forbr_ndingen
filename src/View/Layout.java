@@ -498,7 +498,9 @@ public class Layout {
 
         if(request.equals("newPresentation")){
             button1.setOnAction( e -> {
-                pickADate("Save");
+                //synchronized (this){
+                    pickADate("Save");
+                //}
                 savePresentationStage.close();
                 newPresentation();
             });
@@ -536,6 +538,8 @@ public class Layout {
     }
 
     public void pickADate(String buttonText){
+
+
 
         if(buttonText.equals("Save") && tabController.getTabCollectionSize() == 0){
             setBottomLabelMessage("You have nothing to save.");
@@ -605,7 +609,6 @@ public class Layout {
                 if(buttonText.equals("Open") || buttonText.equals("Open...")) {
                     newPresentation();
                     ArrayList<Slide> presentation = DatabaseSaveAndGet.openPresentation(datePicker.getValue().toString());
-                    System.out.println("Path fra Layout "+presentation.get(0).getImagePath());
                     tabController.openPresentation(presentation);
                 }
 

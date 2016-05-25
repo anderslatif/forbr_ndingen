@@ -260,14 +260,17 @@ public class TabController {
 
         tabPane.getSelectionModel().select(tab);
 
-/*        Image image;
-        if(slidePictureToCreate.getImagePath().equals("null")){
-            image = new Image(slidePictureToCreate.getImagePath());
-        } else {
-            image = new Image("Empty.png");
-        }*/
+        Image image;
 
-        Image image = new Image(slidePictureToCreate.getImagePath());
+
+        if(slidePictureToCreate.getImagePath().equals("null")){
+            image = new Image("Empty.png");
+            slidePictureToCreate.setImagePath("file:///Empty.png");
+        } else {
+            image = new Image(slidePictureToCreate.getImagePath());
+        }
+
+        //Image image = new Image(slidePictureToCreate.getImagePath());
 
 
         ImageView imageView = new ImageView(image);
@@ -494,7 +497,8 @@ public class TabController {
 
         Image image;
         if (happyHourSlide.getImagePath().equals("") || happyHourSlide.getImagePath().equals("null") || happyHourSlide.getImagePath() == null){
-            image = new Image("cocktail.png");
+            image = new Image("Empty.png");
+            happyHourSlide.setImagePath("file:///Empty.png");
         } else {
             image = new Image(happyHourSlide.getImagePath());
         }
