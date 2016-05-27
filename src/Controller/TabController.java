@@ -346,7 +346,7 @@ public class TabController {
         }
 
         ImageView imageView = new ImageView(image);
-        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(4));
+        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(3));
         imageView.fitWidthProperty().bind(vBox.widthProperty());
 
         VBox filler1 = new VBox();
@@ -425,7 +425,7 @@ public class TabController {
 
         ImageView imageView = new ImageView();
         imageView.setImage(image);
-        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(4));
+        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(3));
         imageView.fitWidthProperty().bind(scene.widthProperty());
 
         TextArea textTextArea =  new TextArea();

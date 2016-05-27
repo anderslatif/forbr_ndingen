@@ -367,12 +367,13 @@ public class Layout {
         TreeItem treeItem3 = new TreeItem("Event Slides");
         TreeItem treeItem4 = new TreeItem("Picture Slides");
         TreeItem treeItem5 = new TreeItem("Bar Tilbud Slides");
-        TreeItem treeItem6 = new TreeItem("Om Præsentationer");
-        TreeItem treeItem7 = new TreeItem("Raspberry Pi");
-        TreeItem treeItem8 = new TreeItem("Andet");
+        TreeItem treeItem6 = new TreeItem("Ratio");
+        TreeItem treeItem7 = new TreeItem("Om Præsentationer");
+        TreeItem treeItem8 = new TreeItem("Raspberry Pi");
+        TreeItem treeItem9 = new TreeItem("Andet");
 
 
-        root.getChildren().addAll(treeItem1, treeItem2, treeItem3, treeItem4, treeItem5, treeItem6, treeItem7, treeItem8);
+        root.getChildren().addAll(treeItem1, treeItem2, treeItem3, treeItem4, treeItem5, treeItem6, treeItem7, treeItem8, treeItem9);
 
         TreeView<String> treeView = new TreeView<>(root);
         treeView.setShowRoot(false);
@@ -414,6 +415,12 @@ public class Layout {
                 display += "Det er muligt ikke at tilføje et billede til et bar tilbud slide og den sorte baggrund vil så vises i stedet.\n\n";
                 display += "Alle slides må selvfølgelig gerne bruges til andre formål en deres navne. ";
                 display += "Faktisk er Bar Tilbud slidet oplagt at bruge til andre ting med samme format.";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Ratio")){
+                display = "Display programmet forventes at køre på aspect ratio 16:9. \n\nPicture slides billedet bør opfylde dette størrelsesforhold. " +
+                        "For Event slides og Bar slides burde de være 3 gange mindre høje: dvs. (16 divideret med 3) divideret med 9.\n\n\n" +
+                        "Det er ret besværligt at holde styr på. Derfor er det muligt at læggge et billede på og vælge Analyze ratio i menupunktet About.\n\n" +
+                        "Analyze ratio vil fortælle præcist hvor mange pixels i den ene eller den anden retning der er for meget.";
                 textArea.setText(display);
             } else if(selectedItem.getValue().equals("Om Præsentationer")){
                 display = "En præsentation er en samling af slides, der gemmes under en bestemt dato.\n\n";
@@ -540,7 +547,11 @@ public class Layout {
                                 for(LocalDate localDate : DatabaseSaveAndGet.getPresentationDates()){
                                     super.updateItem(item, empty);
                                     if(item.equals(localDate)){
-                                        setStyle("-fx-background-color: #00cc00;");
+                                        if(localDate.equals(LocalDate.now())){
+                                            setStyle("-fx-background-color: #007a00;");
+                                        } else {
+                                            setStyle("-fx-background-color: #00cc00;");
+                                        }
                                     }
                                 }
                             }
@@ -553,7 +564,9 @@ public class Layout {
         warningLabel.setFont(Font.font("bold"));
         warningLabel.setTextFill(Color.RED);
 
-        Label label = new Label("Choose date:");
+        Label label = new Label("Choose a date:");
+        label.setMaxWidth(Double.MAX_VALUE);
+        label.setAlignment(Pos.CENTER_RIGHT);
 
         Button saveBut = new Button();
         saveBut.setText(buttonText);
@@ -622,6 +635,13 @@ public class Layout {
 
                 saveStage.close();
 
+            } else {
+                    warningLabel.setText("Please use the calendar\nto select a valid date");
+                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(10000), warningLabel);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.play();
+
             }
         });
     }
@@ -647,16 +667,28 @@ public class Layout {
                 image = currentImageView.getImage();
             }
 
-            double ratio = image.getHeight() / image.getWidth();
+            float width = (float) image.getWidth();
+            float height = (float) image.getHeight();
+            float ratio = height / width;
+            float perfectRatio = 16/9f;
 
-            if(ratio == 1.77777){
+
+            if(ratio > 1.777777777777776 && ratio < 1.7777777777778){
                 UserMessage.setBottomLabelMessage("Perfect Ratio!", "Info");
             } else if(ratio < 1.77777){
-                ratio = 1.77777 - ratio;
-                UserMessage.setBottomLabelMessage("Your image is " + ratio + " pixels too wide.", "Info");
+                float difference = width - (height / perfectRatio);
+                if(difference <= 1){
+                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too wide.", "Info");
+                } else {
+                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too wide.", "Info");
+                }
             } else if(ratio > 1.77777){
-                ratio = ratio - 1.77777;
-                UserMessage.setBottomLabelMessage("Your image is " + ratio + " pixels too high.", "Info");
+                float difference = height - (width * perfectRatio);
+                if(difference <= 1){
+                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too high.", "Info");
+                } else {
+                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too high.", "Info");
+                }
             }
 
 
@@ -678,15 +710,30 @@ public class Layout {
                     }
 
 
-                    double prefHeight = vBox.getHeight() / 4;
-                    double prefWidth = vBox.getWidth();
-                    double actualHeight = image.getHeight();
-                    double actualWidth = image.getWidth();
-                    double differenceHeight = prefHeight - actualHeight;
-                    double differenceWidth = prefWidth - actualWidth;
+                    float width = (float) image.getWidth();
+                    float height = (float) image.getHeight();
+                    float ratio = height / width;
+                    float theThirdOfHeight = 16/3f;
+                    float perfectRatio = theThirdOfHeight/9f;
 
-                    System.out.println("The height is " + differenceHeight + " off the mark.");
-                    System.out.println("Your width is " + differenceWidth + " off the mark.");
+
+                    if(ratio > 0.590 && ratio < 0.599){
+                        UserMessage.setBottomLabelMessage("Perfect ratio.", "Info");
+                    } else if(ratio < 0.599){
+                        float difference = width - (height / perfectRatio);
+                        if(difference <= 1){
+                            UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too wide.", "Info");
+                        } else {
+                            UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too wide.", "Info");
+                        }
+                    } else if(ratio > 0.599){
+                        float difference = height - (width * perfectRatio);
+                        if(difference <= 1){
+                            UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too high.", "Info");
+                        } else {
+                            UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too high.", "Info");
+                        }
+                    }
 
 
                 } else if (node instanceof  javafx.scene.layout.VBox){
@@ -702,6 +749,31 @@ public class Layout {
                                 return;
                             } else {
                                 image = currentImageView.getImage();
+                            }
+
+                            float width = (float) image.getWidth();
+                            float height = (float) image.getHeight();
+                            float ratio = height / width;
+                            float theThirdOfHeight = 16/3f;
+                            float perfectRatio = theThirdOfHeight/9f;
+
+
+                            if(ratio > 0.590 && ratio < 0.599){
+                                UserMessage.setBottomLabelMessage("Perfect ratio.", "Info");
+                            } else if(ratio < 0.599){
+                                float difference = width - (height / perfectRatio);
+                                if(difference <= 1){
+                                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too wide.", "Info");
+                                } else {
+                                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too wide.", "Info");
+                                }
+                            } else if(ratio > 0.599){
+                                float difference = height - (width * perfectRatio);
+                                if(difference <= 1){
+                                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too high.", "Info");
+                                } else {
+                                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too high.", "Info");
+                                }
                             }
 
                         }
