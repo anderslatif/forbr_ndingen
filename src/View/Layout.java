@@ -4,6 +4,7 @@ import controller.Controller;
 import controller.TabController;
 import javafx.event.ActionEvent;
 import javafx.stage.Modality;
+import javafx.util.Callback;
 import model.DatabaseSaveAndGet;
 import model.Slide;
 import model.SlideEvent;
@@ -26,6 +27,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -520,15 +522,31 @@ public class Layout {
 
     public void pickADate(String buttonText){
 
-
-
         if(buttonText.equals("Save") && tabController.getTabCollectionSize() == 0){
             UserMessage.setBottomLabelMessage("You have nothing to save.");
             return;
         }
 
-
         DatePicker datePicker = new DatePicker();
+
+        final Callback<DatePicker, DateCell> dayCellFactory =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(DatePicker param) {
+                        return new DateCell(){
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty){
+                                for(LocalDate localDate : DatabaseSaveAndGet.getPresentationDates()){
+                                    super.updateItem(item, empty);
+                                    if(item.equals(localDate)){
+                                        setStyle("-fx-background-color: #00cc00;");
+                                    }
+                                }
+                            }
+                        };
+                    }
+                };
+        datePicker.setDayCellFactory(dayCellFactory);
 
         Label warningLabel = new Label();
         warningLabel.setFont(Font.font("bold"));
