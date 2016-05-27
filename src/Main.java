@@ -32,9 +32,10 @@ public class Main extends Application {
 
         primaryStage.getIcons().add(new Image("file:src/logo.png"));
 
+
 /*        primaryStage.setOnCloseRequest( e -> {
-            Platform.exit();
-            System.out.println("killing all");
+            e.consume();
+            view.savePresentationBeforeClosingAll();
         });*/
 
         primaryStage.setScene(scene);
@@ -42,10 +43,7 @@ public class Main extends Application {
     }
 
 
-/*        primaryStage.setOnCloseRequest( e -> {
-            e.consume();
-            view.savePresentationBeforeClosingAll();
-        });*/
+
 
 
 

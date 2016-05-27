@@ -47,7 +47,7 @@ public class Layout {
         controller = new Controller();
         tabController = new TabController(scene, stage, layout);
         newPresentation();
-
+        UserMessage.borderPane = borderPane;
     }
 
 
@@ -72,7 +72,7 @@ public class Layout {
         ///////////////////////////////////////
         menu1 = new Menu("File");
 
-         m1_1 = new MenuItem("_New Presentation");
+        m1_1 = new MenuItem("_New Presentation");
         m1_1.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
         m1_1.setOnAction( e -> {
             if(tabController.justSaved){
@@ -82,11 +82,11 @@ public class Layout {
             }
         });
 
-         m1_2 = new MenuItem("_Open");
+        m1_2 = new MenuItem("_Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         m1_2.setOnAction( e -> pickADate("Open"));
 
-         m1_3 = new MenuItem("_Save");
+        m1_3 = new MenuItem("_Save");
         m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
         m1_3.setOnAction( e -> pickADate("Save"));
 
@@ -99,17 +99,17 @@ public class Layout {
 
 
         ///////////////////////////////////////
-         menu3 = new Menu("Add a Slide");
+        menu3 = new Menu("Add a Slide");
 
-         m3_1 = new MenuItem("_Picture slide");
+        m3_1 = new MenuItem("_Picture slide");
         m3_1.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN));
         m3_1.setOnAction( e -> tabController.addPictureTab());
 
-         m3_2 = new MenuItem("_Bar Slide");
+        m3_2 = new MenuItem("_Bar Slide");
         m3_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
         m3_2.setOnAction( e -> tabController.addHappyHourTab());
 
-         m3_3 = new MenuItem("_Events");
+        m3_3 = new MenuItem("_Events");
         m3_3.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
         m3_3.setOnAction( e -> getEventOverview());
 
@@ -117,7 +117,7 @@ public class Layout {
         menu3.getItems().addAll(m3_1, m3_2, m3_3);
 
         ///////////////////////////////////////
-         menu4 = new Menu("About");
+        menu4 = new Menu("About");
 
         MenuItem m4_1 = new MenuItem("User Manual");
         m4_1.setOnAction( e -> showUserManual());
@@ -148,28 +148,6 @@ public class Layout {
         return menuBar;
     }
 
-
-
-    public void setBottomLabelMessage(String message){
-
-        Label bottomLabel = new Label();
-        bottomLabel.setMaxHeight(10);
-        borderPane.setBottom(bottomLabel);
-
-        bottomLabel.setTextFill(Color.RED);
-        bottomLabel.setMaxWidth(Double.MAX_VALUE);
-        bottomLabel.setAlignment(Pos.CENTER);
-        bottomLabel.getStyleClass().add("bottomLabel");
-
-        bottomLabel.setText(message);
-
-        borderPane.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                borderPane.setBottom(null);
-            }
-        });
-    }
 
 
 
@@ -545,7 +523,7 @@ public class Layout {
 
 
         if(buttonText.equals("Save") && tabController.getTabCollectionSize() == 0){
-            setBottomLabelMessage("You have nothing to save.");
+            UserMessage.setBottomLabelMessage("You have nothing to save.");
             return;
         }
 
@@ -650,13 +628,13 @@ public class Layout {
             double ratio = image.getHeight() / image.getWidth();
 
             if(ratio == 1.5){
-                System.out.println("perfect ratio");
+                UserMessage.setBottomLabelMessage("perfect ratio");
             } else if(ratio < 1.5){
                 ratio = ratio - 1.5;
-                System.out.println("Your image is " + ratio + " too wide");
+                UserMessage.setBottomLabelMessage("Your image is " + ratio + " too wide");
             } else if(ratio > 1.5){
                 ratio = ratio - 1.5;
-                System.out.println("Your image is " + ratio + " too high");
+                UserMessage.setBottomLabelMessage("Your image is " + ratio + " too high");
             }
 
 
