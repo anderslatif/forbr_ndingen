@@ -36,9 +36,8 @@ public class PortForwardingL{
             } catch (JSchException e) {
                 System.out.println(e);
             }
-        } else {
-            System.out.println("connection is already established");
         }
+
     }
 
         public static void closeConnection() {
