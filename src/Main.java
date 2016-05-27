@@ -1,4 +1,6 @@
 import javafx.application.Platform;
+import model.DatabaseConnection;
+import model.PortForwardingL;
 import view.Layout;
 
 import javafx.application.Application;
@@ -7,6 +9,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import view.Login;
+
+import javax.sound.sampled.Port;
 
 public class Main extends Application {
 
@@ -32,10 +36,12 @@ public class Main extends Application {
 
         primaryStage.getIcons().add(new Image("file:src/logo.png"));
 
-/*        primaryStage.setOnCloseRequest( e -> {
-            Platform.exit();
+        primaryStage.setOnCloseRequest( e -> {
+
+
+            System.exit(0);
             System.out.println("killing all");
-        });*/
+        });
 
         primaryStage.setScene(scene);
         primaryStage.show();

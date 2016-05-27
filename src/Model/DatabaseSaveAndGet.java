@@ -94,10 +94,6 @@ public class DatabaseSaveAndGet {
                     String qString2 = "Values ('"+date+"', '"+startTime+"', '"+slideType+"', '"+header+"', '"+text+"', '"+imagePath+"')";
                     preparedStatement = connection.prepareStatement(qString1+qString2);
                     preparedStatement.executeUpdate();
-
-//                ResultSet resultSet = statement.executeQuery("SELECT first_name, last_name FROM login;");
-//                String firstName = resultSet.getString("first_name");
-
                 }
 
 
@@ -107,6 +103,7 @@ public class DatabaseSaveAndGet {
                 if (connection != null) {
                     try {
                         connection.close();
+                        PortForwardingL.closeConnection();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -145,6 +142,7 @@ public class DatabaseSaveAndGet {
             if (connection != null) {
                 try {
                     connection.close();
+                    PortForwardingL.closeConnection();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -234,6 +232,7 @@ public class DatabaseSaveAndGet {
             if (connection != null) {
                 try {
                     connection.close();
+                    PortForwardingL.closeConnection();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -375,6 +374,7 @@ public class DatabaseSaveAndGet {
             if(connection != null){
                 try {
                     connection.close();
+                    PortForwardingL.closeConnection();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -435,6 +435,7 @@ public class DatabaseSaveAndGet {
             if(connection != null){
                 try {
                     connection.close();
+                    PortForwardingL.closeConnection();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -473,6 +474,7 @@ public class DatabaseSaveAndGet {
             if (connection != null) {
                 try {
                     connection.close();
+                    PortForwardingL.closeConnection();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

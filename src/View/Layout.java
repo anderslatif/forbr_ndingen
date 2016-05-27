@@ -5,6 +5,7 @@ import controller.TabController;
 import javafx.event.ActionEvent;
 import javafx.stage.Modality;
 import model.DatabaseSaveAndGet;
+import model.PortForwardingL;
 import model.Slide;
 import model.SlideEvent;
 import javafx.animation.FadeTransition;
@@ -586,7 +587,10 @@ public class Layout {
         }
 
         // Button Actions
-        cancelBut.setOnAction( e -> saveStage.close());
+        cancelBut.setOnAction( e -> {
+            PortForwardingL.closeConnection();
+            saveStage.close();
+        });
 
         datePicker.setOnAction( e -> {
             if(buttonText.equals("Save")){

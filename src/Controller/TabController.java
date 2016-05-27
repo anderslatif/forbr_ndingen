@@ -37,6 +37,7 @@ public class TabController {
         this.layout = layout;
         tabCollection = new ArrayList<>();
         controller = new Controller();
+        DatabaseConnection.chooseDatabase();
     }
 
     public int getTabCollectionSize(){
