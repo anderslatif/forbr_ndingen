@@ -16,25 +16,7 @@ public class PortForwardingL{
         try{
             JSch jsch=new JSch();
 
-            //String host="pi@192.168.1.181";
-
-            //String user=host.substring(0, host.indexOf('@'));
-            //host=host.substring(host.indexOf('@')+1);
-
-
             session=jsch.getSession(user, host, 22);
-
-            //String foo = "1025:localhost:3306";
-
-            //lport=Integer.parseInt(foo.substring(0, foo.indexOf(':')));
-            //foo=foo.substring(foo.indexOf(':')+1);
-            //rhost=foo.substring(0, foo.indexOf(':'));
-            //rport=Integer.parseInt(foo.substring(foo.indexOf(':')+1));
-
-            // username and password will be given via UserInfo interface.
-
-            //UserInfo ui=new MyUserInfo();
-            //session.setUserInfo(ui);
 
             session.connect();
 
@@ -74,13 +56,7 @@ public class PortForwardingL{
 
         }
 
-        //final GridBagConstraints gbc =
-          //      new GridBagConstraints(0,0,1,1,1,1,
-            //            GridBagConstraints.NORTHWEST,
-              //          GridBagConstraints.NONE,
-                //        new Insets(0,0,0,0),0,0);
-        //private Container panel;
-
+        //benytter ikke denne - men den er overrided fra interface UserInfo
         public String[] promptKeyboardInteractive(String destination,
                                                   String name,
                                                   String instruction,
