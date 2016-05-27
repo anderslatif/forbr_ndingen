@@ -557,14 +557,6 @@ public class TabController {
 
                 if(tab.getContent() == tabNode.getNode()){
 
-                    /*if(tab.getContent() instanceof javafx.scene.image.ImageView){
-                        System.out.println("A: Slide imagepath: " + tabNode.getSlide().getImagePath());
-                        System.out.println("A: Slide " + tabNode.getSlide());
-
-
-
-                    }*/
-
                     presentation.add(tabNode);
                 }
 

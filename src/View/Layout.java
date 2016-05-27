@@ -34,11 +34,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class Layout {
 
-    Stage stage;
-    Scene scene;
-    Controller controller;
-    TabController tabController;
-    Login login = new Login();
+    private Stage stage;
+    private Scene scene;
+    private Controller controller;
+    private TabController tabController;
+    private Login login = new Login();
     public static boolean newPresentation = false;
 
     public void initializeLayout(Scene scene, Stage stage, Layout layout){
@@ -185,10 +185,10 @@ public class Layout {
     public void getEventOverview(){
 
         eventStage = new Stage();
-        Scene eventScene = new Scene(getEventBorderPane(), 1100, 450);
+        Scene eventScene = new Scene(getEventBorderPane(), 900, 250);
 
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-        eventStage.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 500);
+        eventStage.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 300);
 
         eventStage.setScene(eventScene);
         eventStage.show();

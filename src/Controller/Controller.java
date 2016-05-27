@@ -30,7 +30,6 @@ public class Controller {
 
 
             Slide slide = tabNode.getSlide();
-            System.out.println(slide.getImagePath());
 
             if(!(slide.getImagePath() == null  || slide.getImagePath().equals("null") || slide.getImagePath().equals(""))){
                 String new_path = copyFileToDrive(slide.getImagePath());
