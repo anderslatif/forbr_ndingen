@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import view.Layout;
 
 import javafx.application.Application;
@@ -30,6 +31,11 @@ public class Main extends Application {
         scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
 
         primaryStage.getIcons().add(new Image("file:src/logo.png"));
+
+/*        primaryStage.setOnCloseRequest( e -> {
+            Platform.exit();
+            System.out.println("killing all");
+        });*/
 
         primaryStage.setScene(scene);
         primaryStage.show();

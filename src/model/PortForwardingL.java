@@ -1,6 +1,6 @@
 package model;
 import com.jcraft.jsch.*;
-import java.awt.*;
+
 
 public class PortForwardingL{
 
@@ -14,14 +14,14 @@ public class PortForwardingL{
         String host = "192.168.1.181";
 
         try{
-            JSch jsch=new JSch();
+            JSch jsch = new JSch();
 
-            session=jsch.getSession(user, host, 22);
+            session = jsch.getSession(user, host, 22);
 
             session.connect();
 
-            int assinged_port=session.setPortForwardingL(lport, rhost, rport);
-            System.out.println("localhost:"+assinged_port+" -> "+rhost+":"+rport);
+            int assigned_port = session.setPortForwardingL(lport, rhost, rport);
+            System.out.println("localhost:"+assigned_port+" -> "+rhost+":"+rport);
         }
         catch(Exception e){
             System.out.println(e);
@@ -48,7 +48,7 @@ public class PortForwardingL{
 
         public boolean promptPassword(String message){
 
-                passwd="raspberry";
+                passwd = "raspberry";
                 return true;
             }
 
