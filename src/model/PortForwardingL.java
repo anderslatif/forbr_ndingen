@@ -18,6 +18,10 @@ public class PortForwardingL{
 
             session=jsch.getSession(user, host, 22);
 
+            // username and password will be given via UserInfo interface.
+            UserInfo ui=new MyUserInfo();
+            session.setUserInfo(ui);
+
             session.connect();
 
             int assinged_port=session.setPortForwardingL(lport, rhost, rport);
@@ -56,7 +60,6 @@ public class PortForwardingL{
 
         }
 
-        //benytter ikke denne - men den er overrided fra interface UserInfo
         public String[] promptKeyboardInteractive(String destination,
                                                   String name,
                                                   String instruction,
