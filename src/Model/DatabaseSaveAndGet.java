@@ -2,6 +2,7 @@ package model;
 
 import controller.Util;
 import view.Layout;
+import view.UserMessage;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -98,6 +99,7 @@ public class DatabaseSaveAndGet {
 
 
             } catch (Exception e) {
+                UserMessage.setBottomLabelMessage("Error. Could not save your slides correctly. \nPlease open the presentation to check if all is there.", "Error");
                 e.printStackTrace();
             } finally {
                 if (connection != null) {
@@ -105,6 +107,7 @@ public class DatabaseSaveAndGet {
                         connection.close();
                         PortForwardingL.closeConnection();
                     } catch (SQLException e) {
+                        UserMessage.setBottomLabelMessage("Could not close connections while saving.", "Error");
                         e.printStackTrace();
                     }
                 }
@@ -137,6 +140,7 @@ public class DatabaseSaveAndGet {
 
 
         } catch (Exception e) {
+            UserMessage.setBottomLabelMessage("Error. Could not connect to the database", "Error");
             e.printStackTrace();
         } finally {
             if (connection != null) {
@@ -144,6 +148,7 @@ public class DatabaseSaveAndGet {
                     connection.close();
                     PortForwardingL.closeConnection();
                 } catch (SQLException e) {
+                    UserMessage.setBottomLabelMessage("Error occurred while deleting your previous slides", "Error");
                     e.printStackTrace();
                 }
             }
@@ -151,6 +156,7 @@ public class DatabaseSaveAndGet {
                 try {
                     statement.close();
                 } catch (SQLException e) {
+                    UserMessage.setBottomLabelMessage("Error occurred while deleting your previous slides", "Error");
                     e.printStackTrace();
                 }
             }
@@ -179,6 +185,7 @@ public class DatabaseSaveAndGet {
 
 
         } catch (Exception e) {
+            UserMessage.setBottomLabelMessage("Error. Could not connect to the database", "Error");
             e.printStackTrace();
         } finally {
             if (connection != null) {
@@ -227,6 +234,7 @@ public class DatabaseSaveAndGet {
             presentation = resultSetToArrayList(resultSet, date);
 
         } catch (Exception e) {
+            UserMessage.setBottomLabelMessage("Error. Could not connect to the database", "Error");
             e.printStackTrace();
         } finally {
             if (connection != null) {
@@ -234,6 +242,7 @@ public class DatabaseSaveAndGet {
                     connection.close();
                     PortForwardingL.closeConnection();
                 } catch (SQLException e) {
+                    UserMessage.setBottomLabelMessage("Error. Could not close the connection.", "Error");
                     e.printStackTrace();
                 }
             }
@@ -241,6 +250,7 @@ public class DatabaseSaveAndGet {
                 try {
                     statement.close();
                 } catch (SQLException e) {
+                    UserMessage.setBottomLabelMessage("Error. Could not close the connection.", "Error");
                     e.printStackTrace();
                 }
             }
@@ -293,6 +303,7 @@ public class DatabaseSaveAndGet {
 
                         break;
                     default:
+                        UserMessage.setBottomLabelMessage("Error. Could at least one slide is missing.", "Error");
                         System.out.println("Error while calling resultSetToArrayList() in DatabaseSaveAndGet");
 
                 }
@@ -330,7 +341,6 @@ public class DatabaseSaveAndGet {
 
                 while(resultSet.next()){
 
-
                     String date = resultSet.getString("event_date");
                     String startTime = resultSet.getString("start_time");
                     String header = resultSet.getString("header");
@@ -345,13 +355,6 @@ public class DatabaseSaveAndGet {
                     eventDateList.add(dateOfSlideEvent);
 
                 }
-
-/*                Collections.sort(eventCollection, new Comparator<SlideEvent>() {
-                    @Override
-                    public int compare(SlideEvent o1, SlideEvent o2) {
-                        return o1.getLocalDate().compareTo(o2.getLocalDate());
-                    }
-                });*/
 
                 Collections.sort(eventDateList);
 
@@ -369,6 +372,7 @@ public class DatabaseSaveAndGet {
 
 
         } catch(Exception e){
+            UserMessage.setBottomLabelMessage("Error. Could not connect to the Database.", "Error");
             e.printStackTrace();
         } finally {
             if(connection != null){
@@ -376,6 +380,7 @@ public class DatabaseSaveAndGet {
                     connection.close();
                     PortForwardingL.closeConnection();
                 } catch (SQLException e) {
+                    UserMessage.setBottomLabelMessage("Error. Could not close the connection.", "Error");
                     e.printStackTrace();
                 }
             }
@@ -383,6 +388,7 @@ public class DatabaseSaveAndGet {
                 try{
                     statement.close();
                 } catch (SQLException e) {
+                    UserMessage.setBottomLabelMessage("Error. Could not close the connection.", "Error");
                     e.printStackTrace();
                 }
             }
@@ -390,6 +396,7 @@ public class DatabaseSaveAndGet {
                 try{
                     resultSet.close();
                 } catch (SQLException e){
+                    UserMessage.setBottomLabelMessage("Error. Could not close the connection.", "Error");
                     e.printStackTrace();
                 }
             }
@@ -430,6 +437,7 @@ public class DatabaseSaveAndGet {
 
 
         } catch(Exception e){
+            UserMessage.setBottomLabelMessage("Error. Could not connect to the Database.", "Error");
             e.printStackTrace();
         } finally {
             if(connection != null){
@@ -437,6 +445,7 @@ public class DatabaseSaveAndGet {
                     connection.close();
                     PortForwardingL.closeConnection();
                 } catch (SQLException e) {
+                    UserMessage.setBottomLabelMessage("Error. Could not close the connection.", "Error");
                     e.printStackTrace();
                 }
             }
@@ -444,6 +453,7 @@ public class DatabaseSaveAndGet {
                 try{
                     preparedStatement.close();
                 } catch (SQLException e) {
+                    UserMessage.setBottomLabelMessage("Error. Could not close the connection.", "Error");
                     e.printStackTrace();
                 }
             }
@@ -469,6 +479,7 @@ public class DatabaseSaveAndGet {
 
 
         } catch (Exception e) {
+            UserMessage.setBottomLabelMessage("Error. Could not connect to the Database.", "Error");
             e.printStackTrace();
         } finally {
             if (connection != null) {
@@ -476,6 +487,7 @@ public class DatabaseSaveAndGet {
                     connection.close();
                     PortForwardingL.closeConnection();
                 } catch (SQLException e) {
+                    UserMessage.setBottomLabelMessage("Error. Could not close the connection.", "Error");
                     e.printStackTrace();
                 }
             }
@@ -483,6 +495,7 @@ public class DatabaseSaveAndGet {
                 try {
                     statement.close();
                 } catch (SQLException e) {
+                    UserMessage.setBottomLabelMessage("Error. Could not close the connection.", "Error");
                     e.printStackTrace();
                 }
             }
@@ -518,12 +531,14 @@ public class DatabaseSaveAndGet {
 
 
             } catch(Exception e){
+                UserMessage.setBottomLabelMessage("Error. Could not connect to the Database.", "Error");
                 e.printStackTrace();
             } finally {
                 if(connection != null){
                     try {
                         connection.close();
                     } catch (SQLException e) {
+                        UserMessage.setBottomLabelMessage("Error. Could not close the connection.", "Error");
                         e.printStackTrace();
                     }
                 }
@@ -531,6 +546,7 @@ public class DatabaseSaveAndGet {
                     try{
                         statement.close();
                     } catch (SQLException e) {
+                        UserMessage.setBottomLabelMessage("Error. Could not close the connection.", "Error");
                         e.printStackTrace();
                     }
                 }
@@ -538,6 +554,7 @@ public class DatabaseSaveAndGet {
                     try{
                         resultSet.close();
                     } catch (SQLException e){
+                        UserMessage.setBottomLabelMessage("Error. Could not close the connection.", "Error");
                         e.printStackTrace();
                     }
                 }

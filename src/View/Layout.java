@@ -72,8 +72,9 @@ public class Layout {
     public MenuBar getMenuBar(){
         MenuBar menuBar = new MenuBar();
 
+
         ///////////////////////////////////////
-        menu1 = new Menu("File");
+        menu1 = new Menu("_File");
 
         m1_1 = new MenuItem("_New Presentation");
         m1_1.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
@@ -85,7 +86,7 @@ public class Layout {
             }
         });
 
-        m1_2 = new MenuItem("_Open");
+        m1_2 = new MenuItem("Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         m1_2.setOnAction( e -> pickADate("Open"));
 
@@ -102,17 +103,17 @@ public class Layout {
 
 
         ///////////////////////////////////////
-        menu3 = new Menu("Add a Slide");
+        menu3 = new Menu("_Add a Slide");
 
-        m3_1 = new MenuItem("_Picture slide");
+        m3_1 = new MenuItem("Picture slide");
         m3_1.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN));
         m3_1.setOnAction( e -> tabController.addPictureTab());
 
-        m3_2 = new MenuItem("_Bar Slide");
+        m3_2 = new MenuItem("Bar Slide");
         m3_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
         m3_2.setOnAction( e -> tabController.addHappyHourTab());
 
-        m3_3 = new MenuItem("_Events");
+        m3_3 = new MenuItem("Events");
         m3_3.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
         m3_3.setOnAction( e -> getEventOverview());
 
@@ -120,7 +121,7 @@ public class Layout {
         menu3.getItems().addAll(m3_1, m3_2, m3_3);
 
         ///////////////////////////////////////
-        menu4 = new Menu("About");
+        menu4 = new Menu("_About");
 
         MenuItem m4_1 = new MenuItem("User Manual");
         m4_1.setOnAction( e -> showUserManual());
@@ -133,13 +134,13 @@ public class Layout {
         menu4.getItems().addAll(m4_1, m4_2);
 
         ///////////////////////////////////////
-         menu5 = new Menu("Log In");
+         menu5 = new Menu("_Log In");
 
-        MenuItem m5_1 = new MenuItem("_Log in");
+        MenuItem m5_1 = new MenuItem("Log in");
         m5_1.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
         m5_1.setOnAction( event -> login.logIn(this));
 
-        MenuItem m5_2 = new MenuItem("_Check login");
+        MenuItem m5_2 = new MenuItem("Check login");
         m5_2.setOnAction(event -> login.accessAllowed());
 
         menu5.getItems().addAll(m5_1, m5_2);
@@ -444,7 +445,7 @@ public class Layout {
 
     public void savePresentationBeforeClosingAll(){
         if(tabController.justSaved){
-            stage.close();
+            System.exit(0);
         } else {
             savePresentationConfirmation("closeAll");
         }
@@ -497,11 +498,10 @@ public class Layout {
                 button1.setOnAction(e -> {
                     pickADate("Save");
                     savePresentationStage.close();
-                    stage.close();
                 });
                 button2.setOnAction(e -> {
                     savePresentationStage.close();
-                    stage.close();
+                    System.exit(0);
                 });
                 button3.setOnAction(e -> savePresentationStage.close());
             } else if(request.equals("saveAndOpen")){
@@ -524,7 +524,7 @@ public class Layout {
     public void pickADate(String buttonText){
 
         if(buttonText.equals("Save") && tabController.getTabCollectionSize() == 0){
-            UserMessage.setBottomLabelMessage("You have nothing to save.");
+            UserMessage.setBottomLabelMessage("You have nothing to save.", "Error");
             return;
         }
 
@@ -629,7 +629,7 @@ public class Layout {
 
 
 
-    public void analyzeRatio(){  // this is pure nonsense
+    public void analyzeRatio(){
 
         TabPane tabPane = tabController.getTabPane();
 
@@ -644,19 +644,19 @@ public class Layout {
             if(currentImageView.getImage() == null){
                 return;
             } else {
+                image = currentImageView.getImage();
             }
-            image = currentImageView.getImage();
 
             double ratio = image.getHeight() / image.getWidth();
 
-            if(ratio == 1.5){
-                UserMessage.setBottomLabelMessage("perfect ratio");
-            } else if(ratio < 1.5){
-                ratio = ratio - 1.5;
-                UserMessage.setBottomLabelMessage("Your image is " + ratio + " too wide");
-            } else if(ratio > 1.5){
-                ratio = ratio - 1.5;
-                UserMessage.setBottomLabelMessage("Your image is " + ratio + " too high");
+            if(ratio == 1.77777){
+                UserMessage.setBottomLabelMessage("Perfect Ratio!", "Info");
+            } else if(ratio < 1.77777){
+                ratio = 1.77777 - ratio;
+                UserMessage.setBottomLabelMessage("Your image is " + ratio + " pixels too wide.", "Info");
+            } else if(ratio > 1.77777){
+                ratio = ratio - 1.77777;
+                UserMessage.setBottomLabelMessage("Your image is " + ratio + " pixels too high.", "Info");
             }
 
 

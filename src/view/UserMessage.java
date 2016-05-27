@@ -15,17 +15,22 @@ public class UserMessage {
 
     public static BorderPane borderPane;
 
-    public static void setBottomLabelMessage(String message){
+    public static void setBottomLabelMessage(String message, String request){
 
         Label bottomLabel = new Label();
-        bottomLabel.setMaxHeight(10);
+        //bottomLabel.setMaxHeight(20);
         borderPane.setBottom(bottomLabel);
 
-        bottomLabel.setTextFill(Color.RED);
+        if(request.equals("Info")){
+            bottomLabel.setTextFill(Color.GREEN);
+
+        } else if(request.equals("Error")){
+            bottomLabel.setTextFill(Color.RED);
+
+        }
         bottomLabel.setMaxWidth(Double.MAX_VALUE);
         bottomLabel.setAlignment(Pos.CENTER);
         bottomLabel.getStyleClass().add("bottomLabel");
-
         bottomLabel.setText(message);
 
         borderPane.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
