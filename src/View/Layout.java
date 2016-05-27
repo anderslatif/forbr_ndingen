@@ -4,6 +4,7 @@ import controller.Controller;
 import controller.TabController;
 import javafx.event.ActionEvent;
 import javafx.stage.Modality;
+import javafx.util.Callback;
 import model.DatabaseSaveAndGet;
 import model.PortForwardingL;
 import model.Slide;
@@ -27,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -48,7 +50,7 @@ public class Layout {
         controller = new Controller();
         tabController = new TabController(scene, stage, layout);
         newPresentation();
-
+        UserMessage.borderPane = borderPane;
     }
 
 
@@ -73,7 +75,7 @@ public class Layout {
         ///////////////////////////////////////
         menu1 = new Menu("File");
 
-         m1_1 = new MenuItem("_New Presentation");
+        m1_1 = new MenuItem("_New Presentation");
         m1_1.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
         m1_1.setOnAction( e -> {
             if(tabController.justSaved){
@@ -83,11 +85,11 @@ public class Layout {
             }
         });
 
-         m1_2 = new MenuItem("_Open");
+        m1_2 = new MenuItem("_Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         m1_2.setOnAction( e -> pickADate("Open"));
 
-         m1_3 = new MenuItem("_Save");
+        m1_3 = new MenuItem("_Save");
         m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
         m1_3.setOnAction( e -> pickADate("Save"));
 
@@ -100,17 +102,17 @@ public class Layout {
 
 
         ///////////////////////////////////////
-         menu3 = new Menu("Add a Slide");
+        menu3 = new Menu("Add a Slide");
 
-         m3_1 = new MenuItem("_Picture slide");
+        m3_1 = new MenuItem("_Picture slide");
         m3_1.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN));
         m3_1.setOnAction( e -> tabController.addPictureTab());
 
-         m3_2 = new MenuItem("_Bar Slide");
+        m3_2 = new MenuItem("_Bar Slide");
         m3_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
         m3_2.setOnAction( e -> tabController.addHappyHourTab());
 
-         m3_3 = new MenuItem("_Events");
+        m3_3 = new MenuItem("_Events");
         m3_3.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
         m3_3.setOnAction( e -> getEventOverview());
 
@@ -118,7 +120,7 @@ public class Layout {
         menu3.getItems().addAll(m3_1, m3_2, m3_3);
 
         ///////////////////////////////////////
-         menu4 = new Menu("About");
+        menu4 = new Menu("About");
 
         MenuItem m4_1 = new MenuItem("User Manual");
         m4_1.setOnAction( e -> showUserManual());
@@ -149,28 +151,6 @@ public class Layout {
         return menuBar;
     }
 
-
-
-    public void setBottomLabelMessage(String message){
-
-        Label bottomLabel = new Label();
-        bottomLabel.setMaxHeight(10);
-        borderPane.setBottom(bottomLabel);
-
-        bottomLabel.setTextFill(Color.RED);
-        bottomLabel.setMaxWidth(Double.MAX_VALUE);
-        bottomLabel.setAlignment(Pos.CENTER);
-        bottomLabel.getStyleClass().add("bottomLabel");
-
-        bottomLabel.setText(message);
-
-        borderPane.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                borderPane.setBottom(null);
-            }
-        });
-    }
 
 
 
@@ -543,15 +523,31 @@ public class Layout {
 
     public void pickADate(String buttonText){
 
-
-
         if(buttonText.equals("Save") && tabController.getTabCollectionSize() == 0){
-            setBottomLabelMessage("You have nothing to save.");
+            UserMessage.setBottomLabelMessage("You have nothing to save.");
             return;
         }
 
-
         DatePicker datePicker = new DatePicker();
+
+        final Callback<DatePicker, DateCell> dayCellFactory =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(DatePicker param) {
+                        return new DateCell(){
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty){
+                                for(LocalDate localDate : DatabaseSaveAndGet.getPresentationDates()){
+                                    super.updateItem(item, empty);
+                                    if(item.equals(localDate)){
+                                        setStyle("-fx-background-color: #00cc00;");
+                                    }
+                                }
+                            }
+                        };
+                    }
+                };
+        datePicker.setDayCellFactory(dayCellFactory);
 
         Label warningLabel = new Label();
         warningLabel.setFont(Font.font("bold"));
@@ -654,13 +650,13 @@ public class Layout {
             double ratio = image.getHeight() / image.getWidth();
 
             if(ratio == 1.5){
-                System.out.println("perfect ratio");
+                UserMessage.setBottomLabelMessage("perfect ratio");
             } else if(ratio < 1.5){
                 ratio = ratio - 1.5;
-                System.out.println("Your image is " + ratio + " too wide");
+                UserMessage.setBottomLabelMessage("Your image is " + ratio + " too wide");
             } else if(ratio > 1.5){
                 ratio = ratio - 1.5;
-                System.out.println("Your image is " + ratio + " too high");
+                UserMessage.setBottomLabelMessage("Your image is " + ratio + " too high");
             }
 
 

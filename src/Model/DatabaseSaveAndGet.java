@@ -490,6 +490,66 @@ public class DatabaseSaveAndGet {
     }
 
 
+    public static ArrayList<LocalDate> getPresentationDates(){
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        ArrayList<LocalDate> uniqueDates = new ArrayList<>();
+
+
+        try {
+            connection = DatabaseConnection.getConnection();
+
+            statement = connection.createStatement();
+
+            resultSet = statement.executeQuery("SELECT DISTINCT slide_date FROM slides;");
+
+                while(resultSet.next()){
+
+                    String date = resultSet.getString("slide_date");
+
+                    LocalDate localDate = LocalDate.parse(date);
+
+                    uniqueDates.add(localDate);
+
+                }
+
+
+            } catch(Exception e){
+                e.printStackTrace();
+            } finally {
+                if(connection != null){
+                    try {
+                        connection.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if(statement != null){
+                    try{
+                        statement.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if(resultSet != null){
+                    try{
+                        resultSet.close();
+                    } catch (SQLException e){
+                        e.printStackTrace();
+                    }
+                }
+
+                return uniqueDates;
+            }
+
+
+
+    }
+
+
 
 
 }

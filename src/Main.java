@@ -1,6 +1,10 @@
 import javafx.application.Platform;
+<<<<<<< HEAD
 import model.DatabaseConnection;
 import model.PortForwardingL;
+=======
+import model.DatabaseSaveAndGet;
+>>>>>>> 2df434379e3bebd942940d1d3918b6c2f8129eef
 import view.Layout;
 
 import javafx.application.Application;
@@ -36,22 +40,27 @@ public class Main extends Application {
 
         primaryStage.getIcons().add(new Image("file:src/logo.png"));
 
+<<<<<<< HEAD
         primaryStage.setOnCloseRequest( e -> {
 
 
             System.exit(0);
             System.out.println("killing all");
         });
+=======
+
+/*        primaryStage.setOnCloseRequest( e -> {
+            e.consume();
+            view.savePresentationBeforeClosingAll();
+        });*/
+>>>>>>> 2df434379e3bebd942940d1d3918b6c2f8129eef
 
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
 
-/*        primaryStage.setOnCloseRequest( e -> {
-            e.consume();
-            view.savePresentationBeforeClosingAll();
-        });*/
+
 
 
 

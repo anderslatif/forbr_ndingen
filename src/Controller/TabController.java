@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import view.UserMessage;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -417,7 +418,7 @@ public class TabController {
         vBox.getStyleClass().add("happyHourSlide");
 
         double imageWidth = scene.getWidth();
-                double imageHeight = vBox.getHeight()/7;
+        double imageHeight = vBox.getHeight()/7;
         Image image = new Image("dropimage.png");
 
         TextField headerTextField = new TextField();
@@ -547,7 +548,7 @@ public class TabController {
     public void savingPresentation(String chosenDate, Layout view){
 
 
-        layout.setBottomLabelMessage("Presentation has been saved.");
+        UserMessage.setBottomLabelMessage("Presentation has been saved.");
         justSaved = true;
 
         ArrayList<TabNode> presentation = new ArrayList();
