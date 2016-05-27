@@ -381,10 +381,10 @@ public class Layout {
 
 
         TreeItem treeItem1 = new TreeItem("Velkommen");
-        TreeItem treeItem2 = new TreeItem("Event Oversigten");
+        TreeItem treeItem2 = new TreeItem("Eventoversigten");
         TreeItem treeItem3 = new TreeItem("Event Slides");
         TreeItem treeItem4 = new TreeItem("Picture Slides");
-        TreeItem treeItem5 = new TreeItem("Bar Tilbud Slides");
+        TreeItem treeItem5 = new TreeItem("Bartilbud Slides");
         TreeItem treeItem6 = new TreeItem("Om Præsentationer");
         TreeItem treeItem7 = new TreeItem("Raspberry Pi");
         TreeItem treeItem8 = new TreeItem("Andet");
@@ -421,17 +421,17 @@ public class Layout {
                 display += "Hvis intet billede ønskes, så indsæt en png fil med usynlig baggrund.\n\n";
                 display += "Vær dog opmærksom på, at hvis et event bliver oprettet uden komplet information skal informationen tilføjes senere i præsentationen hver eneste gang.\n";
                 display += "Alternativet er at slette eventet i oversigten og genoprette det.\n\n";
-                display += "Vi håber ikke, at det ikke er for besværligt. Vi anbefaler først at oprette events, når al information og billedet er klar. ";
+                display += "Vi håber ikke, at det er for besværligt. Vi anbefaler først at oprette events, når al information og billedet er klar. ";
                 textArea.setText(display);
             } else if(selectedItem.getValue().equals("Picture Slides")){
                 display = "Picture slides er simpelthen ethvert billede der droppes på programmet.\n\n";
                 display += "Billedet vil fylde hele skærmen, så vælg et billede der har den korrekte ratio. Bredden skal være Højden divideret med 1,5.";
                 textArea.setText(display);
             } else if(selectedItem.getValue().equals("Bar Tilbud Slides")){
-                display = "Et bar tilbud slide består af en header, et billede og noget tekst.\n\n";
+                display = "Et bartilbud slide består af en header, et billede og noget tekst.\n\n";
                 display += "Det er muligt ikke at tilføje et billede til et bar tilbud slide og den sorte baggrund vil så vises i stedet.\n\n";
-                display += "Alle slides må selvfølgelig gerne bruges til andre formål en deres navne. ";
-                display += "Faktisk er Bar Tilbud slidet oplagt at bruge til andre ting med samme format.";
+                display += "Alle slides må selvfølgelig gerne bruges til andre formål end deres navne. ";
+                display += "Faktisk er Bartilbud slidet oplagt at bruge til andre ting med samme format.";
                 textArea.setText(display);
             } else if(selectedItem.getValue().equals("Om Præsentationer")){
                 display = "En præsentation er en samling af slides, der gemmes under en bestemt dato.\n\n";
@@ -629,7 +629,7 @@ public class Layout {
 
 
 
-    public void analyzeRatio(){  // this is pure nonsense
+    public void analyzeRatio(){  // this is almost pure nonsense
 
         TabPane tabPane = tabController.getTabPane();
 
