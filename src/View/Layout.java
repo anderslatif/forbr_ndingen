@@ -5,7 +5,9 @@ import controller.TabController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.stage.Modality;
+import javafx.util.Callback;
 import model.DatabaseSaveAndGet;
+import model.PortForwardingL;
 import model.Slide;
 import model.SlideEvent;
 import javafx.animation.FadeTransition;
@@ -27,6 +29,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -47,7 +50,7 @@ public class Layout {
         controller = new Controller();
         tabController = new TabController(scene, stage, layout);
         newPresentation();
-
+        UserMessage.borderPane = borderPane;
     }
 
 
@@ -70,10 +73,11 @@ public class Layout {
     public MenuBar getMenuBar(){
         MenuBar menuBar = new MenuBar();
 
-        ///////////////////////////////////////
-        menu1 = new Menu("File");
 
-         m1_1 = new MenuItem("_New Presentation");
+        ///////////////////////////////////////
+        menu1 = new Menu("_File");
+
+        m1_1 = new MenuItem("_New Presentation");
         m1_1.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
         m1_1.setOnAction( e -> {
             if(tabController.justSaved){
@@ -84,12 +88,12 @@ public class Layout {
         });
         m1_1.disableProperty().bind(loginState);
 
-         m1_2 = new MenuItem("_Open");
+        m1_2 = new MenuItem("Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         m1_2.setOnAction( e -> pickADate("Open"));
         m1_2.disableProperty().bind(loginState);
 
-         m1_3 = new MenuItem("_Save");
+        m1_3 = new MenuItem("_Save");
         m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
         m1_3.setOnAction( e -> pickADate("Save"));
         m1_3.disableProperty().bind(loginState);
@@ -103,19 +107,19 @@ public class Layout {
 
 
         ///////////////////////////////////////
-         menu3 = new Menu("Add a Slide");
+        menu3 = new Menu("_Add a Slide");
 
-         m3_1 = new MenuItem("_Picture slide");
+        m3_1 = new MenuItem("Picture slide");
         m3_1.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN));
         m3_1.setOnAction( e -> tabController.addPictureTab());
         m3_1.disableProperty().bind(loginState);
 
-         m3_2 = new MenuItem("_Bar Slide");
+        m3_2 = new MenuItem("Bar Slide");
         m3_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
         m3_2.setOnAction( e -> tabController.addHappyHourTab());
         m3_2.disableProperty().bind(loginState);
 
-         m3_3 = new MenuItem("_Events");
+        m3_3 = new MenuItem("Events");
         m3_3.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
         m3_3.setOnAction( e -> getEventOverview());
         m3_3.disableProperty().bind(loginState);
@@ -124,7 +128,7 @@ public class Layout {
         menu3.getItems().addAll(m3_1, m3_2, m3_3);
 
         ///////////////////////////////////////
-         menu4 = new Menu("About");
+        menu4 = new Menu("_About");
 
         MenuItem m4_1 = new MenuItem("User Manual");
         m4_1.setOnAction( e -> showUserManual());
@@ -137,15 +141,24 @@ public class Layout {
         menu4.getItems().addAll(m4_1, m4_2);
 
         ///////////////////////////////////////
+<<<<<<< HEAD
          menu5 = new Menu("User");
+=======
+         menu5 = new Menu("_Log In");
+>>>>>>> afe3619edcdf8a3d928beec772cb89d1ab35132a
 
-        MenuItem m5_1 = new MenuItem("_Log in");
+        MenuItem m5_1 = new MenuItem("Log in");
         m5_1.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
         m5_1.setOnAction( event -> login.userStage(this, "login"));
 
+<<<<<<< HEAD
         MenuItem m5_2 = new MenuItem("_Lock");
         m5_2.setAccelerator(new KeyCodeCombination(KeyCode.C, KeyCombination.SHORTCUT_DOWN));
         m5_2.setOnAction(event -> loginState.setValue(true));
+=======
+        MenuItem m5_2 = new MenuItem("Check login");
+        m5_2.setOnAction(event -> login.accessAllowed());
+>>>>>>> afe3619edcdf8a3d928beec772cb89d1ab35132a
 
         MenuItem m5_3 = new MenuItem("_Change username or password");
         m5_3.setOnAction(event -> login.userStage(this, "edit"));
@@ -161,28 +174,6 @@ public class Layout {
         return menuBar;
     }
 
-
-
-    public void setBottomLabelMessage(String message){
-
-        Label bottomLabel = new Label();
-        bottomLabel.setMaxHeight(10);
-        borderPane.setBottom(bottomLabel);
-
-        bottomLabel.setTextFill(Color.RED);
-        bottomLabel.setMaxWidth(Double.MAX_VALUE);
-        bottomLabel.setAlignment(Pos.CENTER);
-        bottomLabel.getStyleClass().add("bottomLabel");
-
-        bottomLabel.setText(message);
-
-        borderPane.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                borderPane.setBottom(null);
-            }
-        });
-    }
 
 
 
@@ -397,13 +388,21 @@ public class Layout {
         TreeItem treeItem2 = new TreeItem("Eventoversigten");
         TreeItem treeItem3 = new TreeItem("Event Slides");
         TreeItem treeItem4 = new TreeItem("Picture Slides");
+<<<<<<< HEAD
         TreeItem treeItem5 = new TreeItem("Bartilbud Slides");
         TreeItem treeItem6 = new TreeItem("Om Præsentationer");
         TreeItem treeItem7 = new TreeItem("Raspberry Pi");
         TreeItem treeItem8 = new TreeItem("Andet");
+=======
+        TreeItem treeItem5 = new TreeItem("Bar Tilbud Slides");
+        TreeItem treeItem6 = new TreeItem("Ratio");
+        TreeItem treeItem7 = new TreeItem("Om Præsentationer");
+        TreeItem treeItem8 = new TreeItem("Raspberry Pi");
+        TreeItem treeItem9 = new TreeItem("Andet");
+>>>>>>> afe3619edcdf8a3d928beec772cb89d1ab35132a
 
 
-        root.getChildren().addAll(treeItem1, treeItem2, treeItem3, treeItem4, treeItem5, treeItem6, treeItem7, treeItem8);
+        root.getChildren().addAll(treeItem1, treeItem2, treeItem3, treeItem4, treeItem5, treeItem6, treeItem7, treeItem8, treeItem9);
 
         TreeView<String> treeView = new TreeView<>(root);
         treeView.setShowRoot(false);
@@ -446,6 +445,12 @@ public class Layout {
                 display += "Alle slides må selvfølgelig gerne bruges til andre formål end deres navne. ";
                 display += "Faktisk er Bartilbud slidet oplagt at bruge til andre ting med samme format.";
                 textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Ratio")){
+                display = "Display programmet forventes at køre på aspect ratio 16:9. \n\nPicture slides billedet bør opfylde dette størrelsesforhold. " +
+                        "For Event slides og Bar slides burde de være 3 gange mindre høje: dvs. (16 divideret med 3) divideret med 9.\n\n\n" +
+                        "Det er ret besværligt at holde styr på. Derfor er det muligt at læggge et billede på og vælge Analyze ratio i menupunktet About.\n\n" +
+                        "Analyze ratio vil fortælle præcist hvor mange pixels i den ene eller den anden retning der er for meget.";
+                textArea.setText(display);
             } else if(selectedItem.getValue().equals("Om Præsentationer")){
                 display = "En præsentation er en samling af slides, der gemmes under en bestemt dato.\n\n";
                 display += "Forsøger man at gemme på en dato hvor der allerede er gemt en præsentation, så overskrives den gamle præsentation. ";
@@ -476,7 +481,7 @@ public class Layout {
 
     public void savePresentationBeforeClosingAll(){
         if(tabController.justSaved){
-            stage.close();
+            System.exit(0);
         } else {
             savePresentationConfirmation("closeAll");
         }
@@ -529,11 +534,10 @@ public class Layout {
                 button1.setOnAction(e -> {
                     pickADate("Save");
                     savePresentationStage.close();
-                    stage.close();
                 });
                 button2.setOnAction(e -> {
                     savePresentationStage.close();
-                    stage.close();
+                    System.exit(0);
                 });
                 button3.setOnAction(e -> savePresentationStage.close());
             } else if(request.equals("saveAndOpen")){
@@ -555,21 +559,43 @@ public class Layout {
 
     public void pickADate(String buttonText){
 
-
-
         if(buttonText.equals("Save") && tabController.getTabCollectionSize() == 0){
-            setBottomLabelMessage("You have nothing to save.");
+            UserMessage.setBottomLabelMessage("You have nothing to save.", "Error");
             return;
         }
 
-
         DatePicker datePicker = new DatePicker();
+
+        final Callback<DatePicker, DateCell> dayCellFactory =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(DatePicker param) {
+                        return new DateCell(){
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty){
+                                for(LocalDate localDate : DatabaseSaveAndGet.getPresentationDates()){
+                                    super.updateItem(item, empty);
+                                    if(item.equals(localDate)){
+                                        if(localDate.equals(LocalDate.now())){
+                                            setStyle("-fx-background-color: #007a00;");
+                                        } else {
+                                            setStyle("-fx-background-color: #00cc00;");
+                                        }
+                                    }
+                                }
+                            }
+                        };
+                    }
+                };
+        datePicker.setDayCellFactory(dayCellFactory);
 
         Label warningLabel = new Label();
         warningLabel.setFont(Font.font("bold"));
         warningLabel.setTextFill(Color.RED);
 
-        Label label = new Label("Choose date:");
+        Label label = new Label("Choose a date:");
+        label.setMaxWidth(Double.MAX_VALUE);
+        label.setAlignment(Pos.CENTER_RIGHT);
 
         Button saveBut = new Button();
         saveBut.setText(buttonText);
@@ -599,7 +625,10 @@ public class Layout {
         }
 
         // Button Actions
-        cancelBut.setOnAction( e -> saveStage.close());
+        cancelBut.setOnAction( e -> {
+            PortForwardingL.closeConnection();
+            saveStage.close();
+        });
 
         datePicker.setOnAction( e -> {
             if(buttonText.equals("Save")){
@@ -635,6 +664,13 @@ public class Layout {
 
                 saveStage.close();
 
+            } else {
+                    warningLabel.setText("Please use the calendar\nto select a valid date");
+                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(10000), warningLabel);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.play();
+
             }
         });
     }
@@ -642,7 +678,11 @@ public class Layout {
 
 
 
+<<<<<<< HEAD
     public void analyzeRatio(){  // this is almost pure nonsense
+=======
+    public void analyzeRatio(){
+>>>>>>> afe3619edcdf8a3d928beec772cb89d1ab35132a
 
         TabPane tabPane = tabController.getTabPane();
 
@@ -657,19 +697,31 @@ public class Layout {
             if(currentImageView.getImage() == null){
                 return;
             } else {
+                image = currentImageView.getImage();
             }
-            image = currentImageView.getImage();
 
-            double ratio = image.getHeight() / image.getWidth();
+            float width = (float) image.getWidth();
+            float height = (float) image.getHeight();
+            float ratio = height / width;
+            float perfectRatio = 16/9f;
 
-            if(ratio == 1.5){
-                System.out.println("perfect ratio");
-            } else if(ratio < 1.5){
-                ratio = ratio - 1.5;
-                System.out.println("Your image is " + ratio + " too wide");
-            } else if(ratio > 1.5){
-                ratio = ratio - 1.5;
-                System.out.println("Your image is " + ratio + " too high");
+
+            if(ratio > 1.777777777777776 && ratio < 1.7777777777778){
+                UserMessage.setBottomLabelMessage("Perfect Ratio!", "Info");
+            } else if(ratio < 1.77777){
+                float difference = width - (height / perfectRatio);
+                if(difference <= 1){
+                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too wide.", "Info");
+                } else {
+                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too wide.", "Info");
+                }
+            } else if(ratio > 1.77777){
+                float difference = height - (width * perfectRatio);
+                if(difference <= 1){
+                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too high.", "Info");
+                } else {
+                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too high.", "Info");
+                }
             }
 
 
@@ -691,15 +743,30 @@ public class Layout {
                     }
 
 
-                    double prefHeight = vBox.getHeight() / 4;
-                    double prefWidth = vBox.getWidth();
-                    double actualHeight = image.getHeight();
-                    double actualWidth = image.getWidth();
-                    double differenceHeight = prefHeight - actualHeight;
-                    double differenceWidth = prefWidth - actualWidth;
+                    float width = (float) image.getWidth();
+                    float height = (float) image.getHeight();
+                    float ratio = height / width;
+                    float theThirdOfHeight = 16/3f;
+                    float perfectRatio = theThirdOfHeight/9f;
 
-                    System.out.println("The height is " + differenceHeight + " off the mark.");
-                    System.out.println("Your width is " + differenceWidth + " off the mark.");
+
+                    if(ratio > 0.590 && ratio < 0.599){
+                        UserMessage.setBottomLabelMessage("Perfect ratio.", "Info");
+                    } else if(ratio < 0.599){
+                        float difference = width - (height / perfectRatio);
+                        if(difference <= 1){
+                            UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too wide.", "Info");
+                        } else {
+                            UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too wide.", "Info");
+                        }
+                    } else if(ratio > 0.599){
+                        float difference = height - (width * perfectRatio);
+                        if(difference <= 1){
+                            UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too high.", "Info");
+                        } else {
+                            UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too high.", "Info");
+                        }
+                    }
 
 
                 } else if (node instanceof  javafx.scene.layout.VBox){
@@ -715,6 +782,31 @@ public class Layout {
                                 return;
                             } else {
                                 image = currentImageView.getImage();
+                            }
+
+                            float width = (float) image.getWidth();
+                            float height = (float) image.getHeight();
+                            float ratio = height / width;
+                            float theThirdOfHeight = 16/3f;
+                            float perfectRatio = theThirdOfHeight/9f;
+
+
+                            if(ratio > 0.590 && ratio < 0.599){
+                                UserMessage.setBottomLabelMessage("Perfect ratio.", "Info");
+                            } else if(ratio < 0.599){
+                                float difference = width - (height / perfectRatio);
+                                if(difference <= 1){
+                                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too wide.", "Info");
+                                } else {
+                                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too wide.", "Info");
+                                }
+                            } else if(ratio > 0.599){
+                                float difference = height - (width * perfectRatio);
+                                if(difference <= 1){
+                                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too high.", "Info");
+                                } else {
+                                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too high.", "Info");
+                                }
                             }
 
                         }

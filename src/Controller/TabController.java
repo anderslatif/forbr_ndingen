@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import view.UserMessage;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class TabController {
         this.layout = layout;
         tabCollection = new ArrayList<>();
         controller = new Controller();
+        DatabaseConnection.chooseDatabase();
     }
 
     public int getTabCollectionSize(){
@@ -124,7 +126,6 @@ public class TabController {
         justSaved = false;
 
         // file:/// with three slashes before the absolute file path helps avoid "MediaException: MEDIA_INACCESSIBLE"
-        System.out.println(file.getAbsolutePath().toString());
 
         String imagePath = "file:///" + file.getAbsoluteFile().toString();
 
@@ -147,7 +148,6 @@ public class TabController {
                         slidePicture.setImagePath(imagePath);
                     }
                 }
-
             }
 
 
@@ -173,7 +173,6 @@ public class TabController {
                             currentImageView.setImage(image);
                         }
                     }
-
                 }
             }
             for (TabNode tabNode : tabCollection) {
@@ -347,7 +346,7 @@ public class TabController {
         }
 
         ImageView imageView = new ImageView(image);
-        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(4));
+        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(3));
         imageView.fitWidthProperty().bind(vBox.widthProperty());
 
         VBox filler1 = new VBox();
@@ -416,7 +415,7 @@ public class TabController {
         vBox.getStyleClass().add("happyHourSlide");
 
         double imageWidth = scene.getWidth();
-                double imageHeight = vBox.getHeight()/7;
+        double imageHeight = vBox.getHeight()/7;
         Image image = new Image("dropimage.png");
 
         TextField headerTextField = new TextField();
@@ -426,7 +425,7 @@ public class TabController {
 
         ImageView imageView = new ImageView();
         imageView.setImage(image);
-        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(4));
+        imageView.fitHeightProperty().bind(vBox.heightProperty().divide(3));
         imageView.fitWidthProperty().bind(scene.widthProperty());
 
         TextArea textTextArea =  new TextArea();
@@ -546,7 +545,7 @@ public class TabController {
     public void savingPresentation(String chosenDate, Layout view){
 
 
-        layout.setBottomLabelMessage("Presentation has been saved.");
+        UserMessage.setBottomLabelMessage("Presentation has been saved.", "Info");
         justSaved = true;
 
         ArrayList<TabNode> presentation = new ArrayList();
@@ -584,7 +583,7 @@ public class TabController {
                     addHappyHourTab((SlideHappyHour) slide);
                     break;
                 default:
-                    System.out.println("Error while calling openPresentation() in TabController");
+                    UserMessage.setBottomLabelMessage("Error while opening one of the slides.", "Error");
             }
         }
         justSaved = true;
