@@ -1,0 +1,21 @@
+Kære Forbrændingen. Tillykke med det nye stykke software. Vi håber, at det bliver brugbart. Systemet kræver noget opsætning og skal opfylde følgende krav:
+
+
+    * JRE (Java Runtime Environment) version 8.0 eller højere er påkrævet. 
+
+    * Vores program er platformsuafhængigt. Testet på Mac, Windows og Linux. 
+
+    * Vi vil sætte en Raspberry Pi op med en Database og forbinde den til TV’et. Vi vil selvfølgelig også teste, om det virker.
+
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+Til underviserne: Vores program tjekker om den kan oprette forbindelse til Raspberry Pi’en ved opstart. Hvis ikke, så vil den køre i debug mode, hvor databasen så kræves at blive hostet lokalt på computeren. Den kan sættes op via vores SQL-Script.sql fil. Database-serverens user er root og password er root. Vi bruger port: 3306. Disse værdier kan ændres på i klassen DatabaseConnection.java.
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+
+
+    * Vi vil benytte os af jeres lokale fildelingsserver til at gemme billeder på. Problemer med serveren rettes mod jeres faste IT-tekniker. 
+
+
+Ved opstart af Raspberry Pi’en, så starter display programmet automatisk på TV skærmen og henter dagens præsentation. For at køre hovedprogrammet skal der blot dobbelt-klikkes på den leverede jar fil.
+
