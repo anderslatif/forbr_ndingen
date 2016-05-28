@@ -2,7 +2,8 @@ package view;
 
 import controller.Controller;
 import controller.TabController;
-import javafx.event.ActionEvent;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.stage.Modality;
 import javafx.util.Callback;
 import model.DatabaseSaveAndGet;
@@ -30,7 +31,6 @@ import javafx.util.Duration;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Anders on 4/21/2016.
@@ -67,7 +67,8 @@ public class Layout {
 
     Menu menu1; Menu menu3; Menu menu4; Menu menu5;
     MenuItem m1_1;MenuItem m1_2; MenuItem m1_3;
-    MenuItem m3_1;MenuItem m3_2; MenuItem m3_3;
+    MenuItem m3_1;MenuItem m3_2; MenuItem m3_3; MenuItem m5_3;
+    final BooleanProperty loginState = new SimpleBooleanProperty();
 
     public MenuBar getMenuBar(){
         MenuBar menuBar = new MenuBar();
@@ -85,14 +86,17 @@ public class Layout {
                 savePresentationConfirmation("newPresentation");
             }
         });
+        m1_1.disableProperty().bind(loginState);
 
         m1_2 = new MenuItem("Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         m1_2.setOnAction( e -> pickADate("Open"));
+        m1_2.disableProperty().bind(loginState);
 
         m1_3 = new MenuItem("_Save");
         m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
         m1_3.setOnAction( e -> pickADate("Save"));
+        m1_3.disableProperty().bind(loginState);
 
 
 
@@ -108,14 +112,17 @@ public class Layout {
         m3_1 = new MenuItem("Picture slide");
         m3_1.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN));
         m3_1.setOnAction( e -> tabController.addPictureTab());
+        m3_1.disableProperty().bind(loginState);
 
         m3_2 = new MenuItem("Bar Slide");
         m3_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
         m3_2.setOnAction( e -> tabController.addHappyHourTab());
+        m3_2.disableProperty().bind(loginState);
 
         m3_3 = new MenuItem("Events");
         m3_3.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
         m3_3.setOnAction( e -> getEventOverview());
+        m3_3.disableProperty().bind(loginState);
 
 
         menu3.getItems().addAll(m3_1, m3_2, m3_3);
@@ -134,20 +141,27 @@ public class Layout {
         menu4.getItems().addAll(m4_1, m4_2);
 
         ///////////////////////////////////////
+         menu5 = new Menu("User");
          menu5 = new Menu("_Log In");
 
         MenuItem m5_1 = new MenuItem("Log in");
         m5_1.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
-        m5_1.setOnAction( event -> login.logIn(this));
+        m5_1.setOnAction( event -> login.userStage(this, "login"));
 
-        MenuItem m5_2 = new MenuItem("Check login");
-        m5_2.setOnAction(event -> login.accessAllowed());
+        MenuItem m5_2 = new MenuItem("_Lock");
+        m5_2.setAccelerator(new KeyCodeCombination(KeyCode.C, KeyCombination.SHORTCUT_DOWN));
+        m5_2.setOnAction(event -> loginState.setValue(true));
 
-        menu5.getItems().addAll(m5_1, m5_2);
+        MenuItem m5_3 = new MenuItem("_Change username and password");
+        m5_3.setOnAction(event -> login.userStage(this, "edit"));
+        m5_3.disableProperty().bind(loginState);
+
+        menu5.getItems().addAll(m5_1, m5_2, m5_3);
         /////////////////////////////////////////
 
         menuBar.getMenus().addAll(menu1, menu3, menu4, menu5);
 
+        //loginState.setValue(true);
 
         return menuBar;
     }
@@ -363,7 +377,7 @@ public class Layout {
 
 
         TreeItem treeItem1 = new TreeItem("Velkommen");
-        TreeItem treeItem2 = new TreeItem("Event Oversigten");
+        TreeItem treeItem2 = new TreeItem("Eventoversigten");
         TreeItem treeItem3 = new TreeItem("Event Slides");
         TreeItem treeItem4 = new TreeItem("Picture Slides");
         TreeItem treeItem5 = new TreeItem("Bar Tilbud Slides");
@@ -404,17 +418,17 @@ public class Layout {
                 display += "Hvis intet billede ønskes, så indsæt en png fil med usynlig baggrund.\n\n";
                 display += "Vær dog opmærksom på, at hvis et event bliver oprettet uden komplet information skal informationen tilføjes senere i præsentationen hver eneste gang.\n";
                 display += "Alternativet er at slette eventet i oversigten og genoprette det.\n\n";
-                display += "Vi håber ikke, at det ikke er for besværligt. Vi anbefaler først at oprette events, når al information og billedet er klar. ";
+                display += "Vi håber ikke, at det er for besværligt. Vi anbefaler først at oprette events, når al information og billedet er klar. ";
                 textArea.setText(display);
             } else if(selectedItem.getValue().equals("Picture Slides")){
                 display = "Picture slides er simpelthen ethvert billede der droppes på programmet.\n\n";
                 display += "Billedet vil fylde hele skærmen, så vælg et billede der har den korrekte ratio. Bredden skal være Højden divideret med 1,5.";
                 textArea.setText(display);
             } else if(selectedItem.getValue().equals("Bar Tilbud Slides")){
-                display = "Et bar tilbud slide består af en header, et billede og noget tekst.\n\n";
+                display = "Et bartilbud slide består af en header, et billede og noget tekst.\n\n";
                 display += "Det er muligt ikke at tilføje et billede til et bar tilbud slide og den sorte baggrund vil så vises i stedet.\n\n";
-                display += "Alle slides må selvfølgelig gerne bruges til andre formål en deres navne. ";
-                display += "Faktisk er Bar Tilbud slidet oplagt at bruge til andre ting med samme format.";
+                display += "Alle slides må selvfølgelig gerne bruges til andre formål end deres navne. ";
+                display += "Faktisk er Bartilbud slidet oplagt at bruge til andre ting med samme format.";
                 textArea.setText(display);
             } else if(selectedItem.getValue().equals("Ratio")){
                 display = "Display programmet forventes at køre på aspect ratio 16:9. \n\nPicture slides billedet bør opfylde dette størrelsesforhold. " +
@@ -649,7 +663,7 @@ public class Layout {
 
 
 
-    public void analyzeRatio(){
+    public void analyzeRatio(){  // this is almost pure nonsense
 
         TabPane tabPane = tabController.getTabPane();
 
@@ -785,17 +799,4 @@ public class Layout {
         }
 
     }
-
-    public void undisableMenus(){
-        m1_1.setDisable(false); m1_2.setDisable(false); m1_3.setDisable(false);
-        m3_1.setDisable(false); m3_2.setDisable(false); m3_3.setDisable(false);
-        System.out.println("undisabled!");
-        System.out.println(m1_1.isDisable());
-        System.out.println(m1_2.isDisable());
-        System.out.println(m1_3.isDisable());
-        System.out.println(m3_1.isDisable());
-        System.out.println(m3_2.isDisable());
-        System.out.println(m3_3.isDisable());
-    }
-
 }
