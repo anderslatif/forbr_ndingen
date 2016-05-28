@@ -40,7 +40,7 @@ public class Login{
 
     }
 
-    
+
     public GridPane loginScreen(Layout layout) {
 
         GridPane gridPane = new GridPane();

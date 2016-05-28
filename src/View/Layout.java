@@ -65,9 +65,7 @@ public class Layout {
         return borderPane;
     }
 
-    Menu menu1; Menu menu3; Menu menu4; Menu menu5;
-    MenuItem m1_1;MenuItem m1_2; MenuItem m1_3;
-    MenuItem m3_1;MenuItem m3_2; MenuItem m3_3; MenuItem m5_3;
+
     final BooleanProperty loginState = new SimpleBooleanProperty();
 
     public MenuBar getMenuBar(){
@@ -75,9 +73,9 @@ public class Layout {
 
 
         ///////////////////////////////////////
-        menu1 = new Menu("_File");
+        Menu menu1 = new Menu("_File");
 
-        m1_1 = new MenuItem("_New Presentation");
+        MenuItem m1_1 = new MenuItem("_New Presentation");
         m1_1.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
         m1_1.setOnAction( e -> {
             if(tabController.justSaved){
@@ -88,12 +86,12 @@ public class Layout {
         });
         m1_1.disableProperty().bind(loginState);
 
-        m1_2 = new MenuItem("Open");
+        MenuItem m1_2 = new MenuItem("Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         m1_2.setOnAction( e -> pickADate("Open"));
         m1_2.disableProperty().bind(loginState);
 
-        m1_3 = new MenuItem("_Save");
+        MenuItem m1_3 = new MenuItem("_Save");
         m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
         m1_3.setOnAction( e -> pickADate("Save"));
         m1_3.disableProperty().bind(loginState);
@@ -107,19 +105,19 @@ public class Layout {
 
 
         ///////////////////////////////////////
-        menu3 = new Menu("_Add a Slide");
+        Menu menu3 = new Menu("_Add a Slide");
 
-        m3_1 = new MenuItem("Picture slide");
+        MenuItem m3_1 = new MenuItem("Picture slide");
         m3_1.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN));
         m3_1.setOnAction( e -> tabController.addPictureTab());
         m3_1.disableProperty().bind(loginState);
 
-        m3_2 = new MenuItem("Bar Slide");
+        MenuItem m3_2 = new MenuItem("Bar Slide");
         m3_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
         m3_2.setOnAction( e -> tabController.addHappyHourTab());
         m3_2.disableProperty().bind(loginState);
 
-        m3_3 = new MenuItem("Events");
+        MenuItem m3_3 = new MenuItem("Events");
         m3_3.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
         m3_3.setOnAction( e -> getEventOverview());
         m3_3.disableProperty().bind(loginState);
@@ -128,7 +126,7 @@ public class Layout {
         menu3.getItems().addAll(m3_1, m3_2, m3_3);
 
         ///////////////////////////////////////
-        menu4 = new Menu("_About");
+        Menu menu4 = new Menu("_About");
 
         MenuItem m4_1 = new MenuItem("User Manual");
         m4_1.setOnAction( e -> showUserManual());
@@ -141,8 +139,8 @@ public class Layout {
         menu4.getItems().addAll(m4_1, m4_2);
 
         ///////////////////////////////////////
-         menu5 = new Menu("User");
-         menu5 = new Menu("_Log In");
+        Menu menu5 = new Menu("User");
+
 
         MenuItem m5_1 = new MenuItem("Log in");
         m5_1.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
