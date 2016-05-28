@@ -22,6 +22,7 @@ public class Login{
     TextField pass;
     Stage loginStage;
     String userName;
+    UserMessage userMessage = new UserMessage();
 
 
     public void userStage(Layout layout, String id){
@@ -32,13 +33,14 @@ public class Login{
             loginScene = new Scene(loginScreen(layout));
         }else if(id.equals("edit")){
             loginStage = new Stage();
-            loginScene = new Scene(changeUsernameOrPassword());
+            loginScene = new Scene(changeUsernameAndPassword());
         }
         loginStage.setScene(loginScene);
         loginStage.show();
 
     }
 
+    
     public GridPane loginScreen(Layout layout) {
 
         GridPane gridPane = new GridPane();
@@ -70,13 +72,12 @@ public class Login{
     public void loginAttempt(Layout layout){
 
         Connection connection = null;
-        Statement statement = null;
+        Statement statement;
 
         try {
             connection = DatabaseConnection.getConnection();
             statement = connection.createStatement();
 
-            if(connection != null){
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM logins;");
 
                 while(resultSet.next()){
@@ -86,14 +87,12 @@ public class Login{
 
                     if(text1.getText().equals(userName) && text2.getText().equals(password)){
                         layout.loginState.setValue(false);
+                        userMessage.setBottomLabelMessage("You are now logged in", "info");
                         loginStage.close();
                     }else{
-                        layout.setBottomLabelMessage("Invalid username or password");
+                        userMessage.setBottomLabelMessage("Invalid username or password", "error");
                     }
                 }
-
-            }
-
 
         } catch(Exception e){
             e.printStackTrace();
@@ -108,7 +107,8 @@ public class Login{
         }
     }
 
-    public GridPane changeUsernameOrPassword(){
+
+    public GridPane changeUsernameAndPassword(){
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20, 20, 20, 20));
@@ -134,6 +134,7 @@ public class Login{
         return gridPane;
     }
 
+
     public void changeAttempt(){
 
         connection = null;
@@ -154,12 +155,15 @@ public class Login{
                     try {
                         preparedStatement.executeUpdate();
                         loginStage.close();
+                        userMessage.setBottomLabelMessage("Username and password updated", "info");
                     } catch (SQLException s) {
                         s.printStackTrace();
+                        userMessage.setBottomLabelMessage("Error while updating username and password", "error");
                     }
                 }
         }catch(SQLException e) {
             e.printStackTrace();
+            userMessage.setBottomLabelMessage("Error while updating username and password", "error");
         }
         finally {
             if(connection != null){

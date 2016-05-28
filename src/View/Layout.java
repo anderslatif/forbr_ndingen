@@ -141,26 +141,18 @@ public class Layout {
         menu4.getItems().addAll(m4_1, m4_2);
 
         ///////////////////////////////////////
-<<<<<<< HEAD
          menu5 = new Menu("User");
-=======
          menu5 = new Menu("_Log In");
->>>>>>> afe3619edcdf8a3d928beec772cb89d1ab35132a
 
         MenuItem m5_1 = new MenuItem("Log in");
         m5_1.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
         m5_1.setOnAction( event -> login.userStage(this, "login"));
 
-<<<<<<< HEAD
         MenuItem m5_2 = new MenuItem("_Lock");
         m5_2.setAccelerator(new KeyCodeCombination(KeyCode.C, KeyCombination.SHORTCUT_DOWN));
         m5_2.setOnAction(event -> loginState.setValue(true));
-=======
-        MenuItem m5_2 = new MenuItem("Check login");
-        m5_2.setOnAction(event -> login.accessAllowed());
->>>>>>> afe3619edcdf8a3d928beec772cb89d1ab35132a
 
-        MenuItem m5_3 = new MenuItem("_Change username or password");
+        MenuItem m5_3 = new MenuItem("_Change username and password");
         m5_3.setOnAction(event -> login.userStage(this, "edit"));
         m5_3.disableProperty().bind(loginState);
 
@@ -388,18 +380,11 @@ public class Layout {
         TreeItem treeItem2 = new TreeItem("Eventoversigten");
         TreeItem treeItem3 = new TreeItem("Event Slides");
         TreeItem treeItem4 = new TreeItem("Picture Slides");
-<<<<<<< HEAD
-        TreeItem treeItem5 = new TreeItem("Bartilbud Slides");
-        TreeItem treeItem6 = new TreeItem("Om Præsentationer");
-        TreeItem treeItem7 = new TreeItem("Raspberry Pi");
-        TreeItem treeItem8 = new TreeItem("Andet");
-=======
         TreeItem treeItem5 = new TreeItem("Bar Tilbud Slides");
         TreeItem treeItem6 = new TreeItem("Ratio");
         TreeItem treeItem7 = new TreeItem("Om Præsentationer");
         TreeItem treeItem8 = new TreeItem("Raspberry Pi");
         TreeItem treeItem9 = new TreeItem("Andet");
->>>>>>> afe3619edcdf8a3d928beec772cb89d1ab35132a
 
 
         root.getChildren().addAll(treeItem1, treeItem2, treeItem3, treeItem4, treeItem5, treeItem6, treeItem7, treeItem8, treeItem9);
@@ -678,11 +663,7 @@ public class Layout {
 
 
 
-<<<<<<< HEAD
     public void analyzeRatio(){  // this is almost pure nonsense
-=======
-    public void analyzeRatio(){
->>>>>>> afe3619edcdf8a3d928beec772cb89d1ab35132a
 
         TabPane tabPane = tabController.getTabPane();
 
