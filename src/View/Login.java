@@ -8,23 +8,29 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-
 import java.sql.*;
+
+/**
+ * Created by Dennis
+ */
 
 
 public class Login{
 
 
-    Connection connection = null;
-    TextField text1;
-    TextField text2;
-    TextField user;
-    TextField pass;
-    Stage loginStage;
-    String userName;
-    UserMessage userMessage = new UserMessage();
+    private Connection connection = null;
+    private TextField text1;
+    private TextField text2;
+    private TextField user;
+    private TextField pass;
+    private Stage loginStage;
+    private String userName;
 
-
+    /**
+     * Tjekker om brugeren vil logge ind eller skifte brugernavn og password
+     * @param layout
+     * @param id
+     */
     public void userStage(Layout layout, String id){
         Scene loginScene = null;
 
@@ -40,7 +46,11 @@ public class Login{
 
     }
 
-
+    /**
+     * Opretter login-vinduet
+     * @param layout
+     * @return
+     */
     public GridPane loginScreen(Layout layout) {
 
         GridPane gridPane = new GridPane();
@@ -68,7 +78,10 @@ public class Login{
         return gridPane;
     }
 
-
+    /**
+     * Tjekker i databasen om loginnet er korrekt
+     * @param layout
+     */
     public void loginAttempt(Layout layout){
 
         Connection connection = null;
@@ -87,10 +100,10 @@ public class Login{
 
                     if(text1.getText().equals(userName) && text2.getText().equals(password)){
                         layout.loginState.setValue(false);
-                        userMessage.setBottomLabelMessage("You are now logged in", "info");
+                        UserMessage.setBottomLabelMessage("You are now logged in", "info");
                         loginStage.close();
                     }else{
-                        userMessage.setBottomLabelMessage("Invalid username or password", "error");
+                        UserMessage.setBottomLabelMessage("Invalid username or password", "error");
                     }
                 }
 
@@ -107,7 +120,10 @@ public class Login{
         }
     }
 
-
+    /**
+     * Opretter vinduet til at ændre brugernavn og password
+     * @return
+     */
     public GridPane changeUsernameAndPassword(){
 
         GridPane gridPane = new GridPane();
@@ -134,7 +150,9 @@ public class Login{
         return gridPane;
     }
 
-
+    /**
+     * opdaterer brugernavn og password i databasen
+     */
     public void changeAttempt(){
 
         connection = null;
@@ -155,15 +173,15 @@ public class Login{
                     try {
                         preparedStatement.executeUpdate();
                         loginStage.close();
-                        userMessage.setBottomLabelMessage("Username and password updated", "info");
+                        UserMessage.setBottomLabelMessage("Username and password updated", "info");
                     } catch (SQLException s) {
                         s.printStackTrace();
-                        userMessage.setBottomLabelMessage("Error while updating username and password", "error");
+                        UserMessage.setBottomLabelMessage("Error while updating username and password", "error");
                     }
                 }
         }catch(SQLException e) {
             e.printStackTrace();
-            userMessage.setBottomLabelMessage("Error while updating username and password", "error");
+            UserMessage.setBottomLabelMessage("Error while updating username and password", "error");
         }
         finally {
             if(connection != null){

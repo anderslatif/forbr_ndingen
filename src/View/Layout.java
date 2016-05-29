@@ -4,6 +4,14 @@ import controller.Controller;
 import controller.TabController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.embed.swing.SwingNode;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.util.Callback;
 import model.DatabaseSaveAndGet;
@@ -28,6 +36,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -44,6 +54,12 @@ public class Layout {
     private Login login = new Login();
     public static boolean newPresentation = false;
 
+    /**
+     * Kaldes når programmet starter for at oprette de grundlæggende objekter der udgør programmet.
+     * @param scene
+     * @param stage
+     * @param layout
+     */
     public void initializeLayout(Scene scene, Stage stage, Layout layout){
         this.scene = scene;
         this.stage = stage;
@@ -56,6 +72,10 @@ public class Layout {
 
     BorderPane borderPane;
 
+    /**
+     * Opretter den borderpane som hovedvinduet i programmet er opbygget på
+     * @return
+     */
     public BorderPane getRootLayout(){
 
         borderPane = new BorderPane();
@@ -65,9 +85,15 @@ public class Layout {
         return borderPane;
     }
 
+    //bruges til at disable og enable menuitems i forbindelse med login
+    public final BooleanProperty loginState = new SimpleBooleanProperty();
 
-    final BooleanProperty loginState = new SimpleBooleanProperty();
+    private final SwingNode swingNode = new SwingNode();
 
+    /**
+     * Kaldes ved programstart og opretter menubaren.
+     * @return
+     */
     public MenuBar getMenuBar(){
         MenuBar menuBar = new MenuBar();
 
@@ -96,9 +122,11 @@ public class Layout {
         m1_3.setOnAction( e -> pickADate("Save"));
         m1_3.disableProperty().bind(loginState);
 
+        MenuItem m1_4 = new MenuItem("_Screensaver");
+        m1_4.setOnAction(event -> createPause(swingNode));
 
 
-        menu1.getItems().addAll(m1_1, m1_2, m1_3);
+        menu1.getItems().addAll(m1_1, m1_2, m1_3, m1_4);
 
         ///////////////////////////////////////
         //Menu menu2 = new Menu("Events");
@@ -163,8 +191,6 @@ public class Layout {
 
         return menuBar;
     }
-
-
 
 
     public void newPresentation(){
@@ -461,7 +487,9 @@ public class Layout {
         userManualStage.show();
     }
 
-
+    /**
+     * Tjekker om præsentationen er gemt
+     */
     public void savePresentationBeforeClosingAll(){
         if(tabController.justSaved){
             System.exit(0);
@@ -470,6 +498,10 @@ public class Layout {
         }
     }
 
+    /**
+     * sikrer at brugeren ikke ved et uheld lukker en aktuel præsentation uden at gemme den
+     * @param request
+     */
     public void savePresentationConfirmation(String request){
 
         GridPane gridPane = new GridPane();
@@ -540,6 +572,10 @@ public class Layout {
         savePresentationStage.show();
     }
 
+    /**
+     * Lader brugeren vælge en dato, hvilket bruges i forbindelse med save- og load-processerne
+     * @param buttonText
+     */
     public void pickADate(String buttonText){
 
         if(buttonText.equals("Save") && tabController.getTabCollectionSize() == 0){
@@ -659,9 +695,10 @@ public class Layout {
     }
 
 
-
-
-    public void analyzeRatio(){  // this is almost pure nonsense
+    /**
+     * Analyserer om det valgte billede har det rigtige størrelsesforhold til at blive vist på en skærm
+     */
+    public void analyzeRatio(){
 
         TabPane tabPane = tabController.getTabPane();
 
@@ -796,5 +833,27 @@ public class Layout {
 
         }
 
+    }
+
+    private int sizeJFrameX = 1000;
+    private int sizeJFrameY = 800;
+    public void createPause(final SwingNode swingNode) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+
+                JFrame f = new JFrame();
+                f.setSize(sizeJFrameX, sizeJFrameY);
+                f.getContentPane().setBackground(java.awt.Color.WHITE);
+                f.setVisible(true);
+                f.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                Graphics g = f.getGraphics();
+                f.update(g);
+
+                new Ball(g, 300, 40, java.awt.Color.BLUE, 60);
+                new Ball(g, 300, 40, java.awt.Color.BLACK, 60);
+                new Ball(g, 300, 40, java.awt.Color.RED, 60);
+                new Ball(g, 300, 40, java.awt.Color.GREEN, 60);
+            }
+        });
     }
 }
