@@ -8,7 +8,12 @@ import java.time.format.DateTimeFormatter;
  */
 public class Util {
 
-
+    /**
+     * Is used for windows because filepath in Windows uses backslashes while both Java and MySQL uses forward slashes.
+     * Necessary to make the program platform independent.
+     * @param stringToParse
+     * @return
+     */
     public static String turnBackslashToForward(String stringToParse) {
 
         if (stringToParse.equals("") || stringToParse.equals("null") || stringToParse == null ){
@@ -20,19 +25,12 @@ public class Util {
         return stringToParse;
     }
 
-    public static String turnBackslashToForwardForFilePath(String stringToParse) {
 
-        if (stringToParse.equals("") || stringToParse.equals("null") || stringToParse == null ){
-            stringToParse = "";
-        } else {
-            stringToParse = stringToParse.replaceAll("\\\\", "/");
-        }
-
-        return stringToParse;
-    }
-
-
-
+    /**
+     * Used to avoid MySQL injections.
+     * @param stringToParse
+     * @return
+     */
     public static String escapeApostrophe(String stringToParse){
 
         if (stringToParse.equals("") || stringToParse.equals("null") || stringToParse == null ){
@@ -44,22 +42,11 @@ public class Util {
 
     }
 
-    public static String changeHyphenInDateToSlash(String stringToParse){
-
-        stringToParse = stringToParse.replace("-", "/");
-
-        return stringToParse;
-    }
-
-
-    public static LocalDate parseToLocalDate(String stringToParse){
-
-        LocalDate localDate = LocalDate.parse(stringToParse);
-
-        return localDate;
-    }
-
-
+    /**
+     * In case it might be needed.
+     * @param localDate
+     * @return
+     */
     public static String parseLocalDateToDateOnlyString(LocalDate localDate){
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM");
@@ -74,7 +61,10 @@ public class Util {
         return date;
     }
 
-
+    /**
+     * It might be necessary to check the operating system to check the hardware the program is running on.
+     * @return
+     */
     public static String checkOperatingSystem(){
 
         String operatingSystem = System.getProperty("os.name");

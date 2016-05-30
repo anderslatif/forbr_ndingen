@@ -10,6 +10,9 @@ public class PortForwardingL{
         return session;
     }
 
+    /**
+     * Creates an ssh connection to the server and passes the local port 1025 to the remote port 3306.
+     */
     public static void portForwardL() {
 
         if (session == null) {
@@ -40,6 +43,10 @@ public class PortForwardingL{
 
     }
 
+
+    /**
+     *Checks whether a connection is established and then disconnects it.
+     */
     public static void closeConnection() {
 
         if(session !=null && session.isConnected()){
@@ -51,9 +58,11 @@ public class PortForwardingL{
         }
     }
 
-    //klassen MyUserInfo
 
-    public static class MyUserInfo implements UserInfo, UIKeyboardInteractive{
+    /**
+     * Implements UserInfo and contains the credentials to connect to the Raspberry Pi.
+     */
+    public static class MyUserInfo implements UserInfo{
 
         public String getPassword(){ return passwd; }
 
@@ -77,14 +86,6 @@ public class PortForwardingL{
 
         public void showMessage(String message){
 
-        }
-
-        public String[] promptKeyboardInteractive(String destination,
-                                                  String name,
-                                                  String instruction,
-                                                  String[] prompt,
-                                                  boolean[] echo){
-            return null;
         }
     }
 }

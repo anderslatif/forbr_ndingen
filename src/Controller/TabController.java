@@ -18,7 +18,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Created by Anders on 4/26/2016.
+ * Created by Anders, Mikkel on 4/26/2016.
  */
 public class TabController {
 
@@ -31,7 +31,13 @@ public class TabController {
     public boolean justSaved = true;
 
 
-
+    /**
+     * Creates a new Controller just as we do in Layout.
+     * After the program starts we check whether the database is local or on a Raspberry Pi.
+     * @param scene
+     * @param stage
+     * @param layout
+     */
     public TabController(Scene scene, Stage stage, Layout layout){
         this.scene = scene;
         this.stage = stage;
@@ -41,10 +47,15 @@ public class TabController {
         DatabaseConnection.chooseDatabase();
     }
 
+    /**
+     * Is used for checking whether there is anything to save, if this method returns zero.
+     * @return
+     */
     public int getTabCollectionSize(){
 
         return tabCollection.size();
     }
+
 
     public TabPane getNewTabPane(){
 
@@ -60,11 +71,13 @@ public class TabController {
     }
 
     public TabPane getTabPane(){
-
         return tabPane;
     }
 
-
+    /**
+     * Creates an empty tab, along with the Dragboard.
+     * @param tabPane
+     */
     public void initializeTabController(TabPane tabPane){
 
         tabPane.setTabMinHeight(20);
@@ -77,12 +90,13 @@ public class TabController {
 
         firstTab.setContent(label);
 
+        //TabPane indexing starts at -1. This is remedied here by adding 2 to the index.
         int compensatingForStartAtMinusOne = tabPane.getSelectionModel().getSelectedIndex() + 2;
         String title = String.valueOf(compensatingForStartAtMinusOne);
         firstTab.setText(title);
         tabPane.getTabs().addAll(firstTab);
 
-        
+        //Enables the dynamic numbers on the tabs.
         tabPane.getSelectionModel().selectedItemProperty().addListener( (ov, oldTab, newTab) -> {
             int tabText = 1;
             for(Tab tab : tabPane.getTabs()){
@@ -94,7 +108,7 @@ public class TabController {
             }
         });
 
-
+        //Dragboard
         tabPane.setOnDragOver( e -> {
             Dragboard db = e.getDragboard();
             if (db.hasFiles()) {
@@ -120,7 +134,12 @@ public class TabController {
 
     }
 
-
+    /**
+     * Firstly checks the type of file that is taken as a parameter.
+     * Secondly allows dropping an image on the TabPane. Adds the image to the ImageView and sets the imagePath in the TabNode.
+     *
+     * @param file
+     */
     public void addPictureToATab(File file){
 
         justSaved = false;
@@ -197,13 +216,10 @@ public class TabController {
                 }
             }
         }
-
-
     }
 
 
     public void addPictureTab(){
-
 
         justSaved = false;
 
@@ -268,8 +284,6 @@ public class TabController {
         } else {
             image = new Image(slidePictureToCreate.getImagePath());
         }
-
-        //Image image = new Image(slidePictureToCreate.getImagePath());
 
 
         ImageView imageView = new ImageView(image);
@@ -414,8 +428,6 @@ public class TabController {
         VBox vBox = new VBox();
         vBox.getStyleClass().add("happyHourSlide");
 
-        double imageWidth = scene.getWidth();
-        double imageHeight = vBox.getHeight()/7;
         Image image = new Image("dropimage.png");
 
         TextField headerTextField = new TextField();
@@ -541,7 +553,11 @@ public class TabController {
     }
 
 
-
+    /**
+     * Gets all the TabNodes that correspond to the open tabs.
+     * @param chosenDate
+     * @param view
+     */
     public void savingPresentation(String chosenDate, Layout view){
 
 
@@ -564,7 +580,10 @@ public class TabController {
         controller.savePresentation(presentation, chosenDate, view);
     }
 
-
+    /**
+     * Creates tabs that correspond with the Slides from the database.
+     * @param presentation
+     */
     public void openPresentation(ArrayList<Slide> presentation){
 
         tabCollection.clear();

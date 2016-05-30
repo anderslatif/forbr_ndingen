@@ -11,11 +11,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by Anders on 4/15/2016.
+ * Created by Anders, Mikkel on 4/15/2016.
  */
 public class Controller {
 
-
+    /**
+     * We get the slides from the TabNode objects. We pass the chosen date and the Layout as parameters.
+     * @param tabNodePresentation
+     * @param chosenDate
+     * @param view
+     */
     public void savePresentation(ArrayList<TabNode> tabNodePresentation, String chosenDate, Layout view){
 
 
@@ -40,6 +45,12 @@ public class Controller {
         DatabaseSaveAndGet.savePresentation(slidePresentation, chosenDate, view);
     }
 
+    /**
+     * Creates a copy of a file and returns the path of the new file as a string.
+     * Is used to copy images from the local computer to a fileserver.
+     * @param filePath
+     * @return
+     */
     public String copyFileToDrive(String filePath){
 
         String tempPath = Util.turnBackslashToForward(filePath.substring(8));

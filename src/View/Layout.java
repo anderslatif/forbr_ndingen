@@ -43,7 +43,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * Created by Anders on 4/21/2016.
+ * Created by Anders, Dennis, Mikkel on 4/21/2016.
  */
 public class Layout {
 
@@ -55,7 +55,7 @@ public class Layout {
     public static boolean newPresentation = false;
 
     /**
-     * Kaldes når programmet starter for at oprette de grundlæggende objekter der udgør programmet.
+     * Transfers the variables scene and stage from Main and initializes the Controller and TabController objects.
      * @param scene
      * @param stage
      * @param layout
@@ -73,8 +73,8 @@ public class Layout {
     BorderPane borderPane;
 
     /**
-     * Opretter den borderpane som hovedvinduet i programmet er opbygget på
-     * @return
+     * Builds the BorderPane that the main window of the program runs on.
+     * @return BorderPane
      */
     public BorderPane getRootLayout(){
 
@@ -85,13 +85,12 @@ public class Layout {
         return borderPane;
     }
 
-    //bruges til at disable og enable menuitems i forbindelse med login
+
+    //used to disable and enable MenuItems when logging in and out
     public final BooleanProperty loginState = new SimpleBooleanProperty();
 
-    private final SwingNode swingNode = new SwingNode();
-
     /**
-     * Kaldes ved programstart og opretter menubaren.
+     * Is called at program launch and initializes the MenuBar.
      * @return
      */
     public MenuBar getMenuBar(){
@@ -110,7 +109,7 @@ public class Layout {
                 savePresentationConfirmation("newPresentation");
             }
         });
-        m1_1.disableProperty().bind(loginState);
+        m1_1.disableProperty().bind(loginState); //binds the booleanProperty for disabled to loginState
 
         MenuItem m1_2 = new MenuItem("Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
@@ -122,70 +121,62 @@ public class Layout {
         m1_3.setOnAction( e -> pickADate("Save"));
         m1_3.disableProperty().bind(loginState);
 
-        MenuItem m1_4 = new MenuItem("_Screensaver");
-        m1_4.setOnAction(event -> createPause(swingNode));
-
-
-        menu1.getItems().addAll(m1_1, m1_2, m1_3, m1_4);
+        menu1.getItems().addAll(m1_1, m1_2, m1_3);
 
         ///////////////////////////////////////
-        //Menu menu2 = new Menu("Events");
+        Menu menu2 = new Menu("_Add a Slide");
+
+        MenuItem m2_1 = new MenuItem("Picture slide");
+        m2_1.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN));
+        m2_1.setOnAction( e -> tabController.addPictureTab());
+        m2_1.disableProperty().bind(loginState);
+
+        MenuItem m2_2 = new MenuItem("Bar Slide");
+        m2_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
+        m2_2.setOnAction( e -> tabController.addHappyHourTab());
+        m2_2.disableProperty().bind(loginState);
+
+        MenuItem m2_3 = new MenuItem("Events");
+        m2_3.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
+        m2_3.setOnAction( e -> getEventOverview());
+        m2_3.disableProperty().bind(loginState);
 
 
-        ///////////////////////////////////////
-        Menu menu3 = new Menu("_Add a Slide");
-
-        MenuItem m3_1 = new MenuItem("Picture slide");
-        m3_1.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN));
-        m3_1.setOnAction( e -> tabController.addPictureTab());
-        m3_1.disableProperty().bind(loginState);
-
-        MenuItem m3_2 = new MenuItem("Bar Slide");
-        m3_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
-        m3_2.setOnAction( e -> tabController.addHappyHourTab());
-        m3_2.disableProperty().bind(loginState);
-
-        MenuItem m3_3 = new MenuItem("Events");
-        m3_3.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
-        m3_3.setOnAction( e -> getEventOverview());
-        m3_3.disableProperty().bind(loginState);
-
-
-        menu3.getItems().addAll(m3_1, m3_2, m3_3);
+        menu2.getItems().addAll(m2_1, m2_2, m2_3);
 
         ///////////////////////////////////////
-        Menu menu4 = new Menu("_About");
+        Menu menu3 = new Menu("_About");
 
-        MenuItem m4_1 = new MenuItem("User Manual");
-        m4_1.setOnAction( e -> showUserManual());
+        MenuItem m3_1 = new MenuItem("User Manual");
+        m3_1.setOnAction( e -> showUserManual());
 
-        MenuItem m4_2 = new MenuItem("Analyze ratio");
-        m4_2.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN));
-        m4_2.setOnAction( e -> analyzeRatio());
+        MenuItem m3_2 = new MenuItem("Analyze ratio");
+        m3_2.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN));
+        m3_2.setOnAction( e -> analyzeRatio());
 
 
-        menu4.getItems().addAll(m4_1, m4_2);
+        menu3.getItems().addAll(m3_1, m3_2);
 
         ///////////////////////////////////////
-        Menu menu5 = new Menu("User");
+        Menu menu4 = new Menu("User");
 
 
-        MenuItem m5_1 = new MenuItem("Log in");
-        m5_1.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
-        m5_1.setOnAction( event -> login.userStage(this, "login"));
+        MenuItem m4_1 = new MenuItem("Log in");
+        m4_1.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
+        m4_1.setOnAction( event -> login.userStage(this, "login"));
 
-        MenuItem m5_2 = new MenuItem("_Lock");
-        m5_2.setAccelerator(new KeyCodeCombination(KeyCode.C, KeyCombination.SHORTCUT_DOWN));
-        m5_2.setOnAction(event -> loginState.setValue(true));
+        MenuItem m4_2 = new MenuItem("_Lock");
+        m4_2.setAccelerator(new KeyCodeCombination(KeyCode.C, KeyCombination.SHORTCUT_DOWN));
+        m4_2.setOnAction(event -> loginState.setValue(true));
 
-        MenuItem m5_3 = new MenuItem("_Change username and password");
-        m5_3.setOnAction(event -> login.userStage(this, "edit"));
-        m5_3.disableProperty().bind(loginState);
+        MenuItem m4_3 = new MenuItem("_Change username and password");
+        m4_3.setOnAction(event -> login.userStage(this, "edit"));
+        m4_3.disableProperty().bind(loginState);
 
-        menu5.getItems().addAll(m5_1, m5_2, m5_3);
+        menu4.getItems().addAll(m4_1, m4_2, m4_3);
         /////////////////////////////////////////
 
-        menuBar.getMenus().addAll(menu1, menu3, menu4, menu5);
+        menuBar.getMenus().addAll(menu1, menu2, menu3, menu4);
 
         //loginState.setValue(true);
 
@@ -202,6 +193,9 @@ public class Layout {
 
     Stage eventStage;
 
+    /**
+     * The event overview shows all the events and enables you to insert them into your presentation
+     */
     public void getEventOverview(){
 
         eventStage = new Stage();
@@ -214,7 +208,10 @@ public class Layout {
         eventStage.show();
     }
 
-
+    /**
+     * Gets the event from the database and adds them to a grid. Is called in getEventOverview() above.
+     * @return
+     */
     public BorderPane getEventBorderPane(){
 
         GridPane gridPane = new GridPane();
@@ -321,8 +318,6 @@ public class Layout {
         Label label = new Label("Drop image here.");
         stackPane.getChildren().addAll(imageView, label);
         eventBorderPane.setCenter(stackPane);
-
-        //eventBorderPane.setCenter(imageView);
 
         VBox vBox2 = new VBox();
 
@@ -488,7 +483,7 @@ public class Layout {
     }
 
     /**
-     * Tjekker om præsentationen er gemt
+     * Checks if the presentation is saved. Ends with closing the program.
      */
     public void savePresentationBeforeClosingAll(){
         if(tabController.justSaved){
@@ -499,7 +494,7 @@ public class Layout {
     }
 
     /**
-     * sikrer at brugeren ikke ved et uheld lukker en aktuel præsentation uden at gemme den
+     * Ensures that the user does not accidentally close an open presentation without saving.
      * @param request
      */
     public void savePresentationConfirmation(String request){
@@ -573,7 +568,7 @@ public class Layout {
     }
 
     /**
-     * Lader brugeren vælge en dato, hvilket bruges i forbindelse med save- og load-processerne
+     * Lets the user pick a date, which is used when saving and loading presentations.
      * @param buttonText
      */
     public void pickADate(String buttonText){
@@ -585,6 +580,8 @@ public class Layout {
 
         DatePicker datePicker = new DatePicker();
 
+        // We get the dates of all the existing presentations and colorcode them differently
+        // Then we colorcode today's date differently if there is a presentation made for today
         final Callback<DatePicker, DateCell> dayCellFactory =
                 new Callback<DatePicker, DateCell>() {
                     @Override
@@ -696,7 +693,7 @@ public class Layout {
 
 
     /**
-     * Analyserer om det valgte billede har det rigtige størrelsesforhold til at blive vist på en skærm
+     * Analyzes if the chosen picture has the right size ratio to be shown on an info screen.
      */
     public void analyzeRatio(){
 
@@ -835,25 +832,4 @@ public class Layout {
 
     }
 
-    private int sizeJFrameX = 1000;
-    private int sizeJFrameY = 800;
-    public void createPause(final SwingNode swingNode) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-
-                JFrame f = new JFrame();
-                f.setSize(sizeJFrameX, sizeJFrameY);
-                f.getContentPane().setBackground(java.awt.Color.WHITE);
-                f.setVisible(true);
-                f.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                Graphics g = f.getGraphics();
-                f.update(g);
-
-                new Ball(g, 300, 40, java.awt.Color.BLUE, 60);
-                new Ball(g, 300, 40, java.awt.Color.BLACK, 60);
-                new Ball(g, 300, 40, java.awt.Color.RED, 60);
-                new Ball(g, 300, 40, java.awt.Color.GREEN, 60);
-            }
-        });
-    }
 }

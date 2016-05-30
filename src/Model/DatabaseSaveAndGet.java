@@ -9,11 +9,17 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * Created by Anders on 4/21/2016.
+ * Created by Anders, Mikkel on 4/21/2016.
  */
 public class DatabaseSaveAndGet {
 
-
+    /**
+     * Saves each slide in a row in the slides table in the database.
+     * We pass the Layout to be able to call newPresentation().
+     * @param presentation
+     * @param date
+     * @param view
+     */
     public static void savePresentation(ArrayList<Slide> presentation, String date, Layout view) {
 
         deleteSlidesWithThisDate(date);
@@ -127,6 +133,10 @@ public class DatabaseSaveAndGet {
 
     }
 
+    /**
+     * Is used for the method savePresentation() to overwrite and delete existing slides on a specific date.
+     * @param date
+     */
     public static void deleteSlidesWithThisDate(String date){
 
         Connection connection = null;
@@ -164,6 +174,12 @@ public class DatabaseSaveAndGet {
     }
 
 
+    /**
+     * Check if slides are already saved on this date to warn users who select a date with datepicker.
+     * The warning appears before the save or open button is clicked.
+     * @param date
+     * @return
+     */
     public static boolean checkIfSlidesAreAlreadySavedOnThisDate(String date){
 
         Connection connection = null;
@@ -215,7 +231,11 @@ public class DatabaseSaveAndGet {
     }
 
 
-
+    /**
+     * Opens the presentation from the selected date.
+     * @param date
+     * @return
+     */
     public static ArrayList<Slide> openPresentation(String date){
 
         ArrayList<Slide> presentation = new ArrayList<>();
@@ -259,6 +279,12 @@ public class DatabaseSaveAndGet {
 
     }
 
+    /**
+     * This aids openPresentation() with creating Slide objects from the ResultSet.
+     * @param resultSet
+     * @param date
+     * @return
+     */
     public static ArrayList<Slide> resultSetToArrayList(ResultSet resultSet, String date){
         ArrayList<Slide> presentation = new ArrayList<>();
 
@@ -317,7 +343,11 @@ public class DatabaseSaveAndGet {
     }
 
 
-
+    /**
+     * Loads all events starting from today's date.
+     * Orders them chronologically with Collections.sort().
+     * @return
+     */
     public static ArrayList<SlideEvent> loadAllEvents(){
 
         Connection connection = null;
@@ -407,9 +437,10 @@ public class DatabaseSaveAndGet {
     }
 
 
-
-
-
+    /**
+     * Saves new event Slide. Takes one newly created event.
+     * @param slideEvent
+     */
     public static void saveNewEventSlide(SlideEvent slideEvent){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -462,6 +493,10 @@ public class DatabaseSaveAndGet {
     }
 
 
+    /**
+     * Deletes an event from the event overview.
+     * @param slideEvent
+     */
     public static void deleteEventSlide(SlideEvent slideEvent){
 
         Connection connection = null;
@@ -503,6 +538,10 @@ public class DatabaseSaveAndGet {
     }
 
 
+    /**
+     * Used for colour coding dates in the DatePicker. Returns an ArrayList of unique dates where slides exist.
+     * @return
+     */
     public static ArrayList<LocalDate> getPresentationDates(){
 
         Connection connection = null;

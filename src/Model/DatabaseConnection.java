@@ -4,11 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 /**
- * Created by Anders on 4/21/2016.
+ * Created by Anders, Mikkel on 4/21/2016.
  */
 public class DatabaseConnection {
 
-    private static int iPort = 3306; // ændres til 1025, hvis der skal forbindes til Raspberry.
+    private static int iPort = 3306; // Changes to 1025, if it is connecting to the Raspberry.
+
 
     public static Connection getConnection(){
         Connection connection = null;
@@ -27,9 +28,12 @@ public class DatabaseConnection {
         }
 
         return connection;
-
     }
 
+
+    /**
+     *Is called during launch and checks whether there is a connection to the Raspberry Pi or not.
+     */
     public static void chooseDatabase(){
 
         PortForwardingL.portForwardL();

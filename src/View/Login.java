@@ -27,7 +27,7 @@ public class Login{
     private String userName;
 
     /**
-     * Tjekker om brugeren vil logge ind eller skifte brugernavn og password
+     * Checks whether the user wants to log in or change username and password.
      * @param layout
      * @param id
      */
@@ -47,7 +47,7 @@ public class Login{
     }
 
     /**
-     * Opretter login-vinduet
+     * Creates the login-window
      * @param layout
      * @return
      */
@@ -79,7 +79,7 @@ public class Login{
     }
 
     /**
-     * Tjekker i databasen om loginnet er korrekt
+     * Checks in the database whether the login is correct.
      * @param layout
      */
     public void loginAttempt(Layout layout){
@@ -121,7 +121,7 @@ public class Login{
     }
 
     /**
-     * Opretter vinduet til at ændre brugernavn og password
+     * Creates the window to change the username and password.
      * @return
      */
     public GridPane changeUsernameAndPassword(){
@@ -151,7 +151,7 @@ public class Login{
     }
 
     /**
-     * opdaterer brugernavn og password i databasen
+     * Updates the username and password in the database.
      */
     public void changeAttempt(){
 
