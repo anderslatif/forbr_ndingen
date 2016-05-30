@@ -1,6 +1,7 @@
 package view;
 
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import model.DatabaseConnection;
 import javafx.geometry.Insets;
@@ -22,7 +23,7 @@ public class Login{
     private TextField text1;
     private TextField text2;
     private TextField user;
-    private TextField pass;
+    private PasswordField pass;
     private Stage loginStage;
     private String userName;
 
@@ -63,7 +64,7 @@ public class Login{
 
         Label label2 = new Label("Password");
         label2.setPadding(new Insets(0, 10, 0, 0));
-        text2 = new TextField();
+        text2 = new PasswordField();
 
         Button button = new Button("Go");
 
@@ -133,10 +134,13 @@ public class Login{
 
 
         Label label1 = new Label("New user name");
+        label1.setPadding(new Insets(0, 10, 0, 0));
+
         user = new TextField();
 
         Label label2 = new Label("New password");
-        pass = new TextField();
+        label2.setPadding(new Insets(0, 10, 0, 0));
+        pass = new PasswordField();
 
         Button button = new Button("Go");
         button.setOnAction( e -> changeAttempt());
