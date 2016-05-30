@@ -40,16 +40,16 @@ public class PortForwardingL{
 
     }
 
-        public static void closeConnection() {
+    public static void closeConnection() {
 
-                if(session !=null && session.isConnected()){
-                    session.disconnect();
-                    session = null;
-                    System.out.println("disconnecting session");
-                } else {
-                    System.out.println("no connection to disconnect");
-                }
+        if(session !=null && session.isConnected()){
+            session.disconnect();
+            session = null;
+            System.out.println("disconnecting session");
+        } else {
+            System.out.println("no connection to disconnect");
         }
+    }
 
     //klassen MyUserInfo
 

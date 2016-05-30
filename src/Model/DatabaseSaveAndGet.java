@@ -127,13 +127,13 @@ public class DatabaseSaveAndGet {
     public static void deleteSlidesWithThisDate(String date){
 
         Connection connection = null;
-        Statement statement = null;
+        PreparedStatement statement = null;
         String sqlQuery = "DELETE FROM slides WHERE slide_date = '"+date+"';";
 
         try {
             connection = DatabaseConnection.getConnection();
-            statement = connection.createStatement();
-            statement.executeUpdate(sqlQuery);
+            statement = connection.prepareStatement(sqlQuery);
+            statement.executeUpdate();
 
 
         } catch (Exception e) {
