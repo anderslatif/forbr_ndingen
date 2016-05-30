@@ -285,7 +285,10 @@ public class TabController {
             image = new Image(slidePictureToCreate.getImagePath());
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0c0a7fe5889c155224f7fb0d6d5e75557be8395c
         ImageView imageView = new ImageView(image);
         imageView.fitWidthProperty().bind(stage.widthProperty());
         imageView.fitHeightProperty().bind(stage.heightProperty());
@@ -495,57 +498,58 @@ public class TabController {
         VBox vBox = new VBox();
         vBox.getStyleClass().add("happyHourSlide");
 
-        TextField headerTextField;
+        TextField headerTextField = new TextField();
         if (happyHourSlide.getHeader().equals("null") || happyHourSlide.getHeader() == null) {
-            headerTextField = new TextField();
+            headerTextField.setPromptText("Type the header here...");
         } else {
-            headerTextField = new TextField(happyHourSlide.getHeader());
+            headerTextField.setText(happyHourSlide.getHeader());
         }
         headerTextField.getStyleClass().add("header");
         headerTextField.setOpacity(0.8);
-        headerTextField.setPromptText("Type the header here...");
 
 
         Image image;
+
         if (happyHourSlide.getImagePath().equals("") || happyHourSlide.getImagePath().equals("null") || happyHourSlide.getImagePath() == null){
             image = new Image("Empty.png");
             happyHourSlide.setImagePath("file:///Empty.png");
         } else {
+            //path ok her
             image = new Image(happyHourSlide.getImagePath());
         }
 
-        ImageView imageView = new ImageView();
-        imageView.setImage(image);
+        ImageView imageView = new ImageView(image);
+
         imageView.fitHeightProperty().bind(vBox.heightProperty().divide(3));
         imageView.fitWidthProperty().bind(vBox.widthProperty().subtract(10));
 
         TextArea textTextArea;
-        if (happyHourSlide.getText().equals("null") || happyHourSlide.getText() != null){
+        if (happyHourSlide.getText().equals("null") || happyHourSlide.getText() == null){
             textTextArea = new TextArea();
+            textTextArea.setPromptText("Type more text here...");
         } else {
             textTextArea = new TextArea(happyHourSlide.getText());
         }
         textTextArea.setOpacity(0.8);
         textTextArea.getStyleClass().add("text_area");
-        textTextArea.setPromptText("Type more text here...");
 
-        SlideHappyHour slideHappyHour = new SlideHappyHour();
-        slideHappyHour.setSlideType("SlideHappyHour");
+
+
         headerTextField.textProperty().addListener( e -> {
-            slideHappyHour.setHeader(headerTextField.getText());
+            happyHourSlide.setHeader(headerTextField.getText());
             justSaved = false;
         });
         textTextArea.textProperty().addListener( e -> {
-            slideHappyHour.setText(textTextArea.getText());
+            happyHourSlide.setText(textTextArea.getText());
             justSaved = false;
         });
 
 
         vBox.getChildren().addAll(headerTextField, imageView, textTextArea);
 
+        TabNodeHappyHour tabNodeHappyHour = new TabNodeHappyHour(vBox, imageView, happyHourSlide);
+        System.out.println("tabnodes path "+tabNodeHappyHour.getSlide().getImagePath());
 
-
-        TabNodeHappyHour tabNodeHappyHour = new TabNodeHappyHour(vBox, imageView, slideHappyHour);
         tabCollection.add(tabNodeHappyHour);
 
         tab.setContent(vBox);

@@ -670,6 +670,7 @@ public class Layout {
                 if(buttonText.equals("Open") || buttonText.equals("Open...")) {
                     newPresentation();
                     ArrayList<Slide> presentation = DatabaseSaveAndGet.openPresentation(datePicker.getValue().toString());
+
                     tabController.openPresentation(presentation);
                 }
 

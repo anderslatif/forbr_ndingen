@@ -324,7 +324,6 @@ public class DatabaseSaveAndGet {
                         String hImagePath = ""+resultSet.getString("image_path");
 
                         SlideHappyHour sh = new SlideHappyHour("SlideHappyHour", hHeader, hText, hImagePath);
-
                         presentation.add(sh);
 
                         break;
