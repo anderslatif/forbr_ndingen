@@ -285,10 +285,6 @@ public class TabController {
             image = new Image(slidePictureToCreate.getImagePath());
         }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 0c0a7fe5889c155224f7fb0d6d5e75557be8395c
         ImageView imageView = new ImageView(image);
         imageView.fitWidthProperty().bind(stage.widthProperty());
         imageView.fitHeightProperty().bind(stage.heightProperty());
