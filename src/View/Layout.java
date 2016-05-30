@@ -2,7 +2,16 @@ package view;
 
 import controller.Controller;
 import controller.TabController;
-import javafx.event.ActionEvent;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.embed.swing.SwingNode;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.util.Callback;
 import model.DatabaseSaveAndGet;
@@ -27,10 +36,11 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Anders on 4/21/2016.
@@ -44,6 +54,12 @@ public class Layout {
     private Login login = new Login();
     public static boolean newPresentation = false;
 
+    /**
+     * Kaldes når programmet starter for at oprette de grundlæggende objekter der udgør programmet.
+     * @param scene
+     * @param stage
+     * @param layout
+     */
     public void initializeLayout(Scene scene, Stage stage, Layout layout){
         this.scene = scene;
         this.stage = stage;
@@ -56,6 +72,10 @@ public class Layout {
 
     BorderPane borderPane;
 
+    /**
+     * Opretter den borderpane som hovedvinduet i programmet er opbygget på
+     * @return
+     */
     public BorderPane getRootLayout(){
 
         borderPane = new BorderPane();
@@ -65,17 +85,23 @@ public class Layout {
         return borderPane;
     }
 
-    Menu menu1; Menu menu3; Menu menu4; Menu menu5;
-    MenuItem m1_1;MenuItem m1_2; MenuItem m1_3;
-    MenuItem m3_1;MenuItem m3_2; MenuItem m3_3;
+    //bruges til at disable og enable menuitems i forbindelse med login
+    public final BooleanProperty loginState = new SimpleBooleanProperty();
 
+    private final SwingNode swingNode = new SwingNode();
+
+    /**
+     * Kaldes ved programstart og opretter menubaren.
+     * @return
+     */
     public MenuBar getMenuBar(){
         MenuBar menuBar = new MenuBar();
 
-        ///////////////////////////////////////
-        menu1 = new Menu("File");
 
-        m1_1 = new MenuItem("_New Presentation");
+        ///////////////////////////////////////
+        Menu menu1 = new Menu("_File");
+
+        MenuItem m1_1 = new MenuItem("_New Presentation");
         m1_1.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
         m1_1.setOnAction( e -> {
             if(tabController.justSaved){
@@ -84,43 +110,51 @@ public class Layout {
                 savePresentationConfirmation("newPresentation");
             }
         });
+        m1_1.disableProperty().bind(loginState);
 
-        m1_2 = new MenuItem("_Open");
+        MenuItem m1_2 = new MenuItem("Open");
         m1_2.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         m1_2.setOnAction( e -> pickADate("Open"));
+        m1_2.disableProperty().bind(loginState);
 
-        m1_3 = new MenuItem("_Save");
+        MenuItem m1_3 = new MenuItem("_Save");
         m1_3.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
         m1_3.setOnAction( e -> pickADate("Save"));
+        m1_3.disableProperty().bind(loginState);
+
+        MenuItem m1_4 = new MenuItem("_Screensaver");
+        m1_4.setOnAction(event -> createPause(swingNode));
 
 
-
-        menu1.getItems().addAll(m1_1, m1_2, m1_3);
+        menu1.getItems().addAll(m1_1, m1_2, m1_3, m1_4);
 
         ///////////////////////////////////////
         //Menu menu2 = new Menu("Events");
 
 
         ///////////////////////////////////////
-        menu3 = new Menu("Add a Slide");
+        Menu menu3 = new Menu("_Add a Slide");
 
-        m3_1 = new MenuItem("_Picture slide");
+        MenuItem m3_1 = new MenuItem("Picture slide");
         m3_1.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN));
         m3_1.setOnAction( e -> tabController.addPictureTab());
+        m3_1.disableProperty().bind(loginState);
 
-        m3_2 = new MenuItem("_Bar Slide");
+        MenuItem m3_2 = new MenuItem("Bar Slide");
         m3_2.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
         m3_2.setOnAction( e -> tabController.addHappyHourTab());
+        m3_2.disableProperty().bind(loginState);
 
-        m3_3 = new MenuItem("_Events");
+        MenuItem m3_3 = new MenuItem("Events");
         m3_3.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN));
         m3_3.setOnAction( e -> getEventOverview());
+        m3_3.disableProperty().bind(loginState);
 
 
         menu3.getItems().addAll(m3_1, m3_2, m3_3);
 
         ///////////////////////////////////////
-        menu4 = new Menu("About");
+        Menu menu4 = new Menu("_About");
 
         MenuItem m4_1 = new MenuItem("User Manual");
         m4_1.setOnAction( e -> showUserManual());
@@ -133,25 +167,30 @@ public class Layout {
         menu4.getItems().addAll(m4_1, m4_2);
 
         ///////////////////////////////////////
-         menu5 = new Menu("Log In");
+        Menu menu5 = new Menu("User");
 
-        MenuItem m5_1 = new MenuItem("_Log in");
+
+        MenuItem m5_1 = new MenuItem("Log in");
         m5_1.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
-        m5_1.setOnAction( event -> login.logIn(this));
+        m5_1.setOnAction( event -> login.userStage(this, "login"));
 
-        MenuItem m5_2 = new MenuItem("_Check login");
-        m5_2.setOnAction(event -> login.accessAllowed());
+        MenuItem m5_2 = new MenuItem("_Lock");
+        m5_2.setAccelerator(new KeyCodeCombination(KeyCode.C, KeyCombination.SHORTCUT_DOWN));
+        m5_2.setOnAction(event -> loginState.setValue(true));
 
-        menu5.getItems().addAll(m5_1, m5_2);
+        MenuItem m5_3 = new MenuItem("_Change username and password");
+        m5_3.setOnAction(event -> login.userStage(this, "edit"));
+        m5_3.disableProperty().bind(loginState);
+
+        menu5.getItems().addAll(m5_1, m5_2, m5_3);
         /////////////////////////////////////////
 
         menuBar.getMenus().addAll(menu1, menu3, menu4, menu5);
 
+        //loginState.setValue(true);
 
         return menuBar;
     }
-
-
 
 
     public void newPresentation(){
@@ -362,16 +401,17 @@ public class Layout {
 
 
         TreeItem treeItem1 = new TreeItem("Velkommen");
-        TreeItem treeItem2 = new TreeItem("Event Oversigten");
+        TreeItem treeItem2 = new TreeItem("Eventoversigten");
         TreeItem treeItem3 = new TreeItem("Event Slides");
         TreeItem treeItem4 = new TreeItem("Picture Slides");
         TreeItem treeItem5 = new TreeItem("Bar Tilbud Slides");
-        TreeItem treeItem6 = new TreeItem("Om Præsentationer");
-        TreeItem treeItem7 = new TreeItem("Raspberry Pi");
-        TreeItem treeItem8 = new TreeItem("Andet");
+        TreeItem treeItem6 = new TreeItem("Ratio");
+        TreeItem treeItem7 = new TreeItem("Om Præsentationer");
+        TreeItem treeItem8 = new TreeItem("Raspberry Pi");
+        TreeItem treeItem9 = new TreeItem("Andet");
 
 
-        root.getChildren().addAll(treeItem1, treeItem2, treeItem3, treeItem4, treeItem5, treeItem6, treeItem7, treeItem8);
+        root.getChildren().addAll(treeItem1, treeItem2, treeItem3, treeItem4, treeItem5, treeItem6, treeItem7, treeItem8, treeItem9);
 
         TreeView<String> treeView = new TreeView<>(root);
         treeView.setShowRoot(false);
@@ -402,17 +442,23 @@ public class Layout {
                 display += "Hvis intet billede ønskes, så indsæt en png fil med usynlig baggrund.\n\n";
                 display += "Vær dog opmærksom på, at hvis et event bliver oprettet uden komplet information skal informationen tilføjes senere i præsentationen hver eneste gang.\n";
                 display += "Alternativet er at slette eventet i oversigten og genoprette det.\n\n";
-                display += "Vi håber ikke, at det ikke er for besværligt. Vi anbefaler først at oprette events, når al information og billedet er klar. ";
+                display += "Vi håber ikke, at det er for besværligt. Vi anbefaler først at oprette events, når al information og billedet er klar. ";
                 textArea.setText(display);
             } else if(selectedItem.getValue().equals("Picture Slides")){
                 display = "Picture slides er simpelthen ethvert billede der droppes på programmet.\n\n";
                 display += "Billedet vil fylde hele skærmen, så vælg et billede der har den korrekte ratio. Bredden skal være Højden divideret med 1,5.";
                 textArea.setText(display);
             } else if(selectedItem.getValue().equals("Bar Tilbud Slides")){
-                display = "Et bar tilbud slide består af en header, et billede og noget tekst.\n\n";
+                display = "Et bartilbud slide består af en header, et billede og noget tekst.\n\n";
                 display += "Det er muligt ikke at tilføje et billede til et bar tilbud slide og den sorte baggrund vil så vises i stedet.\n\n";
-                display += "Alle slides må selvfølgelig gerne bruges til andre formål en deres navne. ";
-                display += "Faktisk er Bar Tilbud slidet oplagt at bruge til andre ting med samme format.";
+                display += "Alle slides må selvfølgelig gerne bruges til andre formål end deres navne. ";
+                display += "Faktisk er Bartilbud slidet oplagt at bruge til andre ting med samme format.";
+                textArea.setText(display);
+            } else if(selectedItem.getValue().equals("Ratio")){
+                display = "Display programmet forventes at køre på aspect ratio 16:9. \n\nPicture slides billedet bør opfylde dette størrelsesforhold. " +
+                        "For Event slides og Bar slides burde de være 3 gange mindre høje: dvs. (16 divideret med 3) divideret med 9.\n\n\n" +
+                        "Det er ret besværligt at holde styr på. Derfor er det muligt at læggge et billede på og vælge Analyze ratio i menupunktet About.\n\n" +
+                        "Analyze ratio vil fortælle præcist hvor mange pixels i den ene eller den anden retning der er for meget.";
                 textArea.setText(display);
             } else if(selectedItem.getValue().equals("Om Præsentationer")){
                 display = "En præsentation er en samling af slides, der gemmes under en bestemt dato.\n\n";
@@ -441,15 +487,21 @@ public class Layout {
         userManualStage.show();
     }
 
-
+    /**
+     * Tjekker om præsentationen er gemt
+     */
     public void savePresentationBeforeClosingAll(){
         if(tabController.justSaved){
-            stage.close();
+            System.exit(0);
         } else {
             savePresentationConfirmation("closeAll");
         }
     }
 
+    /**
+     * sikrer at brugeren ikke ved et uheld lukker en aktuel præsentation uden at gemme den
+     * @param request
+     */
     public void savePresentationConfirmation(String request){
 
         GridPane gridPane = new GridPane();
@@ -497,11 +549,10 @@ public class Layout {
                 button1.setOnAction(e -> {
                     pickADate("Save");
                     savePresentationStage.close();
-                    stage.close();
                 });
                 button2.setOnAction(e -> {
                     savePresentationStage.close();
-                    stage.close();
+                    System.exit(0);
                 });
                 button3.setOnAction(e -> savePresentationStage.close());
             } else if(request.equals("saveAndOpen")){
@@ -521,10 +572,14 @@ public class Layout {
         savePresentationStage.show();
     }
 
+    /**
+     * Lader brugeren vælge en dato, hvilket bruges i forbindelse med save- og load-processerne
+     * @param buttonText
+     */
     public void pickADate(String buttonText){
 
         if(buttonText.equals("Save") && tabController.getTabCollectionSize() == 0){
-            UserMessage.setBottomLabelMessage("You have nothing to save.");
+            UserMessage.setBottomLabelMessage("You have nothing to save.", "Error");
             return;
         }
 
@@ -540,7 +595,11 @@ public class Layout {
                                 for(LocalDate localDate : DatabaseSaveAndGet.getPresentationDates()){
                                     super.updateItem(item, empty);
                                     if(item.equals(localDate)){
-                                        setStyle("-fx-background-color: #00cc00;");
+                                        if(localDate.equals(LocalDate.now())){
+                                            setStyle("-fx-background-color: #007a00;");
+                                        } else {
+                                            setStyle("-fx-background-color: #00cc00;");
+                                        }
                                     }
                                 }
                             }
@@ -553,7 +612,9 @@ public class Layout {
         warningLabel.setFont(Font.font("bold"));
         warningLabel.setTextFill(Color.RED);
 
-        Label label = new Label("Choose date:");
+        Label label = new Label("Choose a date:");
+        label.setMaxWidth(Double.MAX_VALUE);
+        label.setAlignment(Pos.CENTER_RIGHT);
 
         Button saveBut = new Button();
         saveBut.setText(buttonText);
@@ -622,14 +683,22 @@ public class Layout {
 
                 saveStage.close();
 
+            } else {
+                    warningLabel.setText("Please use the calendar\nto select a valid date");
+                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(10000), warningLabel);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.play();
+
             }
         });
     }
 
 
-
-
-    public void analyzeRatio(){  // this is pure nonsense
+    /**
+     * Analyserer om det valgte billede har det rigtige størrelsesforhold til at blive vist på en skærm
+     */
+    public void analyzeRatio(){
 
         TabPane tabPane = tabController.getTabPane();
 
@@ -644,19 +713,31 @@ public class Layout {
             if(currentImageView.getImage() == null){
                 return;
             } else {
+                image = currentImageView.getImage();
             }
-            image = currentImageView.getImage();
 
-            double ratio = image.getHeight() / image.getWidth();
+            float width = (float) image.getWidth();
+            float height = (float) image.getHeight();
+            float ratio = height / width;
+            float perfectRatio = 16/9f;
 
-            if(ratio == 1.5){
-                UserMessage.setBottomLabelMessage("perfect ratio");
-            } else if(ratio < 1.5){
-                ratio = ratio - 1.5;
-                UserMessage.setBottomLabelMessage("Your image is " + ratio + " too wide");
-            } else if(ratio > 1.5){
-                ratio = ratio - 1.5;
-                UserMessage.setBottomLabelMessage("Your image is " + ratio + " too high");
+
+            if(ratio > 1.777777777777776 && ratio < 1.7777777777778){
+                UserMessage.setBottomLabelMessage("Perfect Ratio!", "Info");
+            } else if(ratio < 1.77777){
+                float difference = width - (height / perfectRatio);
+                if(difference <= 1){
+                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too wide.", "Info");
+                } else {
+                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too wide.", "Info");
+                }
+            } else if(ratio > 1.77777){
+                float difference = height - (width * perfectRatio);
+                if(difference <= 1){
+                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too high.", "Info");
+                } else {
+                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too high.", "Info");
+                }
             }
 
 
@@ -678,15 +759,30 @@ public class Layout {
                     }
 
 
-                    double prefHeight = vBox.getHeight() / 4;
-                    double prefWidth = vBox.getWidth();
-                    double actualHeight = image.getHeight();
-                    double actualWidth = image.getWidth();
-                    double differenceHeight = prefHeight - actualHeight;
-                    double differenceWidth = prefWidth - actualWidth;
+                    float width = (float) image.getWidth();
+                    float height = (float) image.getHeight();
+                    float ratio = height / width;
+                    float theThirdOfHeight = 16/3f;
+                    float perfectRatio = theThirdOfHeight/9f;
 
-                    System.out.println("The height is " + differenceHeight + " off the mark.");
-                    System.out.println("Your width is " + differenceWidth + " off the mark.");
+
+                    if(ratio > 0.590 && ratio < 0.599){
+                        UserMessage.setBottomLabelMessage("Perfect ratio.", "Info");
+                    } else if(ratio < 0.599){
+                        float difference = width - (height / perfectRatio);
+                        if(difference <= 1){
+                            UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too wide.", "Info");
+                        } else {
+                            UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too wide.", "Info");
+                        }
+                    } else if(ratio > 0.599){
+                        float difference = height - (width * perfectRatio);
+                        if(difference <= 1){
+                            UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too high.", "Info");
+                        } else {
+                            UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too high.", "Info");
+                        }
+                    }
 
 
                 } else if (node instanceof  javafx.scene.layout.VBox){
@@ -704,6 +800,31 @@ public class Layout {
                                 image = currentImageView.getImage();
                             }
 
+                            float width = (float) image.getWidth();
+                            float height = (float) image.getHeight();
+                            float ratio = height / width;
+                            float theThirdOfHeight = 16/3f;
+                            float perfectRatio = theThirdOfHeight/9f;
+
+
+                            if(ratio > 0.590 && ratio < 0.599){
+                                UserMessage.setBottomLabelMessage("Perfect ratio.", "Info");
+                            } else if(ratio < 0.599){
+                                float difference = width - (height / perfectRatio);
+                                if(difference <= 1){
+                                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too wide.", "Info");
+                                } else {
+                                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too wide.", "Info");
+                                }
+                            } else if(ratio > 0.599){
+                                float difference = height - (width * perfectRatio);
+                                if(difference <= 1){
+                                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixel too high.", "Info");
+                                } else {
+                                    UserMessage.setBottomLabelMessage("Your image is " + difference + " pixels too high.", "Info");
+                                }
+                            }
+
                         }
                     }
 
@@ -714,16 +835,25 @@ public class Layout {
 
     }
 
-    public void undisableMenus(){
-        m1_1.setDisable(false); m1_2.setDisable(false); m1_3.setDisable(false);
-        m3_1.setDisable(false); m3_2.setDisable(false); m3_3.setDisable(false);
-        System.out.println("undisabled!");
-        System.out.println(m1_1.isDisable());
-        System.out.println(m1_2.isDisable());
-        System.out.println(m1_3.isDisable());
-        System.out.println(m3_1.isDisable());
-        System.out.println(m3_2.isDisable());
-        System.out.println(m3_3.isDisable());
-    }
+    private int sizeJFrameX = 1000;
+    private int sizeJFrameY = 800;
+    public void createPause(final SwingNode swingNode) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
 
+                JFrame f = new JFrame();
+                f.setSize(sizeJFrameX, sizeJFrameY);
+                f.getContentPane().setBackground(java.awt.Color.WHITE);
+                f.setVisible(true);
+                f.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                Graphics g = f.getGraphics();
+                f.update(g);
+
+                new Ball(g, 300, 40, java.awt.Color.BLUE, 60);
+                new Ball(g, 300, 40, java.awt.Color.BLACK, 60);
+                new Ball(g, 300, 40, java.awt.Color.RED, 60);
+                new Ball(g, 300, 40, java.awt.Color.GREEN, 60);
+            }
+        });
+    }
 }

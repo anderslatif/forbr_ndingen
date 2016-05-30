@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 import view.Layout;
+import view.UserMessage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,11 +14,6 @@ import java.util.ArrayList;
  * Created by Anders on 4/15/2016.
  */
 public class Controller {
-
-
-    public void saveNewSlideEventToDB(SlideEvent slideEvent){
-        DatabaseSaveAndGet.saveNewEventSlide(slideEvent);
-    }
 
 
     public void savePresentation(ArrayList<TabNode> tabNodePresentation, String chosenDate, Layout view){
@@ -64,6 +60,7 @@ public class Controller {
             }
 
         } catch (IOException e){
+            UserMessage.setBottomLabelMessage("Error while copying a file to the new folder.", "Error");
             e.printStackTrace();
 
         }finally {
@@ -76,6 +73,7 @@ public class Controller {
                     out.close();
                 }
             } catch (IOException e){
+                UserMessage.setBottomLabelMessage("Error. Could not abort file copying operation correctly.", "Error");
                 e.printStackTrace();
             }
 
@@ -90,10 +88,13 @@ public class Controller {
     }
 
 
+    public void saveNewSlideEventToDB(SlideEvent slideEvent){
+        DatabaseSaveAndGet.saveNewEventSlide(slideEvent);
+    }
+
+
     public void deleteEvent(SlideEvent slideEvent){
-
         DatabaseSaveAndGet.deleteEventSlide(slideEvent);
-
     }
 
 
