@@ -42,16 +42,25 @@ public class Controller {
 
     public String copyFileToDrive(String filePath){
 
+        System.out.println(filePath);
+
         String tempPath = Util.turnBackslashToForward(filePath.substring(8));
+
+        System.out.println(tempPath);
 
         File file = new File(tempPath);
 
         FileInputStream in = null;
         FileOutputStream out = null;
 
+        //String fileToLookFor = "FileServer/"+Util.turnBackslashToForward(file.getName());
+
+        //if(file.exists()){}
+
         try{
             in = new FileInputStream(tempPath);
             out = new FileOutputStream("FileServer/"+Util.turnBackslashToForward(file.getName())); //end-point
+
             int myByte;
 
             //while Loop - Kører så længe inputted ikke er -1

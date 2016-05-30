@@ -1,7 +1,9 @@
 package model;
 import com.jcraft.jsch.*;
 
-
+/**
+ * Created by Mikkel on 26/05/2016. With help and inspiration from the JCraft Tutorial.
+ */
 public class PortForwardingL{
 
     private static Session session = null;
@@ -14,28 +16,28 @@ public class PortForwardingL{
 
         if (session == null) {
 
-            int lport = 1025;
-            String rhost = "localhost";
-            int rport = 3306;
-            String user = "pi";
-            String host = "192.168.43.65";
+                int lport = 1025;
+                String rhost = "localhost";
+                int rport = 3306;
+                String user = "pi";
+                String host = "192.168.43.65";
 
-            try {
-                JSch jsch = new JSch();
+                try {
+                    JSch jsch = new JSch();
 
-                session = jsch.getSession(user, host, 22);
+                    session = jsch.getSession(user, host, 22);
 
-                // username and password will be given via UserInfo interface.
-                UserInfo ui = new MyUserInfo();
-                session.setUserInfo(ui);
+                    // username and password will be given via UserInfo interface.
+                    UserInfo ui = new MyUserInfo();
+                    session.setUserInfo(ui);
 
-                session.connect(4000);
+                    session.connect(4000);
 
-                int assigned_port = session.setPortForwardingL(lport, rhost, rport);
-                System.out.println("localhost:" + assigned_port + " -> " + rhost + ":" + rport);
-            } catch (JSchException e) {
-                System.out.println(e);
-            }
+                    int assigned_port = session.setPortForwardingL(lport, rhost, rport);
+                    System.out.println("localhost:" + assigned_port + " -> " + rhost + ":" + rport);
+                } catch (JSchException e) {
+                    System.out.println(e);
+                }
         }
 
     }
