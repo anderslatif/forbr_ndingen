@@ -57,10 +57,12 @@ public class Login{
         gridPane.setPadding(new Insets(20, 20, 20, 20));
 
 
-        Label label1 = new Label("User name");
+        Label label1 = new Label("Username");
+        label1.setPadding(new Insets(0, 10, 0, 0));
         text1 = new TextField();
 
         Label label2 = new Label("Password");
+        label2.setPadding(new Insets(0, 10, 0, 0));
         text2 = new TextField();
 
         Button button = new Button("Go");
