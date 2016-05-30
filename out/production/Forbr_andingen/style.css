@@ -1,6 +1,6 @@
 @font-face {
     font-family: Contribute;
-    src: url('fonts/Contribute_Playtype.otf');
+    src: url('fonts/Contribute_Playtype.otf');  /* This is Forbrændingens font */
 }
 
 .root{
@@ -11,7 +11,7 @@
 
 .eventSlide{
 
-    -fx-background-image: url("background.png");
+    -fx-background-image: url("background.png"); /* This is the background we have created with Forbrændingens logo at the bottom right */
     -fx-background-size: stretch;
 }
 
@@ -40,7 +40,7 @@
 
 .bottomLabel{
     font-family: ContributeBold;
-    src: url('fonts/Contribute_Bold.otf');
+    src: url('fonts/Contribute_Bold.otf'); /* This is Forbrændingens font in bold */
     -fx-font-family: ContributeBold;
     -fx-font-size: 18px;
 }
