@@ -610,7 +610,7 @@ public class Layout {
         warningLabel.setTextFill(Color.RED);
 
         Label label = new Label("Choose a date:");
-        
+
         Button saveBut = new Button();
         saveBut.setText(buttonText);
         saveBut.setMinWidth(85);

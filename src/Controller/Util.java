@@ -62,8 +62,7 @@ public class Util {
     }
 
     /**
-     * It might be necessary to check the operating system to check the hardware the program is running on.
-     * @return
+     * It might be necessary to check the operating system to check the hardware the program is running on.     * @return
      */
     public static String checkOperatingSystem(){
 
