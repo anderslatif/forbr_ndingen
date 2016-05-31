@@ -86,6 +86,11 @@ public class Controller {
 
     }
 
+    /**
+     * This is to write a file to the Fileserver that isn't there yet.
+     * @param filePath
+     * @return
+     */
     private String singleIO(String filePath){
 
         FileInputStream in = null;
@@ -127,6 +132,12 @@ public class Controller {
        return destination;
     }
 
+    /**
+     * This is in case a different file with the same name is already on the Fileserver.
+     * Since we can't read and write to the file at the sam time we have to write the file to a temp file and then write it back.
+     * @param filePath
+     * @return
+     */
     private String doubleIO(String filePath){
 
         FileInputStream in = null;
@@ -203,15 +214,6 @@ public class Controller {
 
         return destination;
     }
-
-/*    private boolean checkIfExactFileExists(File file, String filePath){
-
-        *//*file.exists()
-        filePath = FileServer
-
-        if()*//*
-
-    }*/
 
 
     public void saveNewSlideEventToDB(SlideEvent slideEvent){

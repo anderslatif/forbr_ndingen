@@ -19,3 +19,4 @@ Til underviserne: Vores program tjekker om den kan oprette forbindelse til Raspb
 
 Ved opstart af Raspberry Pi’en, så starter display programmet automatisk på TV skærmen og henter dagens præsentation. For at køre hovedprogrammet skal der blot dobbelt-klikkes på den leverede jar fil.
 
+For de to programmer i mapperne Out/JavaDoc eksisterer en index.html fil. Den kan åbnes i enhver browser for at finde kodedokumentation. 
