@@ -54,9 +54,6 @@ public class PortForwardingL{
         if(session !=null && session.isConnected()){
             session.disconnect();
             session = null;
-            System.out.println("disconnecting session");
-        } else {
-            System.out.println("no connection to disconnect");
         }
     }
 

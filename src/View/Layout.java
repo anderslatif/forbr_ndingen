@@ -441,7 +441,7 @@ public class Layout {
                 textArea.setText(display);
             } else if(selectedItem.getValue().equals("Picture Slides")){
                 display = "Picture slides er simpelthen ethvert billede der droppes på programmet.\n\n";
-                display += "Billedet vil fylde hele skærmen, så vælg et billede der har den korrekte ratio. Bredden skal være Højden divideret med 1,5.";
+                display += "Billedet vil fylde hele skærmen, så vælg et billede der har den korrekte ratio. Bredden skal være højden divideret med 1,77777.";
                 textArea.setText(display);
             } else if(selectedItem.getValue().equals("Bar Tilbud Slides")){
                 display = "Et bartilbud slide består af en header, et billede og noget tekst.\n\n";

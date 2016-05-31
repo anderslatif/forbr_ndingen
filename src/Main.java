@@ -1,3 +1,4 @@
+import controller.Controller;
 import view.Layout;
 
 import javafx.application.Application;
