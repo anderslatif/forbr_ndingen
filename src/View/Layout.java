@@ -199,7 +199,7 @@ public class Layout {
     public void getEventOverview(){
 
         eventStage = new Stage();
-        Scene eventScene = new Scene(getEventBorderPane(), 900, 250);
+        Scene eventScene = new Scene(getEventBorderPane(), 1200, 250);
 
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
         eventStage.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 300);
