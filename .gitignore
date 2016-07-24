@@ -17,3 +17,5 @@ hs_err_pid*
 
 # The file server is an experimental folder and shouldn't be shared
 FileServer/
+
+src/model/DatabaseConnection.java
