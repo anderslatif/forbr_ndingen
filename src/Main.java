@@ -33,8 +33,6 @@ public class Main extends Application {
         primaryStage.setResizable(false);
 
 
-
-
         scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
         primaryStage.getIcons().add(new Image("file:src/logo.png"));
 
@@ -46,9 +44,6 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-
-
 
 
 

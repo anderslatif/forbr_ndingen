@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 Manifest-Version: 1.0
 Class-Path: mysql-connector-java-5.1.38-bin.jar jsch-0.1.53.jar
 Main-Class: Main
 
+=======
+Manifest-Version: 1.0
+Main-Class: Main
+
+>>>>>>> 7cb1d5f6adf6272af731147f47a5cc241c699252

@@ -51,7 +51,6 @@ public class Layout {
     private Scene scene;
     private Controller controller;
     private TabController tabController;
-    private Login login = new Login();
     public static boolean newPresentation = false;
 
     /**
@@ -157,28 +156,9 @@ public class Layout {
 
         menu3.getItems().addAll(m3_1, m3_2);
 
-        ///////////////////////////////////////
-        Menu menu4 = new Menu("User");
-
-
-        MenuItem m4_1 = new MenuItem("Log in");
-        m4_1.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
-        m4_1.setOnAction( event -> login.userStage(this, "login"));
-
-        MenuItem m4_2 = new MenuItem("_Lock");
-        m4_2.setAccelerator(new KeyCodeCombination(KeyCode.C, KeyCombination.SHORTCUT_DOWN));
-        m4_2.setOnAction(event -> loginState.setValue(true));
-
-        MenuItem m4_3 = new MenuItem("_Change username and password");
-        m4_3.setOnAction(event -> login.userStage(this, "edit"));
-        m4_3.disableProperty().bind(loginState);
-
-        menu4.getItems().addAll(m4_1, m4_2, m4_3);
         /////////////////////////////////////////
 
-        menuBar.getMenus().addAll(menu1, menu2, menu3, menu4);
-
-        //loginState.setValue(true);
+        menuBar.getMenus().addAll(menu1, menu2, menu3);
 
         return menuBar;
     }
@@ -199,7 +179,7 @@ public class Layout {
     public void getEventOverview(){
 
         eventStage = new Stage();
-        Scene eventScene = new Scene(getEventBorderPane(), 900, 250);
+        Scene eventScene = new Scene(getEventBorderPane(), 1200, 250);
 
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
         eventStage.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 300);
