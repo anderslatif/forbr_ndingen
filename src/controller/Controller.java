@@ -36,9 +36,24 @@ public class Controller {
             Slide slide = tabNode.getSlide();
 
             if(!(slide.getImagePath() == null  || slide.getImagePath().equals("null") || slide.getImagePath().equals(""))){
-                String new_path = copyFileToDrive(slide.getImagePath());
-                slide.setImagePath(new_path);
-                slidePresentation.add(slide);
+
+                if(DatabaseConnection.getiPort() == 3306) {
+
+                    String new_path = copyFileToDrive(slide.getImagePath());
+                    slide.setImagePath(new_path);
+                    slidePresentation.add(slide);
+
+                } else {
+
+                    File localFile = new File(slide.getImagePath().substring(8));
+
+                    SCPTo.getFileOverSCPTo(Util.turnBackslashToForward(localFile.getAbsolutePath()));
+
+                    slide.setImagePath("/home/pi/FileServer/" + localFile.getName());
+                    slidePresentation.add(slide);
+
+                }
+
             } else {
                 slidePresentation.add(slide);
             }

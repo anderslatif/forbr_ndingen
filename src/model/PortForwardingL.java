@@ -23,7 +23,7 @@ public class PortForwardingL{
                 String rhost = "localhost";
                 int rport = 3306;
                 String user = "pi";
-                String host = "192.168.43.65";
+                String host = "192.168.1.181";
 
                 try {
                     JSch jsch = new JSch();

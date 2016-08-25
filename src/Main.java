@@ -1,4 +1,5 @@
 import controller.Controller;
+import model.SCPTo;
 import view.Layout;
 
 import javafx.application.Application;
